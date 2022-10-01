@@ -15,14 +15,8 @@ public class MainMenuBehaviour : MonoBehaviour
     public ContinuousAudioManager AmbienceAudioManager;
     public ContinuousAudioManager BackgroundAudioManager;
 
-    public GameObject MainMenuContainer;
-    public GameObject OptionsMenuContainer;
 
-    public GameObject SavedGamesButton;
-
-    public GameObject BackButton;
     public GameObject QuitButton;
-
     public void StartGame()
     {
         Core.Game.PlayButtonSound();
@@ -44,7 +38,7 @@ public class MainMenuBehaviour : MonoBehaviour
     public void ShowOptions()
     {
         Core.Game.PlayButtonSound();
-        ChangeContainerVisiblity(options: true);
+        Core.Game.ChangeScene(SceneNames.OptionsScene);
     }
 
     public void ShowCredits()
@@ -60,29 +54,6 @@ public class MainMenuBehaviour : MonoBehaviour
         Application.Quit();
     }
 
-    public void Back()
-    {
-        Core.Game.PlayButtonSound();
-        ChangeContainerVisiblity(mainMenu: true);
-    }
-
-    private void ChangeContainerVisiblity(Boolean mainMenu = false, Boolean options = false)
-    {
-        if (!mainMenu && !options)
-        {
-            throw new InvalidOperationException("No visiblity is not allowed!");
-        }
-
-        this.MainMenuContainer.SetActive(mainMenu);
-        this.OptionsMenuContainer.SetActive(options);
-
-        this.BackButton.SetActive(!mainMenu);
-
-        if (Application.platform != RuntimePlatform.WebGLPlayer)
-        {
-            this.QuitButton.SetActive(mainMenu);
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -123,44 +94,44 @@ public class MainMenuBehaviour : MonoBehaviour
             Core.Game.BackgroundAudioManager.Initialize();
         }
 
-        Core.Game.AudioClipListMenu = new System.Collections.Generic.List<AudioClip>()
-        {
-            GameFrame.Base.Resources.Manager.Audio.Get("Background_1")
-        };
+//        Core.Game.AudioClipListMenu = new System.Collections.Generic.List<AudioClip>()
+//        {
+//            GameFrame.Base.Resources.Manager.Audio.Get("Background_1")
+//        };
 
-        Core.Game.AudioClipListGame1 = new System.Collections.Generic.List<AudioClip>()
-        {
-            GameFrame.Base.Resources.Manager.Audio.Get("Background_2"),
-            GameFrame.Base.Resources.Manager.Audio.Get("Background_3"),
-            GameFrame.Base.Resources.Manager.Audio.Get("Background_4")
-        };
+//        Core.Game.AudioClipListGame1 = new System.Collections.Generic.List<AudioClip>()
+//        {
+//            GameFrame.Base.Resources.Manager.Audio.Get("Background_2"),
+//            GameFrame.Base.Resources.Manager.Audio.Get("Background_3"),
+//            GameFrame.Base.Resources.Manager.Audio.Get("Background_4")
+//        };
 
-        Core.Game.AudioClipListGame2 = new System.Collections.Generic.List<AudioClip>()
-        {
-            GameFrame.Base.Resources.Manager.Audio.Get("Background_5"),
-            GameFrame.Base.Resources.Manager.Audio.Get("Background_6"),
-            GameFrame.Base.Resources.Manager.Audio.Get("Background_7"),
-//            GameFrame.Base.Resources.Manager.Audio.Get("Background_8"),
-            GameFrame.Base.Resources.Manager.Audio.Get("Background_9")
-        };
+//        Core.Game.AudioClipListGame2 = new System.Collections.Generic.List<AudioClip>()
+//        {
+//            GameFrame.Base.Resources.Manager.Audio.Get("Background_5"),
+//            GameFrame.Base.Resources.Manager.Audio.Get("Background_6"),
+//            GameFrame.Base.Resources.Manager.Audio.Get("Background_7"),
+////            GameFrame.Base.Resources.Manager.Audio.Get("Background_8"),
+//            GameFrame.Base.Resources.Manager.Audio.Get("Background_9")
+//        };
 
-        Core.Game.AudioClipListTransition = new System.Collections.Generic.List<AudioClip>()
-        {
-            GameFrame.Base.Resources.Manager.Audio.Get("Background_10")
-        };
+//        Core.Game.AudioClipListTransition = new System.Collections.Generic.List<AudioClip>()
+//        {
+//            GameFrame.Base.Resources.Manager.Audio.Get("Background_10")
+//        };
 
-        Core.Game.BackgroundAudioManager.Clips = Core.Game.AudioClipListMenu;
+//        Core.Game.BackgroundAudioManager.Clips = Core.Game.AudioClipListMenu;
 
-        Core.Game.AmbientClipList = new System.Collections.Generic.List<AudioClip>()
-        {
-            GameFrame.Base.Resources.Manager.Audio.Get("Protest_long")
-        };
-        Core.Game.AmbienceAudioManager.Clips = Core.Game.AmbientClipList;
+//        Core.Game.AmbientClipList = new System.Collections.Generic.List<AudioClip>()
+//        {
+//            GameFrame.Base.Resources.Manager.Audio.Get("Protest_long")
+//        };
+//        Core.Game.AmbienceAudioManager.Clips = Core.Game.AmbientClipList;
 
-        Core.Game.ShopClipList = new System.Collections.Generic.List<AudioClip>()
-        {
-            GameFrame.Base.Resources.Manager.Audio.Get("Shop_Music")
-        };
+//        Core.Game.ShopClipList = new System.Collections.Generic.List<AudioClip>()
+//        {
+//            GameFrame.Base.Resources.Manager.Audio.Get("Shop_Music")
+//        };
 
         //if (!Core.Game.AmbienceAudioManager.IsPlaying)
         //{
@@ -174,9 +145,11 @@ public class MainMenuBehaviour : MonoBehaviour
 
     public void LoadGameSettings()
     {
-        String filePath = Application.streamingAssetsPath + "/GameSettings.json";
-
-        StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<GameSettings>>(filePath, SetGameSettings));
+        if (GameHandler.AvailableGameModes == default)
+        {
+            String filePath = Application.streamingAssetsPath + "/GameSettings.json";
+            StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<GameSettings>>(filePath, SetGameSettings));
+        }
     }
 
     private List<GameSettings> SetGameSettings(List<GameSettings> gameSettings)
