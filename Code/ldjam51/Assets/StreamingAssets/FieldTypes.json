@@ -1,0 +1,13 @@
+[
+  {
+    "TemplateRefernce": "Tile",
+    "Materials": [
+      "Gras"
+    ],
+    "ExtraTemplateReference": [
+      "Stone",
+      "Trees",
+      "Trap"
+    ]
+  }
+]

@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using UnityEngine;
+
 namespace Assets.Scripts.Game
 {
     public class Field
     {
+        public Material Material { get; set; }
     }
 }

@@ -1,6 +1,9 @@
-﻿
+﻿using Assets.Scripts.Game;
+using Assets.Scripts.Model;
+
 using GameFrame.Core.Audio.Multi;
 using GameFrame.Core.Audio.Single;
+using GameFrame.Core.Extensions;
 
 using UnityEngine;
 
@@ -22,13 +25,59 @@ namespace Assets.Scripts.Core
 
         protected override GameState InitializeGameState()
         {
-            var gameMode =  Base.Core.SelectedGameMode;
+            var gameMode = Base.Core.SelectedGameMode;
 
             return new GameState()
             {
                 CurrentScene = SceneNames.PlayFieldScene,
                 Mode = gameMode,
+                Field1 = GenerateField(),
+                Field2 = GenerateField(),
             };
+        }
+
+        private FieldState GenerateField()
+        {
+            var fieldState = new FieldState()
+            {
+                ColumnCount = 9,
+                RowCount = 9,
+                IsActive = true,
+            };
+
+            GenerateFields(fieldState);
+
+            return fieldState;
+        }
+
+        private void GenerateFields(FieldState fieldState)
+        {
+            fieldState.Fields = new Field[fieldState.RowCount, fieldState.ColumnCount];
+
+            for (int row = 0; row < fieldState.RowCount; row++)
+            {
+                for (int column = 0; column < fieldState.ColumnCount; column++)
+                {
+                    var fieldTemplate = GetRandomFieldTemplate();
+
+                    var field = new Field()
+                    {
+                        Material = GameFrame.Base.Resources.Manager.Materials.Get(fieldTemplate.Materials.GetRandomEntry())
+                    };
+
+                    fieldState.Fields[row, column] = field;
+                }
+            }
+        }
+
+        private FieldType GetRandomFieldTemplate()
+        {
+            if (GameHandler.AvailableFieldTypes?.Count > 0)
+            {
+                return GameHandler.AvailableFieldTypes.GetRandomEntry();
+            }
+
+            return default;
         }
 
         protected override PlayerOptions InitialzePlayerOptions()
@@ -52,6 +101,5 @@ namespace Assets.Scripts.Core
         {
             EffectsAudioManager.Play("Button");
         }
-
     }
 }

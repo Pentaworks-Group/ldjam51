@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 
 using Assets.Scripts.Base;
+using Assets.Scripts.Model;
 
 using GameFrame.Core.Audio.Multi;
 using GameFrame.Core.Audio.Single;
@@ -177,6 +178,10 @@ public class MainMenuBehaviour : MonoBehaviour
         String filePath = Application.streamingAssetsPath + "/GameSettings.json";
 
         StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<GameSettings>>(filePath, SetGameSettings));
+        
+        String fieldTypesPath = Application.streamingAssetsPath + "/FieldTypes.json";
+
+        StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<Assets.Scripts.Model.FieldType>>(fieldTypesPath, SetFieldTypes));
     }
 
     private List<GameSettings> SetGameSettings(List<GameSettings> gameSettings)
@@ -189,6 +194,13 @@ public class MainMenuBehaviour : MonoBehaviour
         }
 
         return gameSettings;
+    }
+
+    private List<FieldType> SetFieldTypes(List<FieldType> fieldTypes)
+    {
+        GameHandler.AvailableFieldTypes = fieldTypes;
+
+        return fieldTypes;
     }
 
     public void ReloadSettingsClick()
