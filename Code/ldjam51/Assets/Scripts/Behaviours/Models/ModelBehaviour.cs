@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using UnityEngine;
 
-namespace Assets.Scripts.Models
+namespace Assets.Scripts.Behaviours.Models
 {
     public class ModelBehaviour : MonoBehaviour
     {
