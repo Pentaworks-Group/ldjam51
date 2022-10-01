@@ -1,10 +1,10 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 
-using Assets.Scripts.Core;
 using Assets.Scripts.Scenes;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameModeMenuBehaviour : BaseMenuBehaviour
 {
@@ -14,12 +14,26 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
 
     private readonly List<GameModeSlotBehaviour> SlotBehaviours = new();
 
+
+
+    public GameObject CreateNewModeButton;
+    public GameObject OwnModesButton;
+    public GameObject GlobalModesButton;
+
+
+    public bool ownMode { get; set; } = false;
+    private Color32 selectedColor;
+    private Color32 notSelectedColor;
+
     private void Awake()
     {
         if (GameHandler.AvailableGameModes == default)
         {
             Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.MainMenu);
         }
+
+        selectedColor = GlobalModesButton.GetComponent<Image>().color;
+        notSelectedColor = OwnModesButton.GetComponent<Image>().color;
     }
 
     void Start()
@@ -67,4 +81,74 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
 
     }
 
+    public void CreateNewMode()
+    {
+
+        GameSettings gameFieldSettings = new GameSettings();
+        List<GameSettings> ownModes = getModesFromSlots();
+        ownModes.Add(gameFieldSettings);
+        LoadGameModes(ownModes);
+
+    }
+
+
+     public void SaveGameMode(GameSettings gameSettings)
+    {
+        List<GameSettings> ownModes;
+        if (gameSettings != default) //when called from a global mode
+        {
+            ownModes = GetGameSettingsFromPlayerPref();
+            ownModes.Add(gameSettings);
+        } else
+        {
+            ownModes = getModesFromSlots();
+        }
+        String ownModesJson = GameFrame.Core.Json.Handler.Serialize(ownModes);
+        PlayerPrefs.SetString("OwnModes", ownModesJson);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadGlobalModes()
+    {
+        GlobalModesButton.GetComponent<Image>().color = selectedColor;
+        OwnModesButton.GetComponent<Image>().color = notSelectedColor;
+        ownMode = false;
+        CreateNewModeButton.SetActive(false);
+        LoadGameModes(GameHandler.AvailableGameModes);
+    }
+
+    private List<GameSettings> GetGameSettingsFromPlayerPref()
+    {
+        String ownModesJson = PlayerPrefs.GetString("OwnModes");
+        List<GameSettings> ownModes;
+        if (!String.IsNullOrEmpty(ownModesJson))
+        {
+            ownModes = GameFrame.Core.Json.Handler.Deserialize<List<GameSettings>>(ownModesJson);
+        }
+        else
+        {
+            ownModes = new List<GameSettings>();
+        }
+        return ownModes;
+    }
+
+    public void LoadOwnModes()
+    {
+        GlobalModesButton.GetComponent<Image>().color = notSelectedColor;
+        OwnModesButton.GetComponent<Image>().color = selectedColor;
+        ownMode = true;
+        CreateNewModeButton.SetActive(true);
+        var ownModes = GetGameSettingsFromPlayerPref();
+        LoadGameModes(ownModes);
+    }
+
+    private List<GameSettings> getModesFromSlots()
+    {
+        List<GameSettings> modes = new List<GameSettings>();
+        foreach (GameModeSlotBehaviour slot in SlotBehaviours)
+        {
+            modes.Add(slot.GameSettings);
+        }
+        return modes;
+    }
 }
