@@ -22,6 +22,6 @@ public class PlayerInput : MonoBehaviour
         horizontal *= Time.deltaTime;
         vertical *= Time.deltaTime;
 
-        this.transform.Translate(horizontal, vertical,0 );
+        this.transform.Translate(horizontal, vertical, 0);
     }
 }

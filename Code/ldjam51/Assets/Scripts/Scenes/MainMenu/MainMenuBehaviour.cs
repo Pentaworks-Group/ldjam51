@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 
 using Assets.Scripts.Base;
+using Assets.Scripts.Model;
 
 using GameFrame.Core.Audio.Multi;
 using GameFrame.Core.Audio.Single;
@@ -145,11 +146,9 @@ public class MainMenuBehaviour : MonoBehaviour
 
     public void LoadGameSettings()
     {
-        if (GameHandler.AvailableGameModes == default)
-        {
-            String filePath = Application.streamingAssetsPath + "/GameSettings.json";
-            StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<GameSettings>>(filePath, SetGameSettings));
-        }
+        String filePath = Application.streamingAssetsPath + "/GameSettings.json";
+
+        StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<GameSettings>>(filePath, SetGameSettings));
     }
 
     private List<GameSettings> SetGameSettings(List<GameSettings> gameSettings)
@@ -162,6 +161,13 @@ public class MainMenuBehaviour : MonoBehaviour
         }
 
         return gameSettings;
+    }
+
+    private List<FieldType> SetFieldTypes(List<FieldType> fieldTypes)
+    {
+        GameHandler.AvailableFieldTypes = fieldTypes;
+
+        return fieldTypes;
     }
 
     public void ReloadSettingsClick()

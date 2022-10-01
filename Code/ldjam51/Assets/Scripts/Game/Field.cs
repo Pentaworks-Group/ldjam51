@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 using UnityEngine;
 
-namespace Assets.Scripts.Models
+namespace Assets.Scripts.Game
 {
-    public class ModelBehaviour : MonoBehaviour
+    public class Field
     {
-        public Boolean IsRotatable = true;
+        public Material Material { get; set; }
     }
 }

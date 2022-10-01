@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
 using Assets.Scripts.Base;
+using Assets.Scripts.Model;
 
 using UnityEngine;
 
@@ -8,5 +9,5 @@ public class GameHandler
 {
    
     public static List<GameSettings> AvailableGameModes { get; set; } //move to other handler and keep this handler for current game?
-
+    public static List<FieldType> AvailableFieldTypes { get; set; }
 }
