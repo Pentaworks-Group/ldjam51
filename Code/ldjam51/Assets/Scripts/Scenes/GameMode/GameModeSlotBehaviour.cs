@@ -21,17 +21,25 @@ public class GameModeSlotBehaviour : MonoBehaviour
             if (gameSettings != value)
             {
                 gameSettings = value;
-
-                this.UpdateUI();
+                UpdateUI();
             }
         }
     }
 
     public void Awake()
     {
-        GameModeText = this.gameObject.transform.Find("Details/ModeName").GetComponent<Text>();
+        GameModeText = this.gameObject.transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Text>();
     }
 
+
+    private Text GetGameModeText()
+    {
+        if (this.GameModeText == default)
+        {
+            this.GameModeText = this.gameObject.transform.Find("SelectAndInfo/Details/ModeName").GetComponent<Text>();
+        }
+        return this.GameModeText;
+    }
 
     public void OnSlotClick()
     {
@@ -42,6 +50,6 @@ public class GameModeSlotBehaviour : MonoBehaviour
 
     private void UpdateUI()
     {
-        this.GameModeText.text = this.GameSettings.Name;
+        GetGameModeText().text = GameSettings.Name;
     }
 }
