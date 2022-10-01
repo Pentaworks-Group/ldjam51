@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.Model
 {
-    public class FieldType
+    public class TileType
     {
         public String TemplateReference { get; set; }
         public List<String> Materials { get; set; }

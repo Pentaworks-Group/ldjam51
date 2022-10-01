@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Behaviours.Models
 {
-    public class PlayerBehaviour : MonoBehaviour
+    public class PlayerBehaviour : ModelBehaviour
     {
         public const Int32 StepSize = 2;
 

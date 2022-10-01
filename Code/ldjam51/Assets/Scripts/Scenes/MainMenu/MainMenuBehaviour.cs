@@ -152,9 +152,9 @@ public class MainMenuBehaviour : MonoBehaviour
             StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<GameSettings>>(filePath, SetGameSettings));
 
 
-            String fieldTypesPath = Application.streamingAssetsPath + "/FieldTypes.json";
+            String tileTypesPath = Application.streamingAssetsPath + "/TileTypes.json";
 
-            StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<Assets.Scripts.Model.FieldType>>(fieldTypesPath, SetFieldTypes));
+            StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<Assets.Scripts.Model.TileType>>(tileTypesPath, SetTileTypes));
         }
     }
 
@@ -170,11 +170,11 @@ public class MainMenuBehaviour : MonoBehaviour
         return gameSettings;
     }
 
-    private List<FieldType> SetFieldTypes(List<FieldType> fieldTypes)
+    private List<TileType> SetTileTypes(List<TileType> tileTypes)
     {
-        GameHandler.AvailableFieldTypes = fieldTypes;
+        GameHandler.AvailableTileTypes = tileTypes;
 
-        return fieldTypes;
+        return tileTypes;
     }
 
     public void ReloadSettingsClick()

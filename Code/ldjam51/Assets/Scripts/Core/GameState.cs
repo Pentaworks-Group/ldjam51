@@ -12,5 +12,6 @@ namespace Assets.Scripts.Core
         public String SaveGameName { get; set; }
         public FieldState Field1 { get; set; }
         public FieldState Field2 { get; set; }
+        public Single TimeRemaining { get; internal set; }
     }
 }

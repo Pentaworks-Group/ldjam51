@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using UnityEngine;
-
-namespace Assets.Scripts.Game
+namespace Assets.Scripts.Behaviours.Models
 {
-    public class Field
+    public class TileModelBehaviour : ModelBehaviour
     {
-        public Material Material { get; set; }
     }
 }

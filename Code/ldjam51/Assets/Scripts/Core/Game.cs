@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Game;
+﻿using System;
+
+using Assets.Scripts.Game;
 using Assets.Scripts.Model;
 
 using GameFrame.Core.Audio.Multi;
@@ -11,6 +13,8 @@ namespace Assets.Scripts.Core
 {
     public class Game : GameFrame.Core.Game<GameState, PlayerOptions>
     {
+        public const Int32 FieldCount = 9;
+
         public ContinuousAudioManager AmbienceAudioManager { get; set; }
         public ContinuousAudioManager BackgroundAudioManager { get; set; }
         public EffectsAudioManager EffectsAudioManager { get; set; }
@@ -31,18 +35,19 @@ namespace Assets.Scripts.Core
             {
                 CurrentScene = SceneNames.PlayFieldScene,
                 Mode = gameMode,
-                Field1 = GenerateField(),
-                Field2 = GenerateField(),
+                TimeRemaining = 10,
+                Field1 = GenerateField(true),
+                Field2 = GenerateField(false),
             };
         }
 
-        private FieldState GenerateField()
+        private FieldState GenerateField(Boolean isActive)
         {
             var fieldState = new FieldState()
             {
-                ColumnCount = 9,
-                RowCount = 9,
-                IsActive = true,
+                IsActive = isActive,
+                ColumnCount = FieldCount,
+                RowCount = FieldCount
             };
 
             GenerateFields(fieldState);
@@ -52,29 +57,31 @@ namespace Assets.Scripts.Core
 
         private void GenerateFields(FieldState fieldState)
         {
-            fieldState.Fields = new Field[fieldState.RowCount, fieldState.ColumnCount];
+            fieldState.Tiles = new Tile[fieldState.RowCount, fieldState.ColumnCount];
 
             for (int row = 0; row < fieldState.RowCount; row++)
             {
                 for (int column = 0; column < fieldState.ColumnCount; column++)
                 {
-                    var fieldTemplate = GetRandomFieldTemplate();
+                    var fieldTemplate = GetRandomTileTemplate();
 
-                    var field = new Field()
+                    var field = new Tile()
                     {
+                        TemplateReference = fieldTemplate.TemplateReference,
+                        ExtraTemplateReference = fieldTemplate.ExtraTemplateReference.GetRandomEntry((s) => { return UnityEngine.Random.value > 0.95; }),
                         Material = GameFrame.Base.Resources.Manager.Materials.Get(fieldTemplate.Materials.GetRandomEntry())
                     };
 
-                    fieldState.Fields[row, column] = field;
+                    fieldState.Tiles[row, column] = field;
                 }
             }
         }
 
-        private FieldType GetRandomFieldTemplate()
+        private TileType GetRandomTileTemplate()
         {
-            if (GameHandler.AvailableFieldTypes?.Count > 0)
+            if (GameHandler.AvailableTileTypes?.Count > 0)
             {
-                return GameHandler.AvailableFieldTypes.GetRandomEntry();
+                return GameHandler.AvailableTileTypes.GetRandomEntry();
             }
 
             return default;
