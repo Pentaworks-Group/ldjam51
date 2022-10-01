@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 
 using Assets.Scripts.Core;
@@ -13,6 +12,15 @@ public class SaveGameMenuBehaviour : BaseMenuBehaviour
     private readonly int MaxSlosts = 10;
 
     private List<SaveGameSlotBehaviour> SlotBehaviours = new List<SaveGameSlotBehaviour>();
+
+
+    private void Awake()
+    {
+        if (GameHandler.AvailableGameModes == default)
+        {
+            Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.MainMenu);
+        }
+    }
 
     void Start()
     {
@@ -51,11 +59,13 @@ public class SaveGameMenuBehaviour : BaseMenuBehaviour
         GameObject modeSlot = Instantiate(SaveGameSlotTemplate, new Vector3(0, 0, 0), Quaternion.identity, SaveGameSlotTemplate.transform.parent);
         float relative = 1f / MaxSlosts;
         RectTransform rect = modeSlot.GetComponent<RectTransform>();
+        rect.anchoredPosition3D = new Vector3(0, 0, 0);
         rect.anchorMin = new Vector2(rect.anchorMin.x, (float)index * relative);
         rect.anchorMax = new Vector2(rect.anchorMax.x, (float)(index + 1) * relative);
         rect.offsetMin = new Vector2(0, 0);
         rect.offsetMax = new Vector2(0, 0);
         modeSlot.SetActive(true);
+        modeSlot.name = "SaveGameName " + gameState.SaveGameName;
 
 
         SaveGameSlotBehaviour saveGameSlotBehaviour = modeSlot.GetComponent<SaveGameSlotBehaviour>();

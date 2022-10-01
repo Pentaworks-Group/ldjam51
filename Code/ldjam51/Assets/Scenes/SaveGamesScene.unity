@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ad45f2ad39e8b442aceafcacc014498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SaveGameSlotTemplate: {fileID: 0}
+  SaveGameSlotTemplate: {fileID: 1280632380}
 --- !u!1 &519994562
 GameObject:
   m_ObjectHideFlags: 0

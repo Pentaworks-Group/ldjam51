@@ -6,9 +6,9 @@ using Assets.Scripts.Scenes;
 
 using UnityEngine;
 
-public class OptionsBehaviour : BaseMenuBehaviour
+public class OptionsMenuBehaviour : BaseMenuBehaviour
 {
-
+    
     private void Awake()
     {
         if (GameHandler.AvailableGameModes == default)

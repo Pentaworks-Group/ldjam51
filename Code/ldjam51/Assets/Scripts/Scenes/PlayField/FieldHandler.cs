@@ -20,6 +20,15 @@ namespace Assets.Scripts.Scenes.PlayField
 
         public GameObject TileTemplate;
 
+
+        private void Awake()
+        {
+            if (GameHandler.AvailableGameModes == default)
+            {
+                Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.MainMenu);
+            }
+        }
+
         // Start is called before the first frame update
         void Start()
         {
