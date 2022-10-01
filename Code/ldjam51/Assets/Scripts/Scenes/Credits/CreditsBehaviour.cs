@@ -6,7 +6,7 @@ using Assets.Scripts.Scenes;
 
 using UnityEngine;
 
-public class OptionsBehaviour : BaseMenuBehaviour
+public class CreditsBehaviour : BaseMenuBehaviour
 {
 
     private void Awake()
