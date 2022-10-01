@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cec25f169f29c9644ae2df2b19e09b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayField: {fileID: 0}
 --- !u!1 &9032120619518841222
 GameObject:
   m_ObjectHideFlags: 0
@@ -55,7 +56,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9032120619518841223}
   m_Layer: 0
-  m_Name: FieldsContainer
+  m_Name: TilesContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

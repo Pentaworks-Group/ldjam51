@@ -1,11 +1,17 @@
-﻿using Assets.Scripts.Behaviours.Models;
+﻿using System;
+
+using Assets.Scripts.Behaviours.Models;
 using Assets.Scripts.Game;
+
+using UnityEngine;
 
 namespace Assets.Scripts.Scenes.PlayField
 {
     public class FieldHandler : UnityEngine.MonoBehaviour
     {
         private System.Boolean isLoaded = false;
+        private GameObject tilesContainer;
+        private PlayerBehaviour playerBehaviour;
 
         public FieldState FieldState;
         public PlayFieldBehaviour PlayField;
@@ -23,13 +29,18 @@ namespace Assets.Scripts.Scenes.PlayField
                 isLoaded = true;
 
                 this.LoadField();
-            }
+            }            
+        }
+
+        public void SetActive(Boolean isActive)
+        {
+            this.FieldState.IsActive = isActive;
+            this.playerBehaviour.Player.IsActive = isActive;
         }
 
         private void LoadField()
         {
-            var fieldGameObject = this.gameObject;
-            var fieldsContainer = fieldGameObject.transform.Find("FieldsContainer").gameObject;
+            this.tilesContainer = this.gameObject.transform.Find("TilesContainer").gameObject;
 
             for (int z = 0; z < this.FieldState.RowCount; z++)
             {
@@ -37,7 +48,7 @@ namespace Assets.Scripts.Scenes.PlayField
                 {
                     var tile = FieldState.Tiles[z, x];
 
-                    var tileObject = Instantiate(PlayField.GetTemplateByName<TileModelBehaviour>(tile.TemplateReference), fieldsContainer.transform);
+                    var tileObject = Instantiate(PlayField.GetTemplateByName<TileModelBehaviour>(tile.TemplateReference), tilesContainer.transform);
 
                     var xOffset = x * 2;
                     var zOffset = z * 2;
@@ -45,6 +56,16 @@ namespace Assets.Scripts.Scenes.PlayField
                     tileObject.gameObject.SetActive(true);
 
                     tileObject.transform.Translate(xOffset, 0, zOffset, UnityEngine.Space.World);
+
+                    if (tile.Material != default)
+                    {
+                        var meshRenderer = tileObject.GetComponent<MeshRenderer>();
+
+                        if (meshRenderer != default)
+                        {
+                            meshRenderer.material = tile.Material;
+                        }
+                    }
 
                     if (!System.String.IsNullOrEmpty(tile.ExtraTemplateReference))
                     {
@@ -72,36 +93,19 @@ namespace Assets.Scripts.Scenes.PlayField
                 }
             }
 
-            //var playerTemplate = fieldGameObject.transform.Find("Templates/Player/PlayerTemplate2")?.gameObject;
+            var playerTemplate = PlayField.GetTemplateByName<PlayerBehaviour>(FieldState.Player.TemplateReference);
 
-            //if (playerTemplate != default)
-            //{
-            //    var actualPlayer = Instantiate(playerTemplate, fieldGameObject.transform);
-
-            //    var xOffset = UnityEngine.Random.Range(0, FieldState.ColumnCount) * 2;
-            //    var yOffset = UnityEngine.Random.Range(0, FieldState.RowCount) * 2;
-
-            //    var newPosition = new UnityEngine.Vector3(xOffset, 0, yOffset);
-
-            //    actualPlayer.AddComponent<PlayerBehaviour>();
-
-            //    actualPlayer.transform.Translate(newPosition, UnityEngine.Space.World);
-            //    actualPlayer.SetActive(true);
-            //}
-        }
-
-        /*
-        
-        var gameState = Base.Core.Game?.State;
-
-            if (gameState == default)
+            if (playerTemplate != default)
             {
+                this.playerBehaviour = Instantiate(playerTemplate, this.gameObject.transform);
+
+                var newPosition = new UnityEngine.Vector3(FieldState.Player.PositionX, 0, FieldState.Player.PositionY);
+
+                this.playerBehaviour.Player = FieldState.Player;
                 
-
-
-
-
-
-         */
+                this.playerBehaviour.transform.Translate(newPosition, UnityEngine.Space.World);
+                this.playerBehaviour.gameObject.SetActive(true);
+            }
+        }
     }
 }

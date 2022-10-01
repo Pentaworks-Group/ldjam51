@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Assets.Scripts.Extensions;
 using Assets.Scripts.Game;
 using Assets.Scripts.Model;
 
@@ -59,29 +60,80 @@ namespace Assets.Scripts.Core
         {
             fieldState.Tiles = new Tile[fieldState.RowCount, fieldState.ColumnCount];
 
+            var playerTile = GetRandomPlayerTileTemplate();
+
+            var player = new Player()
+            {
+                IsActive = fieldState.IsActive,
+                TemplateReference = playerTile.TemplateReference,
+                PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
+                PositionY = UnityEngine.Random.Range(0, fieldState.RowCount)
+            };
+
+            fieldState.Player = player;
+
+            fieldState.Tiles[player.PositionX, player.PositionY] = new Tile()
+            {
+                TemplateReference = "StartTile",
+                Material = GameFrame.Base.Resources.Manager.Materials.Get("Start")
+            };
+
+            var targetTileTemplate = GetRandomFinishTileTemplate();
+
+            var finish = new Finish()
+            {
+                TemplateReference = targetTileTemplate.TemplateReference,
+                PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
+                PositionY = UnityEngine.Random.Range(0, fieldState.RowCount)
+            };
+
+            fieldState.Finish = finish;
+
+            fieldState.Tiles[finish.PositionX, finish.PositionY] = new Tile()
+            {
+                TemplateReference = "Tile_Finish",
+                Material = GameFrame.Base.Resources.Manager.Materials.Get("FinishLine")
+            };
+
             for (int row = 0; row < fieldState.RowCount; row++)
             {
                 for (int column = 0; column < fieldState.ColumnCount; column++)
                 {
-                    var fieldTemplate = GetRandomTileTemplate();
-
-                    var field = new Tile()
+                    if (fieldState.Tiles[row, column] == default)
                     {
-                        TemplateReference = fieldTemplate.TemplateReference,
-                        ExtraTemplateReference = fieldTemplate.ExtraTemplateReference.GetRandomEntry((s) => { return UnityEngine.Random.value > 0.95; }),
-                        Material = GameFrame.Base.Resources.Manager.Materials.Get(fieldTemplate.Materials.GetRandomEntry())
-                    };
-
-                    fieldState.Tiles[row, column] = field;
+                        fieldState.Tiles[row, column] = GetRandomTileTemplate().ToTile();
+                    }
                 }
             }
         }
 
         private TileType GetRandomTileTemplate()
         {
-            if (GameHandler.AvailableTileTypes?.Count > 0)
+            if (GameHandler.AvailableTileTypes.Tiles?.Count > 0)
             {
-                return GameHandler.AvailableTileTypes.GetRandomEntry();
+                return GameHandler.AvailableTileTypes.Tiles.GetRandomEntry();
+            }
+
+            return default;
+        }
+
+        private TileType GetRandomPlayerTileTemplate()
+        {
+            if (GameHandler.AvailableTileTypes?.Player?.Count > 0)
+            {
+                return GameHandler.AvailableTileTypes.Player.GetRandomEntry();
+
+            }
+
+            return default;
+        }
+
+        private TileType GetRandomFinishTileTemplate()
+        {
+            if (GameHandler.AvailableTileTypes?.Finish?.Count > 0)
+            {
+                return GameHandler.AvailableTileTypes.Finish.GetRandomEntry();
+
             }
 
             return default;

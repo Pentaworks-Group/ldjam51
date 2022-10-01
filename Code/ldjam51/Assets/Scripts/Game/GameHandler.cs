@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class GameHandler
 {
-   
     public static List<GameSettings> AvailableGameModes { get; set; } //move to other handler and keep this handler for current game?
-    public static List<TileType> AvailableTileTypes { get; set; }
+    public static TileTypes AvailableTileTypes { get; set; }
 }
