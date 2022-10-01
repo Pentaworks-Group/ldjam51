@@ -146,9 +146,16 @@ public class MainMenuBehaviour : MonoBehaviour
 
     public void LoadGameSettings()
     {
-        String filePath = Application.streamingAssetsPath + "/GameSettings.json";
+        if (GameHandler.AvailableGameModes == default)
+        {
+            String filePath = Application.streamingAssetsPath + "/GameSettings.json";
+            StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<GameSettings>>(filePath, SetGameSettings));
 
-        StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<GameSettings>>(filePath, SetGameSettings));
+
+            String fieldTypesPath = Application.streamingAssetsPath + "/FieldTypes.json";
+
+            StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<Assets.Scripts.Model.FieldType>>(fieldTypesPath, SetFieldTypes));
+        }
     }
 
     private List<GameSettings> SetGameSettings(List<GameSettings> gameSettings)
