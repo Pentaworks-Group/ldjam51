@@ -104,10 +104,13 @@ namespace Assets.Scripts.Behaviours.Models
                 {
                     if (targetBehaviour.Tile.IsFinish)
                     {
-                        this.FieldHandler.FieldState.IsCompleted = true;
-                        this.FieldHandler.SetActive(false);
+                        if (!this.FieldHandler.FieldState.IsCompleted)
+                        {
+                            this.FieldHandler.FieldState.IsCompleted = true;
+                            this.FieldHandler.SetActive(false);
 
-                        Base.Core.Game.EffectsAudioManager.Play("Woohoo");
+                            Base.Core.Game.EffectsAudioManager.Play("Woohoo");
+                        }
                     }
                     else if (targetBehaviour.Tile.ExtraTemplate?.IsDeadly == true)
                     {

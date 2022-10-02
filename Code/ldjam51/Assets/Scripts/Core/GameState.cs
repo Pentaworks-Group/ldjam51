@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 using Assets.Scripts.Game;
 
@@ -14,5 +13,6 @@ namespace Assets.Scripts.Core
         public FieldState Field2 { get; set; }
         public Single TimeRemaining { get; set; }
         public Int32 LevelsCompleted { get; set; }
+        public Int32 ToggleIndex { get; set; }
     }
 }

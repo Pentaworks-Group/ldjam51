@@ -9,25 +9,25 @@ namespace Assets.Scripts.Scenes.PlayField
 {
     public class FieldHandler : UnityEngine.MonoBehaviour
     {
-        private System.Boolean isLoaded = false;
         private GameObject plane;
         private GameObject tilesContainer;
+        private PlayFieldBehaviour PlayField;
+
         public PlayerBehaviour playerBehaviour;
-
         public FieldState FieldState;
-        public PlayFieldBehaviour PlayField;
 
-        void Start()
+        void Awake()
         {
-
+            this.tilesContainer = this.gameObject.transform.Find("TilesContainer").gameObject;
             this.plane = this.gameObject.transform.Find("Plane").gameObject;
         }
 
-
-
-        public void LoadNewField(FieldState fieldState)
+        public void LoadNewField(PlayFieldBehaviour playField, FieldState fieldState)
         {
+            this.PlayField = playField;
             this.FieldState = fieldState;
+
+            this.ClearField();
             this.LoadField();
         }
 
@@ -36,14 +36,28 @@ namespace Assets.Scripts.Scenes.PlayField
             this.FieldState.IsActive = isActive;
             this.FieldState.Player.IsActive = isActive;
             this.plane.SetActive(isActive);
+            //this.plane.SetActive(false);
+        }
+
+        private void ClearField()
+        {
+            if (this.tilesContainer != default)
+            {
+                foreach (Transform child in tilesContainer.transform)
+                {
+                    GameObject.Destroy(child.gameObject);
+                }
+            }
+
+            if (this.playerBehaviour != null)
+            {
+                Destroy(this.playerBehaviour.gameObject);
+            }
         }
 
         private void LoadField()
         {
-            this.tilesContainer = this.gameObject.transform.Find("TilesContainer").gameObject;
-
             var fenceTemplate = PlayField.GetTemplateByName<ExtraModelBehaviour>("Fence");
-            //var fenceTemplate = PlayField.GetTemplateByName<ExtraModelBehaviour>("Wall");
 
             var maxColumnIndex = this.FieldState.ColumnCount - 1;
             var maxRowIndex = this.FieldState.RowCount - 1;
@@ -128,7 +142,7 @@ namespace Assets.Scripts.Scenes.PlayField
             {
                 this.playerBehaviour = Instantiate(playerTemplate, this.gameObject.transform);
 
-                var newPosition = new UnityEngine.Vector3(FieldState.Player.PositionX*2, 0, FieldState.Player.PositionZ*2);
+                var newPosition = new UnityEngine.Vector3(FieldState.Player.PositionX * 2, 0, FieldState.Player.PositionZ * 2);
 
                 this.playerBehaviour.FieldHandler = this;
 
@@ -136,12 +150,21 @@ namespace Assets.Scripts.Scenes.PlayField
                 this.playerBehaviour.gameObject.SetActive(true);
             }
 
-            if (plane == default)
+            plane.transform.position = new Vector3(this.transform.position.x + this.FieldState.ColumnCount - 1, plane.transform.position.y, this.FieldState.RowCount - 1);
+
+            if (FieldState.IsActive)
             {
-                this.plane = this.gameObject.transform.Find("Plane").gameObject;
+                if (FieldState.IsPlaneVisible)
+                {
+                    FieldState.IsPlaneVisible = false;
+                }
+
+                plane.SetActive(FieldState.IsActive);
             }
-            plane.SetActive(FieldState.IsPlaneVisible);
-            plane.transform.Translate(new Vector3(this.FieldState.ColumnCount - 1, 0, this.FieldState.RowCount - 1), Space.World);
+            else if (FieldState.IsPlaneVisible)
+            {
+                plane.SetActive(true);
+            }
 
             PlayField.AdjustCamera();
         }

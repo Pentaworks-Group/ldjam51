@@ -69,10 +69,12 @@ namespace Assets.Scripts.Scenes.PlayField
             FindField(transform.Find("RightField")?.gameObject, ref rightField, gameState.Field2);
 
             rightField.gameObject.transform.position = new Vector3(gameState.Field1.ColumnCount * 2 + 5, 0, 0);
+
             if (this.levelsCompletedText != default)
             {
                 this.levelsCompletedText.text = gameState.LevelsCompleted.ToString();
             }
+
             AdjustCamera();
         }
 
@@ -85,7 +87,7 @@ namespace Assets.Scripts.Scenes.PlayField
 
                 if (gameState.TimeRemaining < 0)
                 {
-                    gameState.TimeRemaining = 10;
+                    gameState.TimeRemaining = gameState.Mode.Interval;
 
                     ToggleFields();
                 }
@@ -93,13 +95,13 @@ namespace Assets.Scripts.Scenes.PlayField
                 if (gameState.Field1.IsCompleted && gameState.Field2.IsCompleted)
                 {
                     gameState.LevelsCompleted += 1;
+
                     if (this.levelsCompletedText != default)
                     {
                         this.levelsCompletedText.text = gameState.LevelsCompleted.ToString();
                     }
+
                     LoadNewFields();
-
-
                 }
 
                 UpdateElapsed();
@@ -114,7 +116,11 @@ namespace Assets.Scripts.Scenes.PlayField
             gameState.Field2 = Base.Core.Game.GenerateField(true);
             //rightField.LoadNewField(gameState.Field2);
             gameState.TimeRemaining = gameState.Mode.Interval;
-            Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.PlayFieldScene);
+            gameState.ToggleIndex = 0;
+
+            leftField.LoadNewField(this, gameState.Field1);
+            rightField.LoadNewField(this, gameState.Field2);
+            //Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.PlayFieldScene);
         }
 
         public T GetTemplateByName<T>(String templateName) where T : ModelBehaviour
@@ -165,8 +171,6 @@ namespace Assets.Scripts.Scenes.PlayField
             sceneCamera.transform.position = b.center - distance * sceneCamera.transform.forward;
         }
 
-
-
         private void UpdateElapsed()
         {
             if (this.elapsedTimeText != default)
@@ -192,8 +196,8 @@ namespace Assets.Scripts.Scenes.PlayField
 
                 if (fieldHandler != default)
                 {
-                    fieldHandler.PlayField = this;
-                    fieldHandler.LoadNewField(fieldState);
+                    fieldHandler.LoadNewField(this, fieldState);
+
                     fieldHandlerValue = fieldHandler;
 
                     return true;
@@ -205,25 +209,46 @@ namespace Assets.Scripts.Scenes.PlayField
 
         private void ToggleFields()
         {
-            if (gameState.ElapsedTime > 20)
+            if (gameState.ToggleIndex == 0)
             {
-                SetFieldActive(leftField);
-                SetFieldActive(rightField);
-            }
-            else if (gameState.ElapsedTime > 10)
-            {
-                activeField = leftField;
+                var field1WillBeActive = true;
+                var newToggleState = 1;
 
-                leftField.SetActive(true);
-                rightField.SetActive(false);
+                if (gameState.Field1.IsCompleted)
+                {
+                    newToggleState = 2;
+                    field1WillBeActive = false;
+                }
+
+                gameState.ToggleIndex = newToggleState;
+
+                leftField.SetActive(field1WillBeActive);
+                rightField.SetActive(!field1WillBeActive);
+            }
+            else
+            {
+                var field1Active = false;
+
+                if (gameState.ToggleIndex == 2)
+                {
+                    field1Active = true;
+                    gameState.ToggleIndex = 1;
+                }
+                else
+                {
+                    gameState.ToggleIndex = 2;
+                }
+
+                SetFieldActive(leftField, field1Active);
+                SetFieldActive(rightField, !field1Active);
             }
         }
 
-        private void SetFieldActive(FieldHandler field)
+        private void SetFieldActive(FieldHandler field, Boolean isActive)
         {
             if (!field.FieldState.IsCompleted)
             {
-                var newIsActive = !field.FieldState.IsActive;
+                var newIsActive = isActive;
 
                 field.SetActive(newIsActive);
 
