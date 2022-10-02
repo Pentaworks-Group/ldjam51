@@ -75,8 +75,7 @@ namespace Assets.Scripts.Core
 
             var player = new Player()
             {
-                IsActive = true,
-                //IsActive = fieldState.IsActive,
+                IsActive = fieldState.IsActive,
                 TemplateReference = playerTile.Reference,
                 PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
                 PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount)

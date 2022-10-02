@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6919534149167879005}
+  - {fileID: 5681851328196456170}
   - {fileID: 9032120619518841223}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cec25f169f29c9644ae2df2b19e09b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBehaviour: {fileID: 0}
   PlayField: {fileID: 0}
 --- !u!1 &9032120619518841222
 GameObject:
@@ -78,7 +79,7 @@ Transform:
   m_Father: {fileID: 9032120618573738929}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &7461803607536137398
+--- !u!1001 &5283642450614044929
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -151,8 +152,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36ca15bb585b8d54bab6cead79822b3b, type: 3}
---- !u!4 &6919534149167879005 stripped
+--- !u!4 &5681851328196456170 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 36ca15bb585b8d54bab6cead79822b3b, type: 3}
-  m_PrefabInstance: {fileID: 7461803607536137398}
+  m_PrefabInstance: {fileID: 5283642450614044929}
   m_PrefabAsset: {fileID: 0}

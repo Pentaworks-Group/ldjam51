@@ -19,115 +19,78 @@ namespace Assets.Scripts.Behaviours.Models
         {
             if (this.FieldHandler?.FieldState?.Player?.IsActive == true)
             {
-                var player = FieldHandler.FieldState.Player;
-
                 var moveRequired = false;
 
                 var x = 0f;
                 var z = 0f;
 
-                if ((Input.GetKey(KeyCode.W)) || (Input.GetKey(KeyCode.UpArrow)))
+                if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
                 {
                     moveRequired = true;
 
                     z += StepSize;
-                    player.PositionZ += StepSize;
                 }
-                else if ((Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.LeftArrow)))
+                else if ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
                 {
                     moveRequired = true;
 
                     x -= StepSize;
-                    player.PositionX -= StepSize;
                 }
-                else if ((Input.GetKey(KeyCode.S)) || (Input.GetKey(KeyCode.DownArrow)))
+                else if ((Input.GetKeyDown(KeyCode.S)) || (Input.GetKeyDown(KeyCode.DownArrow)))
                 {
                     moveRequired = true;
 
                     z -= StepSize;
-                    player.PositionZ -= StepSize;
                 }
-                else if ((Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.RightArrow)))
+                else if ((Input.GetKeyDown(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
                 {
                     moveRequired = true;
 
                     x += StepSize;
-                    player.PositionX += StepSize;
                 }
+
                 if (moveRequired)
                 {
-                    this.lastMove = new Vector3(x, 0, z);
-                    var end = this.transform.position + lastMove;
-
-                    this.transform.position = Vector3.Lerp(this.transform.position, end, PlayerSpeed * Time.deltaTime);
+                    this.Move(new Vector3(x, 0, z));
                 }
             }
         }
 
         public void MoveRight()
         {
-            var player = FieldHandler.FieldState.Player;
-            player.PositionX += StepSize;
-
-            this.lastMove = new Vector3(StepSize, 0, 0);
-            var end = this.transform.position + lastMove;
-
-            this.transform.position = Vector3.Lerp(this.transform.position, end, PlayerSpeed * Time.deltaTime);
-
-
-            //this.lastMove = new Vector3(StepSize, 0, 0);
-
-            //this.transform.Translate(lastMove, Space.World);
-            //this.FieldHandler.FieldState.Player.PositionX += StepSize;
+            this.Move(new Vector3(StepSize, 0, 0));
+            FieldHandler.FieldState.Player.PositionX += StepSize;
         }
-
+                
         public void MoveDown()
         {
-            var player = FieldHandler.FieldState.Player;
-            player.PositionZ -= StepSize;
-
-            this.lastMove = new Vector3(0, 0, -StepSize);
-            var end = this.transform.position + lastMove;
-
-            this.transform.position = Vector3.Lerp(this.transform.position, end, PlayerSpeed * Time.deltaTime);
-
-            //this.lastMove = new Vector3(0, 0, -StepSize);
-
-            //this.transform.Translate(lastMove, Space.World);
-            //this.FieldHandler.FieldState.Player.PositionZ -= StepSize;
+            this.Move(new Vector3(StepSize, 0, 0));
         }
 
         public void MoveLeft()
         {
-            var player = FieldHandler.FieldState.Player;
-            player.PositionX -= StepSize;
-
-            this.lastMove = new Vector3(-StepSize, 0, 0);
-            var end = this.transform.position + lastMove;
-
-            this.transform.position = Vector3.Lerp(this.transform.position, end, PlayerSpeed * Time.deltaTime);
-
-
-            //this.lastMove = new Vector3(-StepSize, 0, 0);
-
-            //this.transform.Translate(lastMove, Space.World);
-            //this.FieldHandler.FieldState.Player.PositionX -= StepSize;
+            this.Move(new Vector3(-StepSize, 0, 0));
         }
 
         public void MoveUp()
         {
-            var player = FieldHandler.FieldState.Player;
-            player.PositionZ += StepSize;
+            this.Move(new Vector3(0, 0, StepSize));
+        }
 
-            this.lastMove = new Vector3(0, 0, StepSize);
-            var end = this.transform.position + lastMove;
+        private void Move(Vector3 movementVector)
+        {
+            if (movementVector.x != 0)
+            {
+                FieldHandler.FieldState.Player.PositionX += (Int32)movementVector.x;
+            }
 
-            this.transform.position = Vector3.Lerp(this.transform.position, end, PlayerSpeed * Time.deltaTime);
+            if (movementVector.z != 0)
+            {
+                FieldHandler.FieldState.Player.PositionZ += (Int32)movementVector.z;
+            }
 
-            //this.lastMove = new Vector3(0, 0, StepSize);
-
-            //this.transform.Translate(lastMove, Space.World);
-            //this.FieldHandler.FieldState.Player.PositionZ += StepSize;
+            this.lastMove = movementVector;
+            this.transform.Translate(movementVector, Space.World);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -140,22 +103,16 @@ namespace Assets.Scripts.Behaviours.Models
                 {
                     if (targetBehaviour.Tile.IsFinish)
                     {
-                        Debug.Log("Yay");
                         this.FieldHandler.FieldState.IsCompleted = true;
                         this.FieldHandler.SetActive(false);
                     }
                     else if (targetBehaviour.Tile.ExtraTemplate?.IsDeadly == true)
                     {
-                        // Lost
-
-                        Debug.Log("PEPSI");
                         Base.Core.Game.ChangeScene(SceneNames.GameOver);
                     }
                     else
                     {
-                        //this.transform.Translate(-lastMove, Space.World);
-                        //this.FieldHandler.FieldState.Player.PositionX -= (Int32)lastMove.x;
-                        //this.FieldHandler.FieldState.Player.PositionZ -= (Int32)lastMove.z;
+                        this.Move(-lastMove);
 
                         Base.Core.Game.EffectsAudioManager.Play("Bonk");
                     }
@@ -165,7 +122,7 @@ namespace Assets.Scripts.Behaviours.Models
 
         public void OnCollisionEnter(Collision collision)
         {
-            
+
         }
     }
 }
