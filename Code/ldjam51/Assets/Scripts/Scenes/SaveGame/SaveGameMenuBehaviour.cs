@@ -64,6 +64,7 @@ public class SaveGameMenuBehaviour : BaseMenuBehaviour
         rect.anchorMax = new Vector2(rect.anchorMax.x, (float)(index + 1) * relative);
         rect.offsetMin = new Vector2(0, 0);
         rect.offsetMax = new Vector2(0, 0);
+
         modeSlot.SetActive(true);
         modeSlot.name = "SaveGameName " + gameState.SaveGameName;
 
