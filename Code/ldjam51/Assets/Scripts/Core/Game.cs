@@ -97,12 +97,12 @@ namespace Assets.Scripts.Core
             {
                 TemplateReference = targetTileTemplate.Reference,
                 PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
-                PositionY = UnityEngine.Random.Range(0, fieldState.RowCount)
+                PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount)
             };
 
             fieldState.Finish = finish;
 
-            fieldState.Tiles[finish.PositionX, finish.PositionY] = new Tile()
+            fieldState.Tiles[finish.PositionX, finish.PositionZ] = new Tile()
             {
                 Reference = "Tile",
                 IsFinish = true,
