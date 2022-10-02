@@ -20,33 +20,53 @@ namespace Assets.Scripts.Behaviours.Models
             {
                 if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
                 {
-                    this.lastMove = new Vector3(0, 0, StepSize);
-
-                    this.transform.Translate(lastMove, Space.World);
-                    this.FieldHandler.FieldState.Player.PositionZ += StepSize;
+                    MoveUp();
                 }
                 else if ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
                 {
-                    this.lastMove = new Vector3(-StepSize, 0, 0);
-
-                    this.transform.Translate(lastMove, Space.World);
-                    this.FieldHandler.FieldState.Player.PositionX -= StepSize;
+                    MoveLeft();
                 }
                 else if ((Input.GetKeyDown(KeyCode.S)) || (Input.GetKeyDown(KeyCode.DownArrow)))
                 {
-                    this.lastMove = new Vector3(0, 0, -StepSize);
-
-                    this.transform.Translate(lastMove, Space.World);
-                    this.FieldHandler.FieldState.Player.PositionZ -= StepSize;
+                    MoveDown();
                 }
                 else if ((Input.GetKeyDown(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
                 {
-                    this.lastMove = new Vector3(StepSize, 0, 0);
-
-                    this.transform.Translate(lastMove, Space.World);
-                    this.FieldHandler.FieldState.Player.PositionX += StepSize;
+                    MoveRight();
                 }
             }
+        }
+
+        public void MoveRight()
+        {
+            this.lastMove = new Vector3(StepSize, 0, 0);
+
+            this.transform.Translate(lastMove, Space.World);
+            this.FieldHandler.FieldState.Player.PositionX += StepSize;
+        }
+
+        public void MoveDown()
+        {
+            this.lastMove = new Vector3(0, 0, -StepSize);
+
+            this.transform.Translate(lastMove, Space.World);
+            this.FieldHandler.FieldState.Player.PositionZ -= StepSize;
+        }
+
+        public void MoveLeft()
+        {
+            this.lastMove = new Vector3(-StepSize, 0, 0);
+
+            this.transform.Translate(lastMove, Space.World);
+            this.FieldHandler.FieldState.Player.PositionX -= StepSize;
+        }
+
+        public void MoveUp()
+        {
+            this.lastMove = new Vector3(0, 0, StepSize);
+
+            this.transform.Translate(lastMove, Space.World);
+            this.FieldHandler.FieldState.Player.PositionZ += StepSize;
         }
 
         private void OnTriggerEnter(Collider other)

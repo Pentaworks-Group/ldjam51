@@ -201,6 +201,55 @@ namespace Assets.Scripts.Scenes.PlayField
             return b;
         }
 
+
+        public void MovePlayerRight()
+        {
+            if (this.leftField.FieldState.IsActive)
+            {
+                this.leftField.playerBehaviour.MoveRight();
+            }else 
+            {
+                this.rightField.playerBehaviour.MoveRight();
+            }
+        }
+
+        public void MovePlayerDown()
+        {
+            if (this.leftField.FieldState.IsActive)
+            {
+                this.leftField.playerBehaviour.MoveDown();
+            }
+            else
+            {
+                this.rightField.playerBehaviour.MoveDown();
+            }
+        }
+
+        public void MovePlayerLeft()
+        {
+            if (this.leftField.FieldState.IsActive)
+            {
+                this.leftField.playerBehaviour.MoveLeft();
+            }
+            else
+            {
+                this.rightField.playerBehaviour.MoveLeft();
+            }
+        }
+
+        public void MovePlayerUp()
+        {
+            if (this.leftField.FieldState.IsActive)
+            {
+                this.leftField.playerBehaviour.MoveUp();
+            }
+            else
+            {
+                this.rightField.playerBehaviour.MoveUp();
+            }
+        }
+
+
         public void AdjustCamera(float width, float height)
         {
             //var halfWit = (width / 2f);
