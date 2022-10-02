@@ -88,10 +88,9 @@ namespace Assets.Scripts.Behaviours.Models
                     FieldHandler.FieldState.Player.PositionZ += (Int32)movementVector.z;
                 }
 
-                var adjustedVector = movementVector * 2;
+                this.lastMove = movementVector;
 
-                this.lastMove = adjustedVector;
-                this.transform.Translate(adjustedVector, Space.World);
+                this.transform.Translate(movementVector * 2, Space.World);
             }
         }
 
@@ -107,9 +106,13 @@ namespace Assets.Scripts.Behaviours.Models
                     {
                         this.FieldHandler.FieldState.IsCompleted = true;
                         this.FieldHandler.SetActive(false);
+
+                        Base.Core.Game.EffectsAudioManager.Play("Awww");
                     }
                     else if (targetBehaviour.Tile.ExtraTemplate?.IsDeadly == true)
                     {
+                        Base.Core.Game.EffectsAudioManager.Play("Woohoo");
+
                         Base.Core.Game.ChangeScene(SceneNames.GameOver);
                     }
                     else

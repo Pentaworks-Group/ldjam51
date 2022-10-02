@@ -113,9 +113,11 @@ public class SaveGameContainerBehaviour : MonoBehaviour
         if (this.savedGames?.Count > 0)
         {
             int upperBound;
-            if (MaxSlosts + SlotIndex < this.savedGames.Count) {
+            if (MaxSlosts + SlotIndex < this.savedGames.Count)
+            {
                 upperBound = MaxSlosts + SlotIndex;
-            } else
+            }
+            else
             {
                 upperBound = this.savedGames.Count;
             }
