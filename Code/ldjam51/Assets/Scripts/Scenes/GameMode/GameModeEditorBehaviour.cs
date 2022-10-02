@@ -48,17 +48,26 @@ public class GameModeEditorBehaviour : MonoBehaviour
 
     }
 
+    public void CreateNewGameSettings()
+    {
+        GameModeSlotBehaviour slotToEdit = new GameModeSlotBehaviour();
+        slotToEdit.GameSettings = new GameSettings();
+        slotToEdit.index = -1;
+        OpenGameFieldSettings(slotToEdit);
+    }
+
 
     public void OpenGameFieldSettings(GameModeSlotBehaviour slotToEdit)
     {
         if (inputField == default)
         {
             inputField = transform.GetChild(0).GetComponent<TMPro.TMP_InputField>();
-            //GameObject go2 = transform.Find("InputField/TextArea/Text").gameObject;
-            //Debug.Log(go2);
-            //inputField = transform.Find("InputField/TextArea/Text").GetComponent<Text>();
         }
 
+        if (!GameModeMenuBehaviour.ownMode)
+        {
+            slotToEdit.index = -1;
+        }
 
         openSlot = slotToEdit;
         inputField.text = GameFrame.Core.Json.Handler.SerializePretty(slotToEdit.GameSettings);
@@ -68,15 +77,9 @@ public class GameModeEditorBehaviour : MonoBehaviour
     public void SaveSettings()
     {
         var gameSettings = GameFrame.Core.Json.Handler.Deserialize<GameSettings>(inputField.text);
-        if (GameModeMenuBehaviour.ownMode)
-        {
-            openSlot.GameSettings = gameSettings;
-            GameModeMenuBehaviour.SaveGameMode(default);
-        }
-        else
-        {
-            GameModeMenuBehaviour.SaveGameMode(gameSettings);
-        }
+        openSlot.GameSettings = gameSettings;
+
+        GameModeMenuBehaviour.SaveGameMode(openSlot);
     }
 
 }
