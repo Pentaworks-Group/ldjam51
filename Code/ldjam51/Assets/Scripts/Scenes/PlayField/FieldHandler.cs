@@ -52,15 +52,12 @@ namespace Assets.Scripts.Scenes.PlayField
 
                     var tileObject = Instantiate(template, tilesContainer.transform);
 
+                    tileObject.Tile = tile;
+
                     var xOffset = x * 2;
                     var zOffset = z * 2;
 
-                    if (tile.Reference == "Tile_Start")
-                    {
-
-                    }
-
-                    tileObject.transform.Translate(xOffset, 0 , zOffset, Space.World);
+                    tileObject.transform.Translate(xOffset, 0, zOffset, Space.World);
 
                     tileObject.gameObject.SetActive(true);
 

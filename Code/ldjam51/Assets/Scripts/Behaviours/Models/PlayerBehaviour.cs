@@ -47,6 +47,18 @@ namespace Assets.Scripts.Behaviours.Models
                 Debug.Log($"Bonk: {other.gameObject.name} - Player: {Player.PositionX};{Player.PositionZ}");
 
                 var targetBehaviour = other.GetComponent<ModelBehaviour>();
+
+                if (targetBehaviour.Tile != default)
+                {
+                    if (targetBehaviour.Tile.IsFinish)
+                    {
+                        // Won
+                    }
+                    else if (targetBehaviour.Tile.ExtraTemplate?.IsDeadly == true)
+                    {
+                        // Lost
+                    }
+                }
             }
         }
     }

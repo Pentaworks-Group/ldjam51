@@ -117,7 +117,6 @@ namespace Assets.Scripts.Scenes.PlayField
             rightField.SetActive(!rightField.FieldState.IsActive);
         }
 
-
         internal static Bounds GetBound(GameObject go)
         {
 
@@ -166,7 +165,9 @@ namespace Assets.Scripts.Scenes.PlayField
 
             float cameraDistance = .25f; // Constant factor
             Vector3 objectSizes = b.max - b.min;
+
             float objectSize = Mathf.Max(objectSizes.x, objectSizes.y, objectSizes.z);
+
             float cameraView = 2.0f * Mathf.Tan(0.5f * Mathf.Deg2Rad * sceneCamera.fieldOfView); // Visible height 1 meter in front
             float distance = cameraDistance * objectSize / cameraView; // Combined wanted distance from the object
             distance += 0.5f * objectSize; // Estimated offset from the center to the outside of the object

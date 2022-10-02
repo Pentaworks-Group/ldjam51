@@ -42,7 +42,8 @@
           "Reference": "Trees"
         },
         {
-          "Reference": "Trap"
+          "Reference": "Trap",
+          "IsDeadly": true
         }
       ]
     }

@@ -75,6 +75,7 @@ namespace Assets.Scripts.Core
             fieldState.Tiles[player.PositionX, player.PositionZ] = new Tile()
             {
                 Reference = "Tile_Start",
+                IsStart = true,
                 Material = GameFrame.Base.Resources.Manager.Materials.Get("Start")
             };
 
@@ -92,6 +93,7 @@ namespace Assets.Scripts.Core
             fieldState.Tiles[finish.PositionX, finish.PositionY] = new Tile()
             {
                 Reference = "Tile",
+                IsFinish = true,
                 ExtraTemplate = new Tile()
                 {
                     Reference = "Finish",
