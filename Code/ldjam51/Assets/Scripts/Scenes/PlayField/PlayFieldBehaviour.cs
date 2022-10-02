@@ -56,6 +56,7 @@ namespace Assets.Scripts.Scenes.PlayField
             FindField(transform.Find("LeftField")?.gameObject, ref leftField, gameState.Field1);
             FindField(transform.Find("RightField")?.gameObject, ref rightField, gameState.Field2);
 
+            //rightField.gameObject.transform.Translate(new Vector3(gameState.Field1.ColumnCount * 2 + 5, 0, 0), Space.World);
             rightField.gameObject.transform.position = new Vector3(gameState.Field1.ColumnCount * 2 + 5, 0, 0);
 
             var width = (gameState.Field1.ColumnCount + gameState.Field2.ColumnCount) * 2 + 5;
@@ -81,6 +82,7 @@ namespace Assets.Scripts.Scenes.PlayField
         {
             if (Time.timeScale > 0)
             {
+                gameState.ElapsedTime += Time.deltaTime;
                 gameState.TimeRemaining -= Time.deltaTime;
 
                 if (gameState.TimeRemaining < 0)
@@ -113,15 +115,32 @@ namespace Assets.Scripts.Scenes.PlayField
 
         private void ToggleFields()
         {
-            leftField.SetActive(!leftField.FieldState.IsActive);
-            rightField.SetActive(!rightField.FieldState.IsActive);
+            if (gameState.ElapsedTime > 20)
+            {
+                SetFieldActive(leftField);
+                SetFieldActive(rightField);
+            }
+            else if (gameState.ElapsedTime > 10)
+            {
+                leftField.SetActive(true);
+                rightField.SetActive(false);
+            }
         }
 
-        internal static Bounds GetBound(GameObject go)
+        private void SetFieldActive(FieldHandler field)
         {
+            if (!field.FieldState.IsCompleted)
+            {
+                field.SetActive(!field.FieldState.IsActive);
+            }
+        }
 
-            Bounds b = new Bounds(go.transform.position, Vector3.zero);
-            b = GetBoundRec(go.transform, b);
+        internal static Bounds GetBound(GameObject gameObject)
+        {
+            Bounds b = new Bounds(gameObject.transform.position, Vector3.zero);
+
+            b = GetBoundRec(gameObject.transform, b);
+
             return b;
         }
 
@@ -132,7 +151,9 @@ namespace Assets.Scripts.Scenes.PlayField
                 if (child.gameObject.activeSelf)
                 {
                     b = GetBoundRec(child, b);
+
                     Renderer r = child.GetComponent<MeshRenderer>();
+
                     if (r != default)
                     {
                         b.Encapsulate(r.bounds);
@@ -143,8 +164,8 @@ namespace Assets.Scripts.Scenes.PlayField
                         //Debug.Log("No render:", child);
                     }
                 }
-                
             }
+
             return b;
         }
 

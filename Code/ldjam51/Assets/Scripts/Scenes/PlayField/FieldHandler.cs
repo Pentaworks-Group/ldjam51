@@ -10,6 +10,7 @@ namespace Assets.Scripts.Scenes.PlayField
     public class FieldHandler : UnityEngine.MonoBehaviour
     {
         private System.Boolean isLoaded = false;
+        private GameObject plane;
         private GameObject tilesContainer;
         private PlayerBehaviour playerBehaviour;
 
@@ -28,6 +29,7 @@ namespace Assets.Scripts.Scenes.PlayField
             {
                 isLoaded = true;
 
+                this.plane = this.gameObject.transform.Find("Plane").gameObject;
                 this.LoadField();
             }
         }
@@ -35,9 +37,10 @@ namespace Assets.Scripts.Scenes.PlayField
         public void SetActive(Boolean isActive)
         {
             this.FieldState.IsActive = isActive;
-            this.playerBehaviour.Player.IsActive = isActive;
+            this.FieldState.Player.IsActive = isActive;
+            this.plane.SetActive(isActive);
         }
-
+         
         private void LoadField()
         {
             this.tilesContainer = this.gameObject.transform.Find("TilesContainer").gameObject;
@@ -105,11 +108,18 @@ namespace Assets.Scripts.Scenes.PlayField
 
                 var newPosition = new UnityEngine.Vector3(FieldState.Player.PositionX * 2, 0, FieldState.Player.PositionZ * 2);
 
-                this.playerBehaviour.Player = FieldState.Player;
+                this.playerBehaviour.FieldHandler = this;
 
                 this.playerBehaviour.transform.Translate(newPosition, UnityEngine.Space.World);
                 this.playerBehaviour.gameObject.SetActive(true);
             }
+
+            plane.SetActive(FieldState.IsPlaneVisible);
+            plane.transform.Translate(new Vector3(this.FieldState.ColumnCount -1 , 0, this.FieldState.RowCount - 1), Space.World);
+
+            //var scale = this.FieldState.RowCount * 0.7f;
+
+            //plane.transform.localScale = new Vector3(scale, scale, scale);
 
             PlayField.AdjustCamera(0, 0);
         }

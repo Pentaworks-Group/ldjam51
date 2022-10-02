@@ -12,58 +12,56 @@ namespace Assets.Scripts.Behaviours.Models
         private Vector3 lastMove;
 
         public const Int32 StepSize = 2;
-        public Player Player;
-        public FieldHandler PlayField;
+        public FieldHandler FieldHandler;
 
         void Update()
         {
-            if (this.Player?.IsActive == true)
+            if (this.FieldHandler?.FieldState?.IsActive == true)
             {
                 if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
                 {
                     this.lastMove = new Vector3(0, 0, StepSize);
 
                     this.transform.Translate(lastMove, Space.World);
-                    this.Player.PositionZ += StepSize;
+                    this.FieldHandler.FieldState.Player.PositionZ += StepSize;
                 }
                 else if ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
                 {
                     this.lastMove = new Vector3(-StepSize, 0, 0);
 
                     this.transform.Translate(lastMove, Space.World);
-                    this.Player.PositionX -= StepSize;
+                    this.FieldHandler.FieldState.Player.PositionX -= StepSize;
                 }
                 else if ((Input.GetKeyDown(KeyCode.S)) || (Input.GetKeyDown(KeyCode.DownArrow)))
                 {
                     this.lastMove = new Vector3(0, 0, -StepSize);
 
                     this.transform.Translate(lastMove, Space.World);
-                    this.Player.PositionZ -= StepSize;
+                    this.FieldHandler.FieldState.Player.PositionZ -= StepSize;
                 }
                 else if ((Input.GetKeyDown(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
                 {
                     this.lastMove = new Vector3(StepSize, 0, 0);
 
                     this.transform.Translate(lastMove, Space.World);
-                    this.Player.PositionX += StepSize;
+                    this.FieldHandler.FieldState.Player.PositionX += StepSize;
                 }
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (Player != default)
+            if (this.FieldHandler.FieldState.Player != default)
             {
-                Debug.Log($"Bonk: {other.gameObject.name} - Player: {Player.PositionX};{Player.PositionZ}");
-
                 var targetBehaviour = other.GetComponent<ModelBehaviour>();
 
                 if (targetBehaviour.Tile != default)
                 {
                     if (targetBehaviour.Tile.IsFinish)
                     {
-                        // Won
                         Debug.Log("Yay");
+                        this.FieldHandler.FieldState.IsCompleted = true;
+                        this.FieldHandler.SetActive(false);
                     }
                     else if (targetBehaviour.Tile.ExtraTemplate?.IsDeadly == true)
                     {
@@ -75,8 +73,8 @@ namespace Assets.Scripts.Behaviours.Models
                     else
                     {
                         this.transform.Translate(-lastMove, Space.World);
-                        this.Player.PositionX -= (Int32)lastMove.x;
-                        this.Player.PositionZ -= (Int32)lastMove.z;
+                        this.FieldHandler.FieldState.Player.PositionX -= (Int32)lastMove.x;
+                        this.FieldHandler.FieldState.Player.PositionZ -= (Int32)lastMove.z;
 
                         Base.Core.Game.EffectsAudioManager.Play("Bonk");
                     }
