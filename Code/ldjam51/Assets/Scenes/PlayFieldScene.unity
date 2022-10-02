@@ -170,10 +170,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenu
       objectReference: {fileID: 0}
-    - target: {fileID: 7304199204286171644, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 9199526047750111619, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -459,28 +455,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d792271998d1474b9a241fc3c5efc91, type: 3}
---- !u!1 &320020043 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7016828543276112029, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
-  m_PrefabInstance: {fileID: 137076258}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &320020048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 320020043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!1001 &338711523
 PrefabInstance:
   m_ObjectHideFlags: 0
