@@ -22,6 +22,7 @@ namespace Assets.Scripts.Scenes.PlayField
         private FieldHandler rightField;
         private TextMeshProUGUI elapsedTimeText;
         private TextMeshProUGUI remainingTimeText;
+        private TextMeshProUGUI levelsCompletedText;
         private float remainingTimeFontSize;
 
         public Camera sceneCamera;
@@ -40,7 +41,8 @@ namespace Assets.Scripts.Scenes.PlayField
 
             this.elapsedTimeText = transform.Find("Canvas/ElapsedConatiner/Text")?.GetComponent<TextMeshProUGUI>();
             this.remainingTimeText = transform.Find("Canvas/RemainingContainer/Text")?.GetComponent<TextMeshProUGUI>();
-            remainingTimeFontSize = remainingTimeText.fontSize;
+            this.levelsCompletedText = transform.Find("Canvas/LevelsCompletedText/Text")?.GetComponent<TextMeshProUGUI>();
+            this.remainingTimeFontSize = remainingTimeText.fontSize;
             var templateConatiner = transform.Find("Templates");
 
             if (templateConatiner != default)
@@ -67,8 +69,52 @@ namespace Assets.Scripts.Scenes.PlayField
             FindField(transform.Find("RightField")?.gameObject, ref rightField, gameState.Field2);
 
             rightField.gameObject.transform.position = new Vector3(gameState.Field1.ColumnCount * 2 + 5, 0, 0);
-
+            if (this.levelsCompletedText != default)
+            {
+                this.levelsCompletedText.text = gameState.LevelsCompleted.ToString();
+            }
             AdjustCamera();
+        }
+
+        private void Update()
+        {
+            if (Time.timeScale > 0)
+            {
+                gameState.ElapsedTime += Time.deltaTime;
+                gameState.TimeRemaining -= Time.deltaTime;
+
+                if (gameState.TimeRemaining < 0)
+                {
+                    gameState.TimeRemaining = 10;
+
+                    ToggleFields();
+                }
+
+                if (gameState.Field1.IsCompleted && gameState.Field2.IsCompleted)
+                {
+                    gameState.LevelsCompleted += 1;
+                    if (this.levelsCompletedText != default)
+                    {
+                        this.levelsCompletedText.text = gameState.LevelsCompleted.ToString();
+                    }
+                    LoadNewFields();
+
+
+                }
+
+                UpdateElapsed();
+                UpdateRemaining();
+            }
+        }
+
+        private void LoadNewFields()
+        {
+            gameState.Field1 = Base.Core.Game.GenerateField(false);
+            //leftField.LoadNewField(gameState.Field1);
+            gameState.Field2 = Base.Core.Game.GenerateField(true);
+            //rightField.LoadNewField(gameState.Field2);
+            gameState.TimeRemaining = gameState.Mode.Interval;
+            Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.PlayFieldScene);
         }
 
         public T GetTemplateByName<T>(String templateName) where T : ModelBehaviour
@@ -119,29 +165,7 @@ namespace Assets.Scripts.Scenes.PlayField
             sceneCamera.transform.position = b.center - distance * sceneCamera.transform.forward;
         }
 
-        private void Update()
-        {
-            if (Time.timeScale > 0)
-            {
-                gameState.ElapsedTime += Time.deltaTime;
-                gameState.TimeRemaining -= Time.deltaTime;
 
-                if (gameState.TimeRemaining < 0)
-                {
-                    gameState.TimeRemaining = 10;
-
-                    ToggleFields();
-                }
-
-                if (gameState.Field1.IsCompleted && gameState.Field2.IsCompleted)
-                {
-                    gameState.LevelsCompleted += 1;
-                }
-
-                UpdateElapsed();
-                UpdateRemaining();
-            }
-        }
 
         private void UpdateElapsed()
         {
@@ -169,7 +193,7 @@ namespace Assets.Scripts.Scenes.PlayField
                 if (fieldHandler != default)
                 {
                     fieldHandler.PlayField = this;
-                    fieldHandler.FieldState = fieldState;
+                    fieldHandler.LoadNewField(fieldState);
                     fieldHandlerValue = fieldHandler;
 
                     return true;

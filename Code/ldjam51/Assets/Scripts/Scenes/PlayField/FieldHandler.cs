@@ -20,18 +20,15 @@ namespace Assets.Scripts.Scenes.PlayField
         void Start()
         {
 
+            this.plane = this.gameObject.transform.Find("Plane").gameObject;
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            if ((!isLoaded) && (this.FieldState != default))
-            {
-                isLoaded = true;
+       
 
-                this.plane = this.gameObject.transform.Find("Plane").gameObject;
-                this.LoadField();
-            }
+        public void LoadNewField(FieldState fieldState)
+        {
+            this.FieldState = fieldState;
+            this.LoadField();
         }
 
         public void SetActive(Boolean isActive)
@@ -139,6 +136,10 @@ namespace Assets.Scripts.Scenes.PlayField
                 this.playerBehaviour.gameObject.SetActive(true);
             }
 
+            if (plane == default)
+            {
+                this.plane = this.gameObject.transform.Find("Plane").gameObject;
+            }
             plane.SetActive(FieldState.IsPlaneVisible);
             plane.transform.Translate(new Vector3(this.FieldState.ColumnCount - 1, 0, this.FieldState.RowCount - 1), Space.World);
 

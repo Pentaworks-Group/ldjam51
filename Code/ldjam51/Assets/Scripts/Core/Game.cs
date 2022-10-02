@@ -42,7 +42,7 @@ namespace Assets.Scripts.Core
             };
         }
 
-        private FieldState GenerateField(Boolean isPlaneVisible)
+        public FieldState GenerateField(Boolean isPlaneVisible)
         {
             var fieldState = default(FieldState);
 
