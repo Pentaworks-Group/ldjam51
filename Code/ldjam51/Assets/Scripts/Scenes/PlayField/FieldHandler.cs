@@ -106,6 +106,8 @@ namespace Assets.Scripts.Scenes.PlayField
                 this.playerBehaviour.transform.Translate(newPosition, UnityEngine.Space.World);
                 this.playerBehaviour.gameObject.SetActive(true);
             }
+
+            PlayField.AdjustCamera(0, 0);
         }
     }
 }

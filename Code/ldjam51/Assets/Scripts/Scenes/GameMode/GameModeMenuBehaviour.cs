@@ -38,15 +38,15 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
 
     void Start()
     {
-        LoadGameModes(GameHandler.AvailableGameModes);
+        LoadGameModes(GameHandler.AvailableGameModes, false);
     }
 
-    private void LoadGameModes(List<GameSettings> modes)
+    private void LoadGameModes(List<GameSettings> modes, bool rotateSlots)
     {
         ClearSlots();
         for (int i = 0; i < modes.Count; i++)
         {
-            CreateAndFillSlot(i, modes[i]);
+            CreateAndFillSlot(i, modes[i], rotateSlots);
         }
     }
 
@@ -60,7 +60,7 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
         }
     }
 
-    private void CreateAndFillSlot(int index, GameSettings gameSettings)
+    private void CreateAndFillSlot(int index, GameSettings gameSettings, bool rotateSlot)
     {
 
         GameObject modeSlot = Instantiate(GameModeSlotTemplate, new Vector3(0, 0, 0), Quaternion.identity, GameModeSlotTemplate.transform.parent);
@@ -69,6 +69,10 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
         rect.anchoredPosition3D = new Vector3(0, 0, 0);
         rect.anchorMin = new Vector2(rect.anchorMin.x, (float)index * relative);
         rect.anchorMax = new Vector2(rect.anchorMax.x, (float)(index + 1) * relative);
+        if (rotateSlot && Screen.width < Screen.height)
+        {
+            rect.rotation = new Quaternion(0, 0, 1, 1f);
+        }
         rect.offsetMin = new Vector2(0, 0);
         rect.offsetMax = new Vector2(0, 0);
         modeSlot.SetActive(true);
@@ -87,7 +91,7 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
         GameSettings gameFieldSettings = new GameSettings();
         List<GameSettings> ownModes = getModesFromSlots();
         ownModes.Add(gameFieldSettings);
-        LoadGameModes(ownModes);
+        LoadGameModes(ownModes, true);
 
     }
 
@@ -114,7 +118,7 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
         OwnModesButton.GetComponent<Image>().color = notSelectedColor;
         ownMode = false;
         CreateNewModeButton.SetActive(false);
-        LoadGameModes(GameHandler.AvailableGameModes);
+        LoadGameModes(GameHandler.AvailableGameModes, true);
     }
 
     private List<GameSettings> GetGameSettingsFromPlayerPref()
@@ -139,7 +143,7 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
         ownMode = true;
         CreateNewModeButton.SetActive(true);
         var ownModes = GetGameSettingsFromPlayerPref();
-        LoadGameModes(ownModes);
+        LoadGameModes(ownModes, true);
     }
 
     private List<GameSettings> getModesFromSlots()

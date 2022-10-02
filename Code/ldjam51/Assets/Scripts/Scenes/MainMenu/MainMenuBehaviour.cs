@@ -53,6 +53,7 @@ public class MainMenuBehaviour : MonoBehaviour
         Core.Game.PlayButtonSound();
         Assets.Scripts.Base.Core.Game.SaveOptions();
         Application.Quit();
+        Screen.fullScreen = false;
     }
 
 
@@ -61,7 +62,7 @@ public class MainMenuBehaviour : MonoBehaviour
     {
         StartAudioManagers();
         LoadGameSettings();
-        HideIfWGL();
+        //HideIfWGL();
     }
 
     private void HideIfWGL()

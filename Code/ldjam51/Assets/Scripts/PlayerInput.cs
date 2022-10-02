@@ -16,19 +16,37 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var horizontal = Input.GetAxis("Horizontal") * Speed;
-        var vertical = Input.GetAxis("Vertical") * Speed;
+        //var horizontal = Input.GetAxis("Horizontal") * Speed;
+        //var vertical = Input.GetAxis("Vertical") * Speed;
 
-        horizontal *= Time.deltaTime;
-        vertical *= Time.deltaTime;
+
+        var horizontal = default(Single);
+        if (Input.GetKey(KeyCode.K))
+        {
+            horizontal = (Speed * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.H))
+        {
+            horizontal = -(Speed * Time.deltaTime);
+        }
+
+        var vertical = default(Single);
+        if (Input.GetKey(KeyCode.U))
+        {
+            vertical = (Speed * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.J))
+        {
+            vertical = -(Speed * Time.deltaTime);
+        }
 
         var yOffset = default(Single);
 
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Y))
         {
             yOffset = (Speed * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.E))
+        else if (Input.GetKey(KeyCode.I))
         {
             yOffset = -(Speed * Time.deltaTime);
         }
