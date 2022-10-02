@@ -73,7 +73,11 @@ public class SaveGameContainerBehaviour : MonoBehaviour
     public void OverrideSave(SaveGameSlotBehaviour saveGameSlotBehaviour)
     {
         int index = saveGameSlotBehaviour.index;
-        this.savedGames[index] = Assets.Scripts.Base.Core.Game.State; 
+
+        Core.Game.State.SavedOn = DateTime.Now;
+
+        this.savedGames[index] = Assets.Scripts.Base.Core.Game.State;
+
         SaveGames();
         UpdateSlots();
     }
@@ -106,9 +110,11 @@ public class SaveGameContainerBehaviour : MonoBehaviour
         if (this.savedGames?.Count > 0)
         {
             int upperBound;
-            if (MaxSlosts + SlotIndex < this.savedGames.Count) {
+            if (MaxSlosts + SlotIndex < this.savedGames.Count)
+            {
                 upperBound = MaxSlosts + SlotIndex;
-            } else
+            }
+            else
             {
                 upperBound = this.savedGames.Count;
             }

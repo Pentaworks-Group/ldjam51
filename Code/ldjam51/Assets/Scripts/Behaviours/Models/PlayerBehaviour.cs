@@ -88,10 +88,9 @@ namespace Assets.Scripts.Behaviours.Models
                     FieldHandler.FieldState.Player.PositionZ += (Int32)movementVector.z;
                 }
 
-                var adjustedVector = movementVector * 2;
+                this.lastMove = movementVector;
 
-                this.lastMove = adjustedVector;
-                this.transform.Translate(adjustedVector, Space.World);
+                this.transform.Translate(movementVector * 2, Space.World);
             }
         }
 
