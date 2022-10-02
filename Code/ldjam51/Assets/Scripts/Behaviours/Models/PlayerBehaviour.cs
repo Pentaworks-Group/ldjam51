@@ -10,7 +10,7 @@ namespace Assets.Scripts.Behaviours.Models
     {
         public const float PlayerSpeed = 5;
 
-        private Vector3 lastMove;
+        private Vector3 lastMove = Vector3.zero;
 
         public const Int32 StepSize = 2;
         public FieldHandler FieldHandler;
@@ -59,12 +59,11 @@ namespace Assets.Scripts.Behaviours.Models
         public void MoveRight()
         {
             this.Move(new Vector3(StepSize, 0, 0));
-            FieldHandler.FieldState.Player.PositionX += StepSize;
         }
-                
+
         public void MoveDown()
         {
-            this.Move(new Vector3(StepSize, 0, 0));
+            this.Move(new Vector3(0, 0, -StepSize));
         }
 
         public void MoveLeft()
