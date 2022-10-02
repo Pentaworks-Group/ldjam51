@@ -223,7 +223,14 @@ namespace Assets.Scripts.Scenes.PlayField
         {
             if (!field.FieldState.IsCompleted)
             {
-                field.SetActive(!field.FieldState.IsActive);
+                var newIsActive = !field.FieldState.IsActive;
+
+                field.SetActive(newIsActive);
+
+                if (newIsActive)
+                {
+                    this.activeField = field;
+                }
             }
         }
 

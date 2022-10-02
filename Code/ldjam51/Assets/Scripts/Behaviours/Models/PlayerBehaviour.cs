@@ -8,51 +8,47 @@ namespace Assets.Scripts.Behaviours.Models
 {
     public class PlayerBehaviour : ModelBehaviour
     {
-        public const float PlayerSpeed = 5;
+        public const Int32 StepSize = 2;
 
         private Vector3 lastMove = Vector3.zero;
-
-        public const Int32 StepSize = 2;
+        
         public FieldHandler FieldHandler;
 
         void Update()
         {
-            if (this.FieldHandler?.FieldState?.Player?.IsActive == true)
+            var moveRequired = false;
+
+            var x = 0f;
+            var z = 0f;
+
+            if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
             {
-                var moveRequired = false;
+                moveRequired = true;
 
-                var x = 0f;
-                var z = 0f;
+                z += StepSize;
+            }
+            else if ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
+            {
+                moveRequired = true;
 
-                if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
-                {
-                    moveRequired = true;
+                x -= StepSize;
+            }
+            else if ((Input.GetKeyDown(KeyCode.S)) || (Input.GetKeyDown(KeyCode.DownArrow)))
+            {
+                moveRequired = true;
 
-                    z += StepSize;
-                }
-                else if ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
-                {
-                    moveRequired = true;
+                z -= StepSize;
+            }
+            else if ((Input.GetKeyDown(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
+            {
+                moveRequired = true;
 
-                    x -= StepSize;
-                }
-                else if ((Input.GetKeyDown(KeyCode.S)) || (Input.GetKeyDown(KeyCode.DownArrow)))
-                {
-                    moveRequired = true;
+                x += StepSize;
+            }
 
-                    z -= StepSize;
-                }
-                else if ((Input.GetKeyDown(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
-                {
-                    moveRequired = true;
-
-                    x += StepSize;
-                }
-
-                if (moveRequired)
-                {
-                    this.Move(new Vector3(x, 0, z));
-                }
+            if (moveRequired)
+            {
+                this.Move(new Vector3(x, 0, z));
             }
         }
 
@@ -78,18 +74,23 @@ namespace Assets.Scripts.Behaviours.Models
 
         private void Move(Vector3 movementVector)
         {
-            if (movementVector.x != 0)
-            {
-                FieldHandler.FieldState.Player.PositionX += (Int32)movementVector.x;
-            }
+            var player = FieldHandler?.FieldState?.Player;
 
-            if (movementVector.z != 0)
+            if (player?.IsActive == true)
             {
-                FieldHandler.FieldState.Player.PositionZ += (Int32)movementVector.z;
-            }
+                if (movementVector.x != 0)
+                {
+                    FieldHandler.FieldState.Player.PositionX += (Int32)movementVector.x;
+                }
 
-            this.lastMove = movementVector;
-            this.transform.Translate(movementVector, Space.World);
+                if (movementVector.z != 0)
+                {
+                    FieldHandler.FieldState.Player.PositionZ += (Int32)movementVector.z;
+                }
+
+                this.lastMove = movementVector;
+                this.transform.Translate(movementVector, Space.World);
+            }
         }
 
         private void OnTriggerEnter(Collider other)
@@ -111,7 +112,7 @@ namespace Assets.Scripts.Behaviours.Models
                     }
                     else
                     {
-                        this.Move(-lastMove);
+                        this.Move(-this.lastMove);
 
                         Base.Core.Game.EffectsAudioManager.Play("Bonk");
                     }
