@@ -148,6 +148,7 @@ namespace Assets.Scripts.Scenes.PlayField
         private void AddFence(TileModelBehaviour tileObject, ExtraModelBehaviour fenceTemplate, Int32 rotationAngle)
         {
             var fenceObject = Instantiate(fenceTemplate, tileObject.transform);
+            fenceObject.Tile = tileObject.Tile;
 
             if (rotationAngle != 0)
             {
