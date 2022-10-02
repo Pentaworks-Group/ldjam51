@@ -13,13 +13,13 @@ namespace Assets.Scripts.Extensions
             {
                 var tile = new Tile()
                 {
-                    TemplateReference = tileType.TemplateReference,
+                    Reference = tileType.Reference,
                     Material = GameFrame.Base.Resources.Manager.Materials.Get(tileType.Materials.GetRandomEntry())
                 };
 
-                if (tileType.ExtraTemplateReference?.Count > 0)
+                if (tileType.ExtraTemplates?.Count > 0)
                 {
-                    tile.ExtraTemplateReference = tileType.ExtraTemplateReference.GetRandomEntry((s) => { return UnityEngine.Random.value > 0.95; });
+                    tile.ExtraTemplate = tileType.ExtraTemplates.GetRandomEntry((t) => { return UnityEngine.Random.value > 0.95; })?.ToTile();
                 }
 
                 return tile;

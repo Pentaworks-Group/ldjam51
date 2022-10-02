@@ -29,7 +29,7 @@ namespace Assets.Scripts.Scenes.PlayField
                 isLoaded = true;
 
                 this.LoadField();
-            }            
+            }
         }
 
         public void SetActive(Boolean isActive)
@@ -46,16 +46,23 @@ namespace Assets.Scripts.Scenes.PlayField
             {
                 for (int x = 0; x < this.FieldState.ColumnCount; x++)
                 {
-                    var tile = FieldState.Tiles[z, x];
+                    var tile = FieldState.Tiles[x, z];
 
-                    var tileObject = Instantiate(PlayField.GetTemplateByName<TileModelBehaviour>(tile.TemplateReference), tilesContainer.transform);
+                    var template = PlayField.GetTemplateByName<TileModelBehaviour>(tile.Reference);
+
+                    var tileObject = Instantiate(template, tilesContainer.transform);
 
                     var xOffset = x * 2;
                     var zOffset = z * 2;
 
-                    tileObject.gameObject.SetActive(true);
+                    if (tile.Reference == "Tile_Start")
+                    {
 
-                    tileObject.transform.Translate(xOffset, 0, zOffset, UnityEngine.Space.World);
+                    }
+
+                    tileObject.transform.Translate(xOffset, 0 , zOffset, Space.World);
+
+                    tileObject.gameObject.SetActive(true);
 
                     if (tile.Material != default)
                     {
@@ -67,13 +74,12 @@ namespace Assets.Scripts.Scenes.PlayField
                         }
                     }
 
-                    if (!System.String.IsNullOrEmpty(tile.ExtraTemplateReference))
+                    if (tile.ExtraTemplate != default)
                     {
-                        var extraTemplate = PlayField.GetTemplateByName<ExtraModelBehaviour>(tile.ExtraTemplateReference);
+                        var extraTemplate = PlayField.GetTemplateByName<ExtraModelBehaviour>(tile.ExtraTemplate.Reference);
 
                         if (extraTemplate != default)
                         {
-                            //var extraObject = Instantiate(extraTemplate.gameObject, fieldsContainer.transform);
                             var extraObject = Instantiate(extraTemplate.gameObject, tileObject.transform);
 
                             if (extraTemplate.IsRotatable)
@@ -86,7 +92,6 @@ namespace Assets.Scripts.Scenes.PlayField
                                 }
                             }
 
-                            //extraObject.transform.Translate(xOffset, 0, zOffset, Space.World);
                             extraObject.SetActive(true);
                         }
                     }
@@ -99,10 +104,10 @@ namespace Assets.Scripts.Scenes.PlayField
             {
                 this.playerBehaviour = Instantiate(playerTemplate, this.gameObject.transform);
 
-                var newPosition = new UnityEngine.Vector3(FieldState.Player.PositionX, 0, FieldState.Player.PositionY);
+                var newPosition = new UnityEngine.Vector3(FieldState.Player.PositionX * 2, 0, FieldState.Player.PositionZ * 2);
 
                 this.playerBehaviour.Player = FieldState.Player;
-                
+
                 this.playerBehaviour.transform.Translate(newPosition, UnityEngine.Space.World);
                 this.playerBehaviour.gameObject.SetActive(true);
             }

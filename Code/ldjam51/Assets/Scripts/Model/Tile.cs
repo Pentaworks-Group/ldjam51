@@ -10,8 +10,8 @@ namespace Assets.Scripts.Game
 {
     public class Tile
     {
-        public String TemplateReference { get; set; }
-        public String ExtraTemplateReference { get; set; }
+        public String Reference { get; set; }
+        public Tile ExtraTemplate { get; set; }
         public Material Material { get; set; }
     }
 }

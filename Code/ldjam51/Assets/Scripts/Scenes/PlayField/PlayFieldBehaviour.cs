@@ -41,6 +41,9 @@ namespace Assets.Scripts.Scenes.PlayField
                 {
                     foreach (var modelTemplate in modelTemplates)
                     {
+                        modelTemplate.gameObject.transform.position = Vector3.zero;
+                        modelTemplate.gameObject.transform.localPosition = Vector3.zero;
+
                         this.templatesCache[modelTemplate.name] = modelTemplate;
                     }
                 }
@@ -111,7 +114,7 @@ namespace Assets.Scripts.Scenes.PlayField
         private void ToggleFields()
         {
             leftField.SetActive(!leftField.FieldState.IsActive);
-            rightField.SetActive(!rightField.FieldState.IsActive);            
+            rightField.SetActive(!rightField.FieldState.IsActive);
         }
 
         private void AdjustCamera(float width, float height)
@@ -119,7 +122,6 @@ namespace Assets.Scripts.Scenes.PlayField
             var halfWit = (width / 2f);
 
             sceneCamera.transform.position = new Vector3(halfWit, halfWit * 1.25f, -(halfWit / 6f));
-
 
             //var halfWit = (width / 2f);
 

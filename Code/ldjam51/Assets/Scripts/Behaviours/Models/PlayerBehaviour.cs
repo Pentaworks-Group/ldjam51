@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Assets.Scripts.Model;
+using Assets.Scripts.Scenes.PlayField;
 
 using UnityEngine;
 
@@ -10,6 +11,7 @@ namespace Assets.Scripts.Behaviours.Models
     {
         public const Int32 StepSize = 2;
         public Player Player;
+        public FieldHandler PlayField;
 
         void Update()
         {
@@ -18,7 +20,7 @@ namespace Assets.Scripts.Behaviours.Models
                 if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
                 {
                     this.transform.Translate(0, 0, StepSize, Space.World);
-                    this.Player.PositionY += StepSize;
+                    this.Player.PositionZ += StepSize;
                 }
                 else if ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
                 {
@@ -28,13 +30,23 @@ namespace Assets.Scripts.Behaviours.Models
                 else if ((Input.GetKeyDown(KeyCode.S)) || (Input.GetKeyDown(KeyCode.DownArrow)))
                 {
                     this.transform.Translate(0, 0, -StepSize, Space.World);
-                    this.Player.PositionY -= StepSize;
+                    this.Player.PositionZ -= StepSize;
                 }
                 else if ((Input.GetKeyDown(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
                 {
                     this.transform.Translate(StepSize, 0, 0, Space.World);
                     this.Player.PositionX += StepSize;
                 }
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (Player != default)
+            {
+                Debug.Log($"Bonk: {other.gameObject.name} - Player: {Player.PositionX};{Player.PositionZ}");
+
+                var targetBehaviour = other.GetComponent<ModelBehaviour>();
             }
         }
     }
