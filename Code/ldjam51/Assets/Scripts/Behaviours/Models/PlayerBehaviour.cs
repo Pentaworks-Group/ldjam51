@@ -9,6 +9,8 @@ namespace Assets.Scripts.Behaviours.Models
 {
     public class PlayerBehaviour : ModelBehaviour
     {
+        private Vector3 lastMove;
+
         public const Int32 StepSize = 2;
         public Player Player;
         public FieldHandler PlayField;
@@ -19,22 +21,30 @@ namespace Assets.Scripts.Behaviours.Models
             {
                 if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
                 {
-                    this.transform.Translate(0, 0, StepSize, Space.World);
+                    this.lastMove = new Vector3(0, 0, StepSize);
+
+                    this.transform.Translate(lastMove, Space.World);
                     this.Player.PositionZ += StepSize;
                 }
                 else if ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
                 {
-                    this.transform.Translate(-StepSize, 0, 0, Space.World);
+                    this.lastMove = new Vector3(-StepSize, 0, 0);
+
+                    this.transform.Translate(lastMove, Space.World);
                     this.Player.PositionX -= StepSize;
                 }
                 else if ((Input.GetKeyDown(KeyCode.S)) || (Input.GetKeyDown(KeyCode.DownArrow)))
                 {
-                    this.transform.Translate(0, 0, -StepSize, Space.World);
+                    this.lastMove = new Vector3(0, 0, -StepSize);
+
+                    this.transform.Translate(lastMove, Space.World);
                     this.Player.PositionZ -= StepSize;
                 }
                 else if ((Input.GetKeyDown(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
                 {
-                    this.transform.Translate(StepSize, 0, 0, Space.World);
+                    this.lastMove = new Vector3(StepSize, 0, 0);
+
+                    this.transform.Translate(lastMove, Space.World);
                     this.Player.PositionX += StepSize;
                 }
             }
@@ -53,10 +63,20 @@ namespace Assets.Scripts.Behaviours.Models
                     if (targetBehaviour.Tile.IsFinish)
                     {
                         // Won
+                        Debug.Log("Yay");
                     }
                     else if (targetBehaviour.Tile.ExtraTemplate?.IsDeadly == true)
                     {
                         // Lost
+
+                        Debug.Log("PEPSI");
+                        Base.Core.Game.ChangeScene(SceneNames.GameOver);
+                    }
+                    else
+                    {
+                        this.transform.Translate(-lastMove, Space.World);
+                        this.Player.PositionX -= (Int32)lastMove.x;
+                        this.Player.PositionZ -= (Int32)lastMove.z;
                     }
                 }
             }
