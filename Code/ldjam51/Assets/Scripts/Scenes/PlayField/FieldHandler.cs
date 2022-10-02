@@ -50,6 +50,7 @@ namespace Assets.Scripts.Scenes.PlayField
                 for (int x = 0; x < this.FieldState.ColumnCount; x++)
                 {
                     var tile = FieldState.Tiles[x, z];
+                    tile.FieldState = FieldState;
 
                     var template = PlayField.GetTemplateByName<TileModelBehaviour>(tile.Reference);
 

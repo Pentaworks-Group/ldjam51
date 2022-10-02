@@ -14,7 +14,7 @@ namespace Assets.Scripts.Game
         public Boolean IsDeadly { get; set; }
         public Tile ExtraTemplate { get; set; }
         public String MaterialReference { get; set; }
-
+        
         private Material material;
         [JsonIgnore]
         public Material Material
@@ -37,5 +37,8 @@ namespace Assets.Scripts.Game
                 }
             }
         }
+        
+        [JsonIgnore]
+        public FieldState FieldState { get; set; }
     }
 }

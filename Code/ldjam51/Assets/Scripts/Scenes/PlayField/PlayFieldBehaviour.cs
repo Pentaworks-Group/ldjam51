@@ -5,7 +5,10 @@ using Assets.Scripts.Behaviours.Models;
 using Assets.Scripts.Core;
 using Assets.Scripts.Game;
 
+using TMPro;
+
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Scenes.PlayField
 {
@@ -13,9 +16,11 @@ namespace Assets.Scripts.Scenes.PlayField
     {
         private readonly Dictionary<String, ModelBehaviour> templatesCache = new Dictionary<String, ModelBehaviour>();
 
+        private GameState gameState;
         private FieldHandler leftField;
         private FieldHandler rightField;
-        private GameState gameState;
+        private TextMeshProUGUI elapsedTimeText;
+        private TextMeshProUGUI remainingTimeText;
 
         public Camera sceneCamera;
 
@@ -30,6 +35,9 @@ namespace Assets.Scripts.Scenes.PlayField
         private void Start()
         {
             this.gameState = Base.Core.Game.State;
+
+            this.elapsedTimeText = transform.Find("Canvas/ElapsedConatiner/Text")?.GetComponent<TextMeshProUGUI>();
+            this.remainingTimeText = transform.Find("Canvas/RemainingContainer/Text")?.GetComponent<TextMeshProUGUI>();
 
             var templateConatiner = transform.Find("Templates");
 
@@ -91,6 +99,30 @@ namespace Assets.Scripts.Scenes.PlayField
 
                     ToggleFields();
                 }
+
+                if (gameState.Field1.IsCompleted && gameState.Field2.IsCompleted)
+                {
+                    gameState.LevelsCompleted += 1;
+                }
+
+                UpdateElapsed();
+                UpdateRemaining();
+            }
+        }
+
+        private void UpdateElapsed()
+        {
+            if (this.elapsedTimeText != default)
+            {
+                this.elapsedTimeText.text = gameState.ElapsedTime.ToString("###0.0s");
+            }
+        }
+
+        private void UpdateRemaining()
+        {
+            if (this.remainingTimeText != default)
+            {
+                this.remainingTimeText.text = gameState.TimeRemaining.ToString("#0.0");
             }
         }
 
