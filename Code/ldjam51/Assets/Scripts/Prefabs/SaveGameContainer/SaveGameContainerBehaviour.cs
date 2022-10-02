@@ -28,12 +28,18 @@ public class SaveGameContainerBehaviour : MonoBehaviour
 
     void Start()
     {
-        UpdateSlostsFromPrevab();
-        CheckMoveButtonVisibillity();
+        ReloadSaveGames();
         if (Core.Game.State == default)
         {
             SaveButton.SetActive(false);
         }
+    }
+
+    public void ReloadSaveGames()
+    {
+        UpdateSlostsFromPrevab();
+        CheckMoveButtonVisibillity();
+
     }
 
     private void CheckMoveButtonVisibillity()
@@ -73,6 +79,7 @@ public class SaveGameContainerBehaviour : MonoBehaviour
     public void OverrideSave(SaveGameSlotBehaviour saveGameSlotBehaviour)
     {
         int index = saveGameSlotBehaviour.index;
+        Assets.Scripts.Base.Core.Game.State.SavedOn = DateTime.Now;
         this.savedGames[index] = Assets.Scripts.Base.Core.Game.State; 
         SaveGames();
         UpdateSlots();
@@ -163,6 +170,7 @@ public class SaveGameContainerBehaviour : MonoBehaviour
 
     public void SaveNewGame()
     {
+        Assets.Scripts.Base.Core.Game.State.SavedOn = DateTime.Now;
         this.savedGames.Add(Assets.Scripts.Base.Core.Game.State);
         SaveGames();
     }
