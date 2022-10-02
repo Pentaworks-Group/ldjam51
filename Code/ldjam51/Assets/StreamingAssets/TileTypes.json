@@ -1,39 +1,49 @@
 {
   "Player": [
     {
-      "TemplateReference": "PlayerTemplate",
+      "Reference": "PlayerTemplate",
       "Materials": [
         "Leather"
       ],
-      "ExtraTemplateReference": []
+      "ExtraTemplates": []
     },
     {
-      "TemplateReference": "PlayerTemplate2",
+      "Reference": "PlayerTemplate2",
       "Materials": [
         "Metal"
       ],
-      "ExtraTemplateReference": []
+      "ExtraTemplates": []
     }
   ],
   "Finish": [
     {
-      "TemplateReference": "Tile_Finish",
+      "Reference": "Tile",
       "Materials": [
         "FinishLine"
       ],
-      "ExtraTemplateReference": [ ]
+      "ExtraTemplates": [
+        {
+          "Reference": "Target"
+        }
+      ]
     }
   ],
   "Tiles": [
     {
-      "TemplateReference": "Tile",
+      "Reference": "Tile",
       "Materials": [
         "Grass"
       ],
-      "ExtraTemplateReference": [
-        "Stone",
-        "Trees",
-        "Trap"
+      "ExtraTemplates": [
+        {
+          "Reference": "Stone"
+        },
+        {
+          "Reference": "Trees"
+        },
+        {
+          "Reference": "Trap"
+        }
       ]
     }
   ]

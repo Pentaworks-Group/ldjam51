@@ -65,16 +65,16 @@ namespace Assets.Scripts.Core
             var player = new Player()
             {
                 IsActive = fieldState.IsActive,
-                TemplateReference = playerTile.TemplateReference,
+                TemplateReference = playerTile.Reference,
                 PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
-                PositionY = UnityEngine.Random.Range(0, fieldState.RowCount)
+                PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount)
             };
 
             fieldState.Player = player;
 
-            fieldState.Tiles[player.PositionX, player.PositionY] = new Tile()
+            fieldState.Tiles[player.PositionX, player.PositionZ] = new Tile()
             {
-                TemplateReference = "StartTile",
+                Reference = "Tile_Start",
                 Material = GameFrame.Base.Resources.Manager.Materials.Get("Start")
             };
 
@@ -82,7 +82,7 @@ namespace Assets.Scripts.Core
 
             var finish = new Finish()
             {
-                TemplateReference = targetTileTemplate.TemplateReference,
+                TemplateReference = targetTileTemplate.Reference,
                 PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
                 PositionY = UnityEngine.Random.Range(0, fieldState.RowCount)
             };
@@ -91,7 +91,12 @@ namespace Assets.Scripts.Core
 
             fieldState.Tiles[finish.PositionX, finish.PositionY] = new Tile()
             {
-                TemplateReference = "Tile_Finish",
+                Reference = "Tile",
+                ExtraTemplate = new Tile()
+                {
+                    Reference = "Finish",
+                    Material = GameFrame.Base.Resources.Manager.Materials.Get("Finish")
+                },
                 Material = GameFrame.Base.Resources.Manager.Materials.Get("FinishLine")
             };
 
@@ -99,9 +104,9 @@ namespace Assets.Scripts.Core
             {
                 for (int column = 0; column < fieldState.ColumnCount; column++)
                 {
-                    if (fieldState.Tiles[row, column] == default)
+                    if (fieldState.Tiles[column, row] == default)
                     {
-                        fieldState.Tiles[row, column] = GetRandomTileTemplate().ToTile();
+                        fieldState.Tiles[column, row] = GetRandomTileTemplate().ToTile();
                     }
                 }
             }

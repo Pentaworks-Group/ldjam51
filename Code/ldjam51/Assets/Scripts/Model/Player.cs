@@ -7,6 +7,6 @@ namespace Assets.Scripts.Model
         public Boolean IsActive { get; set; }
         public String TemplateReference { get; set; }
         public Int32 PositionX { get; set; }
-        public Int32 PositionY { get; set; }
+        public Int32 PositionZ { get; set; }
     }
 }
