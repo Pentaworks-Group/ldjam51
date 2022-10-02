@@ -12,7 +12,7 @@ namespace Assets.Scripts.Scenes.PlayField
         private System.Boolean isLoaded = false;
         private GameObject plane;
         private GameObject tilesContainer;
-        private PlayerBehaviour playerBehaviour;
+        public PlayerBehaviour playerBehaviour;
 
         public FieldState FieldState;
         public PlayFieldBehaviour PlayField;

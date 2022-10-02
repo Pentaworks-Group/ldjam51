@@ -40,21 +40,20 @@ namespace Assets.Scripts.Behaviours.Models
                     x -= StepSize;
                     player.PositionX -= StepSize;
                 }
-                else if ((Input.GetKey(KeyCode.S)) || (Input.GetKey(KeyCode.DownArrow)))
+                else if ((Input.GetKeyDown(KeyCode.S)) || (Input.GetKeyDown(KeyCode.DownArrow)))
                 {
                     moveRequired = true;
 
                     z -= StepSize;
                     player.PositionZ -= StepSize;
                 }
-                else if ((Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.RightArrow)))
+                else if ((Input.GetKeyDown(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
                 {
                     moveRequired = true;
 
                     x += StepSize;
                     player.PositionX += StepSize;
                 }
-
                 if (moveRequired)
                 {
                     this.lastMove = new Vector3(x, 0, z);
@@ -63,6 +62,72 @@ namespace Assets.Scripts.Behaviours.Models
                     this.transform.position = Vector3.Lerp(this.transform.position, end, PlayerSpeed * Time.deltaTime);
                 }
             }
+        }
+
+        public void MoveRight()
+        {
+            var player = FieldHandler.FieldState.Player;
+            player.PositionX += StepSize;
+
+            this.lastMove = new Vector3(StepSize, 0, 0);
+            var end = this.transform.position + lastMove;
+
+            this.transform.position = Vector3.Lerp(this.transform.position, end, PlayerSpeed * Time.deltaTime);
+
+
+            //this.lastMove = new Vector3(StepSize, 0, 0);
+
+            //this.transform.Translate(lastMove, Space.World);
+            //this.FieldHandler.FieldState.Player.PositionX += StepSize;
+        }
+
+        public void MoveDown()
+        {
+            var player = FieldHandler.FieldState.Player;
+            player.PositionZ -= StepSize;
+
+            this.lastMove = new Vector3(0, 0, -StepSize);
+            var end = this.transform.position + lastMove;
+
+            this.transform.position = Vector3.Lerp(this.transform.position, end, PlayerSpeed * Time.deltaTime);
+
+            //this.lastMove = new Vector3(0, 0, -StepSize);
+
+            //this.transform.Translate(lastMove, Space.World);
+            //this.FieldHandler.FieldState.Player.PositionZ -= StepSize;
+        }
+
+        public void MoveLeft()
+        {
+            var player = FieldHandler.FieldState.Player;
+            player.PositionX -= StepSize;
+
+            this.lastMove = new Vector3(-StepSize, 0, 0);
+            var end = this.transform.position + lastMove;
+
+            this.transform.position = Vector3.Lerp(this.transform.position, end, PlayerSpeed * Time.deltaTime);
+
+
+            //this.lastMove = new Vector3(-StepSize, 0, 0);
+
+            //this.transform.Translate(lastMove, Space.World);
+            //this.FieldHandler.FieldState.Player.PositionX -= StepSize;
+        }
+
+        public void MoveUp()
+        {
+            var player = FieldHandler.FieldState.Player;
+            player.PositionZ += StepSize;
+
+            this.lastMove = new Vector3(0, 0, StepSize);
+            var end = this.transform.position + lastMove;
+
+            this.transform.position = Vector3.Lerp(this.transform.position, end, PlayerSpeed * Time.deltaTime);
+
+            //this.lastMove = new Vector3(0, 0, StepSize);
+
+            //this.transform.Translate(lastMove, Space.World);
+            //this.FieldHandler.FieldState.Player.PositionZ += StepSize;
         }
 
         private void OnTriggerEnter(Collider other)
