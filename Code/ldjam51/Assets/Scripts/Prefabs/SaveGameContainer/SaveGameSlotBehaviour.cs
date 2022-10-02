@@ -11,7 +11,10 @@ public class SaveGameSlotBehaviour : MonoBehaviour
     private Text GameModeText;
     private Text SaveGameText;
 
+    public int index;
+
     private GameObject OverrideButton;
+    private GameObject DeleteButton;
 
     private GameState gameState;
     public GameState GameState
@@ -33,11 +36,23 @@ public class SaveGameSlotBehaviour : MonoBehaviour
     public void Awake()
     {
         //this.gameObject.SetActive(true);
+        DeleteButton = this.gameObject.transform.Find("DeleteButton").gameObject;
         OverrideButton = this.gameObject.transform.Find("OverrideButton").gameObject;
         SavedOnText = this.gameObject.transform.Find("LeftSide/Details/SavedOn").GetComponent<Text>();
         ElapsedOnText = this.gameObject.transform.Find("LeftSide/Details/ElapsedTime").GetComponent<Text>();
         GameModeText = this.gameObject.transform.Find("LeftSide/Details/ModeName").GetComponent<Text>();
         SaveGameText = this.gameObject.transform.Find("LeftSide/Details/SaveGameName").GetComponent<Text>();
+    }
+
+    public void Start()
+    {
+        if (Core.Game.State == default)
+        {
+            OverrideButton.SetActive(false);
+        } else
+        {
+            DeleteButton.SetActive(false);
+        }
     }
 
 

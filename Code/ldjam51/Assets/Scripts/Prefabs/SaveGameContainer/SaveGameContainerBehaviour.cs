@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using Assets.Scripts.Base;
 using Assets.Scripts.Core;
-using Assets.Scripts.Scenes;
 
 using UnityEngine;
 
@@ -12,58 +11,111 @@ public class SaveGameContainerBehaviour : MonoBehaviour
 
     public GameObject SaveGameSlotTemplate;
     private GameObject SaveButton;
+    private GameObject UpButton;
+    private GameObject DownButton;
     private readonly int MaxSlosts = 10;
+    private int SlotIndex = 0;
 
     private readonly List<SaveGameSlotBehaviour> SlotBehaviours = new();
+    private List<GameState> savedGames = new();
 
     private void Awake()
     {
         SaveButton = transform.Find("NewSaveButton").gameObject;
-    }
-
-
-    public void OverrideSave(SaveGameSlotBehaviour saveGameSlotBehaviour)
-    {
-        saveGameSlotBehaviour.GameState = Assets.Scripts.Base.Core.Game.State;
-
-        SaveGameSlots();
-    }
-
-    private void SaveGameSlots()
-    {
-        var savedGames = new List<GameState>();
-        foreach (SaveGameSlotBehaviour saveGameSlot in SlotBehaviours)
-        {
-            savedGames.Add(saveGameSlot.GameState);
-        }
-        SaveGames(savedGames);
+        UpButton = transform.Find("SaveGames/UpButton").gameObject;
+        DownButton = transform.Find("SaveGames/DownButton").gameObject;
     }
 
     void Start()
     {
-        var savedGamesJson = PlayerPrefs.GetString("SavedGames");
-
-        if (!System.String.IsNullOrEmpty(savedGamesJson))
-        {
-            var savedGames = GameFrame.Core.Json.Handler.Deserialize<List<GameState>>(savedGamesJson);
-            UpdateSlots(savedGames);
-        }
+        UpdateSlostsFromPrevab();
+        CheckMoveButtonVisibillity();
         if (Core.Game.State == default)
         {
             SaveButton.SetActive(false);
         }
     }
 
-    private void UpdateSlots(List<GameState> savedGames)
+    private void CheckMoveButtonVisibillity()
+    {
+        if (savedGames?.Count > SlotIndex + MaxSlosts)
+        {
+            UpButton.SetActive(true);
+        }
+        else
+        {
+            UpButton.SetActive(false);
+        }
+        if (SlotIndex > 0)
+        {
+            DownButton.SetActive(true);
+        }
+        else
+        {
+            DownButton.SetActive(false);
+        }
+    }
+
+    public void MoveUp()
+    {
+        SlotIndex += MaxSlosts;
+        UpdateSlots();
+        CheckMoveButtonVisibillity();
+    }
+
+    public void MoveDown()
+    {
+        SlotIndex -= MaxSlosts;
+        UpdateSlots();
+        CheckMoveButtonVisibillity();
+    }
+
+    public void OverrideSave(SaveGameSlotBehaviour saveGameSlotBehaviour)
+    {
+        int index = saveGameSlotBehaviour.index;
+        this.savedGames[index] = Assets.Scripts.Base.Core.Game.State; 
+        SaveGames();
+        UpdateSlots();
+    }
+
+    public void DeleteSave(SaveGameSlotBehaviour saveGameSlotBehaviour)
+    {
+        int index = saveGameSlotBehaviour.index;
+        this.savedGames.RemoveAt(index);
+        SaveGames();
+        UpdateSlots();
+    }
+
+
+    private void UpdateSlostsFromPrevab()
+    {
+        var savedGamesJson = PlayerPrefs.GetString("SavedGames");
+
+        if (!System.String.IsNullOrEmpty(savedGamesJson))
+        {
+            this.savedGames = GameFrame.Core.Json.Handler.Deserialize<List<GameState>>(savedGamesJson);
+            Debug.Log($"Found GameStates: {this.savedGames.Count}");
+            UpdateSlots();
+        }
+
+    }
+
+    private void UpdateSlots()
     {
         ClearSlots();
-        if (savedGames?.Count > 0)
+        if (this.savedGames?.Count > 0)
         {
-            Debug.Log($"Found GameStates: {savedGames.Count}");
-
-            for (int i = 0; i < savedGames?.Count; i++)
+            int upperBound;
+            if (MaxSlosts + SlotIndex < this.savedGames.Count) {
+                upperBound = MaxSlosts + SlotIndex;
+            } else
             {
-                CreateAndFillSlot(i, savedGames[i]);
+                upperBound = this.savedGames.Count;
+            }
+            Debug.Log(SlotIndex + "->" + upperBound);
+            for (int i = SlotIndex; i < upperBound; i++)
+            {
+                CreateAndFillSlot(i, this.savedGames[i]);
             }
         }
     }
@@ -92,8 +144,9 @@ public class SaveGameContainerBehaviour : MonoBehaviour
         float relative = 1f / MaxSlosts;
         RectTransform rect = modeSlot.GetComponent<RectTransform>();
         rect.anchoredPosition3D = new Vector3(0, 0, 0);
-        rect.anchorMin = new Vector2(rect.anchorMin.x, (float)index * relative);
-        rect.anchorMax = new Vector2(rect.anchorMax.x, (float)(index + 1) * relative);
+        int relativeIndex = index % MaxSlosts;
+        rect.anchorMin = new Vector2(rect.anchorMin.x, (float)relativeIndex * relative);
+        rect.anchorMax = new Vector2(rect.anchorMax.x, (float)(relativeIndex + 1) * relative);
         rect.offsetMin = new Vector2(0, 0);
         rect.offsetMax = new Vector2(0, 0);
 
@@ -102,7 +155,8 @@ public class SaveGameContainerBehaviour : MonoBehaviour
 
 
         SaveGameSlotBehaviour saveGameSlotBehaviour = modeSlot.GetComponent<SaveGameSlotBehaviour>();
-        SlotBehaviours.Add(saveGameSlotBehaviour);
+        saveGameSlotBehaviour.index = index;
+        this.SlotBehaviours.Add(saveGameSlotBehaviour);
         saveGameSlotBehaviour.GameState = gameState;
 
     }
@@ -110,23 +164,15 @@ public class SaveGameContainerBehaviour : MonoBehaviour
 
     public void SaveNewGame()
     {
-        var savedGames = new List<GameState>();
-        var savedGamesJson = PlayerPrefs.GetString("SavedGames");
-
-        if (!System.String.IsNullOrEmpty(savedGamesJson))
-        {
-             savedGames = GameFrame.Core.Json.Handler.Deserialize<List<GameState>>(savedGamesJson);            
-        }
-
-        savedGames.Add(Assets.Scripts.Base.Core.Game.State);
-        SaveGames(savedGames);
+        this.savedGames.Add(Assets.Scripts.Base.Core.Game.State);
+        SaveGames();
     }
 
-    private void SaveGames(List<GameState> savedGames)
+    private void SaveGames()
     {
-        var savedGamesJson = GameFrame.Core.Json.Handler.Serialize(savedGames);
+        var savedGamesJson = GameFrame.Core.Json.Handler.Serialize(this.savedGames);
         PlayerPrefs.SetString("SavedGames", savedGamesJson);
         PlayerPrefs.Save();
-        UpdateSlots(savedGames);
+        UpdateSlots();
     }
 }
