@@ -44,15 +44,25 @@ namespace Assets.Scripts.Core
 
         private FieldState GenerateField(Boolean isPlaneVisible)
         {
-            var fieldState = new FieldState()
-            {
-                IsActive = false,
-                IsPlaneVisible = isPlaneVisible,
-                ColumnCount = FieldCount,
-                RowCount = FieldCount
-            };
+            var fieldState = default(FieldState);
 
-            GenerateFields(fieldState);
+            while (fieldState == default)
+            { 
+                var newFieldState = new FieldState()
+                {
+                    IsActive = false,
+                    IsPlaneVisible = isPlaneVisible,
+                    ColumnCount = FieldCount,
+                    RowCount = FieldCount
+                };
+
+                GenerateFields(newFieldState);
+
+                if (new FieldStateValidator(newFieldState).IsValid())
+                {
+                    fieldState = newFieldState;
+                }
+            }
 
             return fieldState;
         }
@@ -65,7 +75,8 @@ namespace Assets.Scripts.Core
 
             var player = new Player()
             {
-                IsActive = fieldState.IsActive,
+                IsActive = true,
+                //IsActive = fieldState.IsActive,
                 TemplateReference = playerTile.Reference,
                 PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
                 PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount)

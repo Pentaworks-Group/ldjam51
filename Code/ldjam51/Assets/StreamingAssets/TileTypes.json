@@ -6,13 +6,6 @@
         "Leather"
       ],
       "ExtraTemplates": []
-    },
-    {
-      "Reference": "PlayerTemplate2",
-      "Materials": [
-        "Metal"
-      ],
-      "ExtraTemplates": []
     }
   ],
   "Finish": [
@@ -35,16 +28,10 @@
         "Grass"
       ],
       "ExtraTemplates": [
-        {
-          "Reference": "Stone"
-        },
-        {
-          "Reference": "Trees"
-        },
-        {
-          "Reference": "Trap",
-          "IsDeadly": true
-        }
+        { "Reference": "Stone" },
+        { "Reference": "Trees" },
+        { "Reference": "Chest" },
+        { "Reference": "Trap", "IsDeadly": true }
       ]
     }
   ]

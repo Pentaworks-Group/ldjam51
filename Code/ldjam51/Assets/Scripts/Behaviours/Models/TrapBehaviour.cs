@@ -16,7 +16,7 @@ namespace Assets.Scripts.Behaviours.Models
 
         void Update()
         {
-            if (!this.tile.FieldState.IsActive && !this.tile.FieldState.IsCompleted)
+            if (this.tile?.FieldState?.IsActive == false && this.tile.FieldState?.IsCompleted == false)
             {
                 this.transform.Rotate(0, RotationAngle * Time.deltaTime, 0, Space.World);
             }
