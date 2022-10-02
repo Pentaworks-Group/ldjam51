@@ -8,10 +8,10 @@ namespace Assets.Scripts.Behaviours.Models
 {
     public class PlayerBehaviour : ModelBehaviour
     {
-        public const Int32 StepSize = 2;
+        public const Int32 StepSize = 1;
 
         private Vector3 lastMove = Vector3.zero;
-        
+
         public FieldHandler FieldHandler;
 
         void Update()
@@ -88,8 +88,10 @@ namespace Assets.Scripts.Behaviours.Models
                     FieldHandler.FieldState.Player.PositionZ += (Int32)movementVector.z;
                 }
 
-                this.lastMove = movementVector;
-                this.transform.Translate(movementVector, Space.World);
+                var adjustedVector = movementVector * 2;
+
+                this.lastMove = adjustedVector;
+                this.transform.Translate(adjustedVector, Space.World);
             }
         }
 

@@ -23,7 +23,7 @@ namespace Assets.Scripts.Scenes.PlayField
             this.plane = this.gameObject.transform.Find("Plane").gameObject;
         }
 
-       
+
 
         public void LoadNewField(FieldState fieldState)
         {
@@ -128,7 +128,7 @@ namespace Assets.Scripts.Scenes.PlayField
             {
                 this.playerBehaviour = Instantiate(playerTemplate, this.gameObject.transform);
 
-                var newPosition = new UnityEngine.Vector3(FieldState.Player.PositionX * 2, 0, FieldState.Player.PositionZ * 2);
+                var newPosition = new UnityEngine.Vector3(FieldState.Player.PositionX*2, 0, FieldState.Player.PositionZ*2);
 
                 this.playerBehaviour.FieldHandler = this;
 
