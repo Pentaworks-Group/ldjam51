@@ -156,7 +156,7 @@ namespace Assets.Scripts.Scenes.PlayField
             if (this.remainingTimeText != default)
             {
                 this.remainingTimeText.text = gameState.TimeRemaining.ToString("#0.0");
-                this.remainingTimeText.fontSize = remainingTimeFontSize * (10 - remainingTimeFontSize) / 10 + remainingTimeFontSize;
+                this.remainingTimeText.fontSize = remainingTimeFontSize * (10 - gameState.TimeRemaining) / 5 + remainingTimeFontSize;
             }
         }
 
