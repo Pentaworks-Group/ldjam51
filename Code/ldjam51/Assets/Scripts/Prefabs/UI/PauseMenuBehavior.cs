@@ -54,10 +54,14 @@ public class PauseMenuBehavior : MonoBehaviour
     public void Hide()
     {
         Menu.SetActive(false);
+     
+        Time.timeScale = 1;
     }
 
     public void Show()
     {
+        Time.timeScale = 0;
+
         CursorMode cursorMode = CursorMode.Auto;
         Cursor.SetCursor(null, Vector2.zero, cursorMode);
 
@@ -79,7 +83,6 @@ public class PauseMenuBehavior : MonoBehaviour
         Core.Game.PlayButtonSound();
         this.SetVisible(options: true);
     }
-
 
     public void Quit()
     {
