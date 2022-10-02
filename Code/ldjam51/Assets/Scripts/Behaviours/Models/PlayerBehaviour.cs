@@ -8,11 +8,10 @@ namespace Assets.Scripts.Behaviours.Models
 {
     public class PlayerBehaviour : ModelBehaviour
     {
-        public const float PlayerSpeed = 5;
+        public const Int32 StepSize = 2;
 
         private Vector3 lastMove = Vector3.zero;
-
-        public const Int32 StepSize = 2;
+        
         public FieldHandler FieldHandler;
 
         void Update()
@@ -111,7 +110,7 @@ namespace Assets.Scripts.Behaviours.Models
                     }
                     else
                     {
-                        this.Move(-lastMove);
+                        this.Move(-this.lastMove);
 
                         Base.Core.Game.EffectsAudioManager.Play("Bonk");
                     }
