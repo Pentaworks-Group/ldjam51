@@ -11,14 +11,18 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
 
     public GameObject GameModeSlotTemplate;
     private readonly int MaxSlosts = 10;
+    private int SlotIndex = 0;
 
     private readonly List<GameModeSlotBehaviour> SlotBehaviours = new();
+    private List<GameSettings> modes = new();
 
 
 
     public GameObject CreateNewModeButton;
     public GameObject OwnModesButton;
     public GameObject GlobalModesButton;
+    public GameObject UpButton;
+    public GameObject DownButton;
 
 
     public bool ownMode { get; set; } = false;
@@ -31,18 +35,72 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
         notSelectedColor = OwnModesButton.GetComponent<Image>().color;
     }
 
+
     void Start()
     {
-        LoadGameModes(GameHandler.AvailableGameModes, false);
+        LoadGlobalModes();
+        CheckMoveButtonVisibillity();
     }
 
-    private void LoadGameModes(List<GameSettings> modes, bool rotateSlots)
+
+    private void CheckMoveButtonVisibillity()
+    {
+        if (modes?.Count > SlotIndex + MaxSlosts)
+        {
+            UpButton.SetActive(true);
+        }
+        else
+        {
+            UpButton.SetActive(false);
+        }
+        if (SlotIndex > 0)
+        {
+            DownButton.SetActive(true);
+        }
+        else
+        {
+            DownButton.SetActive(false);
+        }
+    }
+
+    public void MoveUp()
+    {
+        SlotIndex += MaxSlosts;
+        UpdateSlots(true);
+        CheckMoveButtonVisibillity();
+    }
+
+    public void MoveDown()
+    {
+        SlotIndex -= MaxSlosts;
+        UpdateSlots(true);
+        CheckMoveButtonVisibillity();
+    }
+
+    private void UpdateSlots(bool rotateSlots)
     {
         ClearSlots();
-        for (int i = 0; i < modes.Count; i++)
+        if (this.modes?.Count > 0)
         {
-            CreateAndFillSlot(i, modes[i], rotateSlots);
+            int upperBound;
+            if (SlotIndex > this.modes.Count)
+            {
+                SlotIndex = modes.Count - modes.Count % MaxSlosts;
+            }
+            if (MaxSlosts + SlotIndex < this.modes.Count)
+            {
+                upperBound = MaxSlosts + SlotIndex;
+            }
+            else
+            {
+                upperBound = this.modes.Count;
+            }
+            for (int i = SlotIndex; i < upperBound; i++)
+            {
+                CreateAndFillSlot(i, this.modes[i], rotateSlots);
+            }
         }
+
     }
 
     private void ClearSlots()
@@ -62,8 +120,9 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
         float relative = 1f / MaxSlosts;
         RectTransform rect = modeSlot.GetComponent<RectTransform>();
         rect.anchoredPosition3D = new Vector3(0, 0, 0);
-        rect.anchorMin = new Vector2(rect.anchorMin.x, (float)index * relative);
-        rect.anchorMax = new Vector2(rect.anchorMax.x, (float)(index + 1) * relative);
+        int relativeIndex = index % MaxSlosts;
+        rect.anchorMin = new Vector2(rect.anchorMin.x, (float)relativeIndex * relative);
+        rect.anchorMax = new Vector2(rect.anchorMax.x, (float)(relativeIndex + 1) * relative);
         if (rotateSlot && Screen.width < Screen.height)
         {
             rect.rotation = new Quaternion(0, 0, 1, 1f);
@@ -75,46 +134,63 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
 
 
         GameModeSlotBehaviour gameModeSlotBehaviour = modeSlot.GetComponent<GameModeSlotBehaviour>();
+        gameModeSlotBehaviour.index = index;
         SlotBehaviours.Add(gameModeSlotBehaviour);
         gameModeSlotBehaviour.GameSettings = gameSettings;
-
-    }
-
-    public void CreateNewMode()
-    {
-
-        GameSettings gameFieldSettings = new GameSettings();
-        List<GameSettings> ownModes = getModesFromSlots();
-        ownModes.Add(gameFieldSettings);
-        LoadGameModes(ownModes, true);
-
+        gameModeSlotBehaviour.IsOwnMode = ownMode;
+        gameModeSlotBehaviour.UpdateUI();
     }
 
 
-     public void SaveGameMode(GameSettings gameSettings)
+
+     public void SaveGameMode(GameModeSlotBehaviour slotBehaviour)
     {
-        List<GameSettings> ownModes;
-        if (gameSettings != default) //when called from a global mode
+        if (slotBehaviour.index != -1) 
         {
-            ownModes = GetGameSettingsFromPlayerPref();
-            ownModes.Add(gameSettings);
+            int index = slotBehaviour.index;
+            this.modes[index] = slotBehaviour.GameSettings;
         } else
         {
-            ownModes = getModesFromSlots();
+            if (ownMode != true)
+            {
+                modes = GetGameSettingsFromPlayerPref();
+            }
+            modes.Add(slotBehaviour.GameSettings);
+            SlotIndex = modes.Count - modes.Count % MaxSlosts;
         }
-        String ownModesJson = GameFrame.Core.Json.Handler.Serialize(ownModes);
+        SaveGameModes();
+        UpdateSlots(true);
+    }
+
+
+    public void DeleteGameMode(GameModeSlotBehaviour slotBehaviour)
+    {
+        modes.RemoveAt(slotBehaviour.index);
+        SaveGameModes();
+        UpdateSlots(true);
+    }
+
+    private void SaveGameModes()
+    {
+        String ownModesJson = GameFrame.Core.Json.Handler.Serialize(modes);
         PlayerPrefs.SetString("OwnModes", ownModesJson);
         PlayerPrefs.Save();
     }
 
-    public void LoadGlobalModes()
+    private void UpdateModeButtonColors()
     {
-        GlobalModesButton.GetComponent<Image>().color = selectedColor;
-        OwnModesButton.GetComponent<Image>().color = notSelectedColor;
-        ownMode = false;
-        CreateNewModeButton.SetActive(false);
-        LoadGameModes(GameHandler.AvailableGameModes, true);
+        if (ownMode)
+        {
+            GlobalModesButton.GetComponent<Image>().color = selectedColor;
+            OwnModesButton.GetComponent<Image>().color = notSelectedColor;
+        } else
+        {
+            GlobalModesButton.GetComponent<Image>().color = notSelectedColor;
+            OwnModesButton.GetComponent<Image>().color = selectedColor;
+        }
     }
+
+
 
     private List<GameSettings> GetGameSettingsFromPlayerPref()
     {
@@ -133,21 +209,21 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
 
     public void LoadOwnModes()
     {
-        GlobalModesButton.GetComponent<Image>().color = notSelectedColor;
-        OwnModesButton.GetComponent<Image>().color = selectedColor;
         ownMode = true;
         CreateNewModeButton.SetActive(true);
-        var ownModes = GetGameSettingsFromPlayerPref();
-        LoadGameModes(ownModes, true);
+        UpdateModeButtonColors();
+        modes = GetGameSettingsFromPlayerPref();
+        UpdateSlots(false);
+        CheckMoveButtonVisibillity();
     }
 
-    private List<GameSettings> getModesFromSlots()
+    public void LoadGlobalModes()
     {
-        List<GameSettings> modes = new List<GameSettings>();
-        foreach (GameModeSlotBehaviour slot in SlotBehaviours)
-        {
-            modes.Add(slot.GameSettings);
-        }
-        return modes;
+        ownMode = false;
+        CreateNewModeButton.SetActive(false);
+        UpdateModeButtonColors();
+        modes = GameHandler.AvailableGameModes;
+        UpdateSlots(false);
+        CheckMoveButtonVisibillity();
     }
 }

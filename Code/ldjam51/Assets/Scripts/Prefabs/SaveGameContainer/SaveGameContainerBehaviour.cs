@@ -112,7 +112,6 @@ public class SaveGameContainerBehaviour : MonoBehaviour
             {
                 upperBound = this.savedGames.Count;
             }
-            Debug.Log(SlotIndex + "->" + upperBound);
             for (int i = SlotIndex; i < upperBound; i++)
             {
                 CreateAndFillSlot(i, this.savedGames[i]);

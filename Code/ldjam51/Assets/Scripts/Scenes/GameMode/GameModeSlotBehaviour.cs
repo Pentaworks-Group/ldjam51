@@ -7,7 +7,10 @@ using UnityEngine.UI;
 public class GameModeSlotBehaviour : MonoBehaviour
 {
     private Text GameModeText;
+    private GameObject DeleteButton;
 
+    public int index;
+    public bool IsOwnMode = false;
 
     private GameSettings gameSettings;
     public GameSettings GameSettings
@@ -21,13 +24,13 @@ public class GameModeSlotBehaviour : MonoBehaviour
             if (gameSettings != value)
             {
                 gameSettings = value;
-                UpdateUI();
             }
         }
     }
 
     public void Awake()
     {
+        DeleteButton = this.gameObject.transform.Find("DeleteButton").gameObject;
         GameModeText = this.gameObject.transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Text>();
     }
 
@@ -48,8 +51,19 @@ public class GameModeSlotBehaviour : MonoBehaviour
         Core.Game.ChangeScene(SceneNames.MainMenu);
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
+        if (DeleteButton != default)
+        {
+            if (this.IsOwnMode)
+            {
+                DeleteButton.SetActive(true);
+            }
+            else
+            {
+                DeleteButton.SetActive(false);
+            }
+        }
         GetGameModeText().text = GameSettings.Name;
     }
 }
