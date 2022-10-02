@@ -107,11 +107,11 @@ namespace Assets.Scripts.Behaviours.Models
                         this.FieldHandler.FieldState.IsCompleted = true;
                         this.FieldHandler.SetActive(false);
 
-                        Base.Core.Game.EffectsAudioManager.Play("Awww");
+                        Base.Core.Game.EffectsAudioManager.Play("Woohoo");
                     }
                     else if (targetBehaviour.Tile.ExtraTemplate?.IsDeadly == true)
                     {
-                        Base.Core.Game.EffectsAudioManager.Play("Woohoo");
+                        Base.Core.Game.EffectsAudioManager.Play("Awww");
 
                         Base.Core.Game.ChangeScene(SceneNames.GameOver);
                     }
