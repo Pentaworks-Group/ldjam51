@@ -89,11 +89,8 @@ namespace Assets.Scripts.Behaviours.Models
                 FieldHandler.FieldState.Player.PositionZ += (Int32)movementVector.z;
             }
 
+            this.lastMove = movementVector;
             this.transform.Translate(movementVector, Space.World);
-
-            //var targetPosition = this.transform.position + movementVector;
-
-            //this.transform.position = Vector3.Lerp(this.transform.position, targetPosition, Time.time);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -119,9 +116,7 @@ namespace Assets.Scripts.Behaviours.Models
                     }
                     else
                     {
-                        this.transform.Translate(-lastMove, Space.World);
-                        this.FieldHandler.FieldState.Player.PositionX -= (Int32)lastMove.x;
-                        this.FieldHandler.FieldState.Player.PositionZ -= (Int32)lastMove.z;
+                        this.Move(-lastMove);
 
                         Base.Core.Game.EffectsAudioManager.Play("Bonk");
                     }
