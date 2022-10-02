@@ -37,16 +37,17 @@ namespace Assets.Scripts.Core
                 CurrentScene = SceneNames.PlayFieldScene,
                 Mode = gameMode,
                 TimeRemaining = 10,
-                Field1 = GenerateField(true),
-                Field2 = GenerateField(false),
+                Field1 = GenerateField(false),
+                Field2 = GenerateField(true),
             };
         }
 
-        private FieldState GenerateField(Boolean isActive)
+        private FieldState GenerateField(Boolean isPlaneVisible)
         {
             var fieldState = new FieldState()
             {
-                IsActive = isActive,
+                IsActive = false,
+                IsPlaneVisible = isPlaneVisible,
                 ColumnCount = FieldCount,
                 RowCount = FieldCount
             };
