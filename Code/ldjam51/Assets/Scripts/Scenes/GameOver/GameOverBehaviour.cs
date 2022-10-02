@@ -9,12 +9,5 @@ using UnityEngine;
 public class GameOverBehaviour : BaseMenuBehaviour
 {
 
-    private void Awake()
-    {
-        if (GameHandler.AvailableGameModes == default)
-        {
-            Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.MainMenu);
-        }
-    }
 
 }

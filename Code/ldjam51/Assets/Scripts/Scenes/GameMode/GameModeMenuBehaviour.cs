@@ -25,13 +25,8 @@ public class GameModeMenuBehaviour : BaseMenuBehaviour
     private Color32 selectedColor;
     private Color32 notSelectedColor;
 
-    private void Awake()
+    protected override void CustomAwake()
     {
-        if (GameHandler.AvailableGameModes == default)
-        {
-            Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.MainMenu);
-        }
-
         selectedColor = GlobalModesButton.GetComponent<Image>().color;
         notSelectedColor = OwnModesButton.GetComponent<Image>().color;
     }

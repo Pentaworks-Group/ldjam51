@@ -12,7 +12,14 @@ namespace Assets.Scripts.Scenes
             {
                 Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.MainMenu);
             }
+            CustomAwake();
         }
+
+        protected virtual void CustomAwake()
+        {
+
+        }
+
         public void ToMainMenu()
         {
             Base.Core.Game.PlayButtonSound();

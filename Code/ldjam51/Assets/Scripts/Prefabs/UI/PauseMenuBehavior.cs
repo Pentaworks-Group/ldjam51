@@ -17,7 +17,6 @@ public class PauseMenuBehavior : MonoBehaviour
     public GameObject SaveGameArea;
     public Button BackButton;
     public Button ContinueButton;
-    public SaveGameSlotBehaviour[] SaveGameSlots;
 
     public void ToggleMenu()
     {
@@ -48,7 +47,6 @@ public class PauseMenuBehavior : MonoBehaviour
     public void ShowSavedGames()
     {
         Core.Game.PlayButtonSound();
-        LoadGameStates();
 
         SetVisible(saveGame: true);
     }
@@ -82,64 +80,6 @@ public class PauseMenuBehavior : MonoBehaviour
         this.SetVisible(options: true);
     }
 
-    private void LoadGameStates()
-    {
-        Debug.Log("Loading saved games");
-        var savedGames = PlayerPrefs.GetString("SavedGames");
-
-        if (!String.IsNullOrEmpty(savedGames))
-        {
-            try
-            {
-                gameStates = GameFrame.Core.Json.Handler.Deserialize<Assets.Scripts.Core.GameState[]>(savedGames);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogException(ex);
-            }
-        }
-
-        if (gameStates == null)
-        {
-            Debug.Log("Couldn't parse string or none found.");
-            gameStates = new Assets.Scripts.Core.GameState[5];
-        }
-
-        for (int i = 0; i < 5; i++)
-        {
-            SaveGameSlots[i].GameState = gameStates[i];
-        }
-    }
-
-    public void OnSaveGameSlotClicked(SaveGameSlotBehaviour slot)
-    {
-        Core.Game.PlayButtonSound();
-        var index = 0;
-
-        for (int i = 0; i < 5; i++)
-        {
-            if (SaveGameSlots[i] == slot)
-            {
-                index = i;
-                break;
-            }
-        }
-
-        var serialized = GameFrame.Core.Json.Handler.Serialize(Core.Game.State);
-
-        var gameState = GameFrame.Core.Json.Handler.Deserialize<Assets.Scripts.Core.GameState>(serialized);
-
-        gameState.SavedOn = DateTime.Now;
-
-        slot.GameState = gameState;
-        gameStates[index] = gameState;
-
-        Debug.Log("Serializing gameStates.");
-        var savedGames = GameFrame.Core.Json.Handler.Serialize(gameStates);
-
-        PlayerPrefs.SetString("SavedGames", savedGames);
-        PlayerPrefs.Save();
-    }
 
     public void Quit()
     {

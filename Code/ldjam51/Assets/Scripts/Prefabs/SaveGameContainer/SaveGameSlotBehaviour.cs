@@ -11,6 +11,7 @@ public class SaveGameSlotBehaviour : MonoBehaviour
     private Text GameModeText;
     private Text SaveGameText;
 
+    private GameObject OverrideButton;
 
     private GameState gameState;
     public GameState GameState
@@ -29,13 +30,14 @@ public class SaveGameSlotBehaviour : MonoBehaviour
             }
         }
     }
-
     public void Awake()
     {
-        SavedOnText = this.gameObject.transform.Find("Details/SaveGameName").GetComponent<Text>();
-        ElapsedOnText = this.gameObject.transform.Find("Details/ElapsedTime").GetComponent<Text>();
-        GameModeText = this.gameObject.transform.Find("Details/ModeName").GetComponent<Text>();
-        SaveGameText = this.gameObject.transform.Find("Details/SaveGameName").GetComponent<Text>();
+        //this.gameObject.SetActive(true);
+        OverrideButton = this.gameObject.transform.Find("OverrideButton").gameObject;
+        SavedOnText = this.gameObject.transform.Find("LeftSide/Details/SavedOn").GetComponent<Text>();
+        ElapsedOnText = this.gameObject.transform.Find("LeftSide/Details/ElapsedTime").GetComponent<Text>();
+        GameModeText = this.gameObject.transform.Find("LeftSide/Details/ModeName").GetComponent<Text>();
+        SaveGameText = this.gameObject.transform.Find("LeftSide/Details/SaveGameName").GetComponent<Text>();
     }
 
 

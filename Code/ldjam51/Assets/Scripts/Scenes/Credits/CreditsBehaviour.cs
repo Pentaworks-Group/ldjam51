@@ -9,12 +9,4 @@ using UnityEngine;
 public class CreditsBehaviour : BaseMenuBehaviour
 {
 
-    private void Awake()
-    {
-        if (GameHandler.AvailableGameModes == default)
-        {
-            Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.MainMenu);
-        }
-    }
-
 }
