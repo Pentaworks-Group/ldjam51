@@ -130,16 +130,21 @@ namespace Assets.Scripts.Scenes.PlayField
         {
             foreach (Transform child in goT)
             {
-                b = GetBoundRec(child, b);
-                Renderer r = child.GetComponent<MeshRenderer>();
-                if (r != default)
+                if (child.gameObject.activeSelf)
                 {
-                    b.Encapsulate(r.bounds);
-                    Debug.Log("dodi", child);
-                } else
-                {
-                    Debug.Log("No render:", child);
+                    b = GetBoundRec(child, b);
+                    Renderer r = child.GetComponent<MeshRenderer>();
+                    if (r != default)
+                    {
+                        b.Encapsulate(r.bounds);
+                        //Debug.Log("dodi", child);
+                    }
+                    else
+                    {
+                        //Debug.Log("No render:", child);
+                    }
                 }
+                
             }
             return b;
         }
@@ -151,7 +156,7 @@ namespace Assets.Scripts.Scenes.PlayField
             //sceneCamera.transform.position = new Vector3(halfWit, halfWit * 1.25f, -(halfWit / 6f));
             Bounds b = GetBound(this.gameObject);
 
-            Debug.Log(b);
+            //Debug.Log(b);
             //Vector3 max = b.size;
             //float radius = Mathf.Max(max.x, Mathf.Max(max.y, max.z));
 
