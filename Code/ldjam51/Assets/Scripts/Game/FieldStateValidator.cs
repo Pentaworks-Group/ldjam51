@@ -31,7 +31,7 @@ namespace Assets.Scripts.Game
                 }
             }
 
-            return default;
+            return true;
         }
 
         private Boolean CheckTileRecursive(Tile tile)
