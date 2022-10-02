@@ -6,13 +6,6 @@
         "Leather"
       ],
       "ExtraTemplates": []
-    },
-    {
-      "Reference": "PlayerTemplate2",
-      "Materials": [
-        "Metal"
-      ],
-      "ExtraTemplates": []
     }
   ],
   "Finish": [

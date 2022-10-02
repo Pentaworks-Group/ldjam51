@@ -46,6 +46,7 @@ namespace Assets.Scripts.Scenes.PlayField
             this.tilesContainer = this.gameObject.transform.Find("TilesContainer").gameObject;
 
             var fenceTemplate = PlayField.GetTemplateByName<ExtraModelBehaviour>("Fence");
+            //var fenceTemplate = PlayField.GetTemplateByName<ExtraModelBehaviour>("Wall");
 
             var maxColumnIndex = this.FieldState.ColumnCount - 1;
             var maxRowIndex = this.FieldState.RowCount - 1;
