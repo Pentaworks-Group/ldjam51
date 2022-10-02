@@ -12,7 +12,6 @@ public class PauseMenuBehavior : MonoBehaviour
     public UnityEvent<Boolean> PauseToggled = new UnityEvent<Boolean>();
 
     public GameObject Menu;
-    public GameObject GameView;
     public GameObject MenuArea;
     public GameObject OptionsArea;
     public GameObject SaveGameArea;

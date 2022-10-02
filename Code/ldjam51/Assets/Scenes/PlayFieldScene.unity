@@ -254,37 +254,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1682637802365037447, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
---- !u!1 &137076259 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7016828543276112029, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
-  m_PrefabInstance: {fileID: 137076258}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &137076260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137076259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd7fbf2e49cfb2e4f889e3d409976c20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PauseToggled:
-    m_PersistentCalls:
-      m_Calls: []
-  Menu: {fileID: 0}
-  GameView: {fileID: 0}
-  MenuArea: {fileID: 0}
-  OptionsArea: {fileID: 0}
-  SaveGameArea: {fileID: 0}
-  BackButton: {fileID: 0}
-  ContinueButton: {fileID: 0}
-  SaveGameSlots: []
 --- !u!1001 &210002662
 PrefabInstance:
   m_ObjectHideFlags: 0
