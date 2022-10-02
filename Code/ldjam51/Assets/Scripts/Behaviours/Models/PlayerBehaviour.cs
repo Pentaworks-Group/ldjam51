@@ -16,7 +16,7 @@ namespace Assets.Scripts.Behaviours.Models
 
         void Update()
         {
-            if (this.FieldHandler?.FieldState?.IsActive == true)
+            if (this.FieldHandler?.FieldState?.Player?.IsActive == true)
             {
                 if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
                 {

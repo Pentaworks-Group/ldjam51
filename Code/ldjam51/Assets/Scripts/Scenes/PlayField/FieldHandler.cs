@@ -40,10 +40,15 @@ namespace Assets.Scripts.Scenes.PlayField
             this.FieldState.Player.IsActive = isActive;
             this.plane.SetActive(isActive);
         }
-         
+
         private void LoadField()
         {
             this.tilesContainer = this.gameObject.transform.Find("TilesContainer").gameObject;
+
+            var fenceTemplate = PlayField.GetTemplateByName<ExtraModelBehaviour>("Fence");
+
+            var maxColumnIndex = this.FieldState.ColumnCount - 1;
+            var maxRowIndex = this.FieldState.RowCount - 1;
 
             for (int z = 0; z < this.FieldState.RowCount; z++)
             {
@@ -98,6 +103,24 @@ namespace Assets.Scripts.Scenes.PlayField
                             extraObject.gameObject.SetActive(true);
                         }
                     }
+
+                    if (x == 0)
+                    {
+                        AddFence(tileObject, fenceTemplate, 90);
+                    }
+                    else if (x == maxColumnIndex)
+                    {
+                        AddFence(tileObject, fenceTemplate, -90);
+                    }
+
+                    if (z == 0)
+                    {
+                        AddFence(tileObject, fenceTemplate, 0);
+                    }
+                    else if (z == maxRowIndex)
+                    {
+                        AddFence(tileObject, fenceTemplate, 180);
+                    }
                 }
             }
 
@@ -116,13 +139,21 @@ namespace Assets.Scripts.Scenes.PlayField
             }
 
             plane.SetActive(FieldState.IsPlaneVisible);
-            plane.transform.Translate(new Vector3(this.FieldState.ColumnCount -1 , 0, this.FieldState.RowCount - 1), Space.World);
-
-            //var scale = this.FieldState.RowCount * 0.7f;
-
-            //plane.transform.localScale = new Vector3(scale, scale, scale);
+            plane.transform.Translate(new Vector3(this.FieldState.ColumnCount - 1, 0, this.FieldState.RowCount - 1), Space.World);
 
             PlayField.AdjustCamera(0, 0);
+        }
+
+        private void AddFence(TileModelBehaviour tileObject, ExtraModelBehaviour fenceTemplate, Int32 rotationAngle)
+        {
+            var fenceObject = Instantiate(fenceTemplate, tileObject.transform);
+
+            if (rotationAngle != 0)
+            {
+                fenceObject.transform.Rotate(new Vector3(0, 0, rotationAngle));
+            }
+
+            fenceObject.gameObject.SetActive(true);
         }
     }
 }

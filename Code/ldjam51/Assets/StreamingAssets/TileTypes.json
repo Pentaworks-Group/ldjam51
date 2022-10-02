@@ -35,16 +35,10 @@
         "Grass"
       ],
       "ExtraTemplates": [
-        {
-          "Reference": "Stone"
-        },
-        {
-          "Reference": "Trees"
-        },
-        {
-          "Reference": "Trap",
-          "IsDeadly": true
-        }
+        { "Reference": "Stone" },
+        { "Reference": "Trees" },
+        { "Reference": "Chest" },
+        { "Reference": "Trap", "IsDeadly": true }
       ]
     }
   ]
