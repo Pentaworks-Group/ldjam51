@@ -77,6 +77,8 @@ namespace Assets.Scripts.Behaviours.Models
                         this.transform.Translate(-lastMove, Space.World);
                         this.Player.PositionX -= (Int32)lastMove.x;
                         this.Player.PositionZ -= (Int32)lastMove.z;
+
+                        Base.Core.Game.EffectsAudioManager.Play("Bonk");
                     }
                 }
             }
