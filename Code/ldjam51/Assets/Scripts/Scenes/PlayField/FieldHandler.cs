@@ -77,7 +77,9 @@ namespace Assets.Scripts.Scenes.PlayField
 
                         if (extraTemplate != default)
                         {
-                            var extraObject = Instantiate(extraTemplate.gameObject, tileObject.transform);
+                            var extraObject = Instantiate(extraTemplate, tileObject.transform);
+
+                            extraObject.Tile = tile;
 
                             if (extraTemplate.IsRotatable)
                             {
@@ -89,7 +91,7 @@ namespace Assets.Scripts.Scenes.PlayField
                                 }
                             }
 
-                            extraObject.SetActive(true);
+                            extraObject.gameObject.SetActive(true);
                         }
                     }
                 }
