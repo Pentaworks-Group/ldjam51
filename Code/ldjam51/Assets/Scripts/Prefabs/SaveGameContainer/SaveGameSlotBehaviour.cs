@@ -9,7 +9,7 @@ public class SaveGameSlotBehaviour : MonoBehaviour
     private Text SavedOnText;
     private Text ElapsedOnText;
     private Text GameModeText;
-    private Text SaveGameText;
+    private Text LevelText;
 
     public int index;
 
@@ -41,7 +41,7 @@ public class SaveGameSlotBehaviour : MonoBehaviour
         SavedOnText = this.gameObject.transform.Find("LeftSide/Details/SavedOn").GetComponent<Text>();
         ElapsedOnText = this.gameObject.transform.Find("LeftSide/Details/ElapsedTime").GetComponent<Text>();
         GameModeText = this.gameObject.transform.Find("LeftSide/Details/ModeName").GetComponent<Text>();
-        SaveGameText = this.gameObject.transform.Find("LeftSide/Details/SaveGameName").GetComponent<Text>();
+        LevelText = this.gameObject.transform.Find("LeftSide/Details/Level").GetComponent<Text>();
     }
 
     public void Start()
@@ -68,7 +68,7 @@ public class SaveGameSlotBehaviour : MonoBehaviour
     {
         this.SavedOnText.text = string.Format("{0:G}", this.GameState.SavedOn);
         this.GameModeText.text = this.GameState.Mode.Name;
-        this.SaveGameText.text = this.GameState.SaveGameName;
+        this.LevelText.text = this.GameState.LevelsCompleted.ToString();
 
         this.ElapsedOnText.text = string.Format("{0:F1}s", this.GameState.ElapsedTime);
     }
