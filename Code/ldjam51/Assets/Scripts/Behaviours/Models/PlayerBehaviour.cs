@@ -40,14 +40,14 @@ namespace Assets.Scripts.Behaviours.Models
                     x -= StepSize;
                     player.PositionX -= StepSize;
                 }
-                else if ((Input.GetKeyDown(KeyCode.S)) || (Input.GetKeyDown(KeyCode.DownArrow)))
+                else if ((Input.GetKey(KeyCode.S)) || (Input.GetKey(KeyCode.DownArrow)))
                 {
                     moveRequired = true;
 
                     z -= StepSize;
                     player.PositionZ -= StepSize;
                 }
-                else if ((Input.GetKeyDown(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
+                else if ((Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.RightArrow)))
                 {
                     moveRequired = true;
 
