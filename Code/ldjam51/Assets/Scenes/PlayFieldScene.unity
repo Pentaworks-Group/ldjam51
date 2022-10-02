@@ -1497,8 +1497,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsRotatable: 0
---- !u!64 &689785268
-MeshCollider:
+--- !u!65 &689785271
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1507,10 +1507,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: dbfdb5d2cefd6b54e98bcbd0abe7e85c, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 2.0267606, y: 1, z: 0.63688}
+  m_Center: {x: -0.002323091, y: 1.505786, z: 0.31549743}
 --- !u!1 &696532644
 GameObject:
   m_ObjectHideFlags: 0
