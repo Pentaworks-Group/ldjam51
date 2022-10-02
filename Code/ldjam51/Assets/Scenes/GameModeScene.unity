@@ -3081,6 +3081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
+  IsOwnMode: 0
 --- !u!1 &1289378035
 GameObject:
   m_ObjectHideFlags: 0
@@ -4440,7 +4441,7 @@ GameObject:
   - component: {fileID: 2140161942}
   - component: {fileID: 2140161941}
   m_Layer: 5
-  m_Name: Delete
+  m_Name: DeleteButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
