@@ -8,7 +8,6 @@ using Assets.Scripts.Game;
 using TMPro;
 
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.Scenes.PlayField
 {
@@ -17,6 +16,8 @@ namespace Assets.Scripts.Scenes.PlayField
         private readonly Dictionary<String, ModelBehaviour> templatesCache = new Dictionary<String, ModelBehaviour>();
 
         private GameState gameState;
+        private FieldHandler activeField;
+
         private FieldHandler leftField;
         private FieldHandler rightField;
         private TextMeshProUGUI elapsedTimeText;
@@ -64,13 +65,9 @@ namespace Assets.Scripts.Scenes.PlayField
             FindField(transform.Find("LeftField")?.gameObject, ref leftField, gameState.Field1);
             FindField(transform.Find("RightField")?.gameObject, ref rightField, gameState.Field2);
 
-            //rightField.gameObject.transform.Translate(new Vector3(gameState.Field1.ColumnCount * 2 + 5, 0, 0), Space.World);
             rightField.gameObject.transform.position = new Vector3(gameState.Field1.ColumnCount * 2 + 5, 0, 0);
 
-            var width = (gameState.Field1.ColumnCount + gameState.Field2.ColumnCount) * 2 + 5;
-            var height = (Math.Max(gameState.Field1.RowCount, gameState.Field2.RowCount) * 2);
-
-            AdjustCamera(width, height);
+            AdjustCamera();
         }
 
         public T GetTemplateByName<T>(String templateName) where T : ModelBehaviour
@@ -84,6 +81,41 @@ namespace Assets.Scripts.Scenes.PlayField
             }
 
             throw new Exception($"No model template found for name '{templateName}'");
+        }
+
+        public void MovePlayerRight()
+        {
+            this.activeField?.playerBehaviour?.MoveRight();
+        }
+
+        public void MovePlayerDown()
+        {
+            this.activeField?.playerBehaviour?.MoveDown();
+        }
+
+        public void MovePlayerLeft()
+        {
+            this.activeField?.playerBehaviour?.MoveLeft();
+        }
+
+        public void MovePlayerUp()
+        {
+            this.activeField?.playerBehaviour?.MoveUp();
+        }
+
+        public void AdjustCamera()
+        {
+            Bounds b = GetBound(this.gameObject);
+
+            float cameraDistance = .25f; // Constant factor
+            Vector3 objectSizes = b.max - b.min;
+
+            float objectSize = Mathf.Max(objectSizes.x, objectSizes.y, objectSizes.z);
+
+            float cameraView = 2.0f * Mathf.Tan(0.5f * Mathf.Deg2Rad * sceneCamera.fieldOfView); // Visible height 1 meter in front
+            float distance = cameraDistance * objectSize / cameraView; // Combined wanted distance from the object
+            distance += 0.5f * objectSize; // Estimated offset from the center to the outside of the object
+            sceneCamera.transform.position = b.center - distance * sceneCamera.transform.forward;
         }
 
         private void Update()
@@ -154,6 +186,8 @@ namespace Assets.Scripts.Scenes.PlayField
             }
             else if (gameState.ElapsedTime > 10)
             {
+                activeField = leftField;
+
                 leftField.SetActive(true);
                 rightField.SetActive(false);
             }
@@ -201,116 +235,5 @@ namespace Assets.Scripts.Scenes.PlayField
             return b;
         }
 
-
-        public void MovePlayerRight()
-        {
-            if (this.leftField.FieldState.IsActive)
-            {
-                this.leftField.playerBehaviour.MoveRight();
-            }else 
-            {
-                this.rightField.playerBehaviour.MoveRight();
-            }
-        }
-
-        public void MovePlayerDown()
-        {
-            if (this.leftField.FieldState.IsActive)
-            {
-                this.leftField.playerBehaviour.MoveDown();
-            }
-            else
-            {
-                this.rightField.playerBehaviour.MoveDown();
-            }
-        }
-
-        public void MovePlayerLeft()
-        {
-            if (this.leftField.FieldState.IsActive)
-            {
-                this.leftField.playerBehaviour.MoveLeft();
-            }
-            else
-            {
-                this.rightField.playerBehaviour.MoveLeft();
-            }
-        }
-
-        public void MovePlayerUp()
-        {
-            if (this.leftField.FieldState.IsActive)
-            {
-                this.leftField.playerBehaviour.MoveUp();
-            }
-            else
-            {
-                this.rightField.playerBehaviour.MoveUp();
-            }
-        }
-
-
-        public void AdjustCamera(float width, float height)
-        {
-            //var halfWit = (width / 2f);
-
-            //sceneCamera.transform.position = new Vector3(halfWit, halfWit * 1.25f, -(halfWit / 6f));
-            Bounds b = GetBound(this.gameObject);
-
-            //Debug.Log(b);
-            //Vector3 max = b.size;
-            //float radius = Mathf.Max(max.x, Mathf.Max(max.y, max.z));
-
-            //float dist = radius / (Mathf.Tan(sceneCamera.fieldOfView * Mathf.Deg2Rad / 2f));
-            //Debug.Log("Radius = " + radius + " dist = " + dist);
-
-
-            //Vector3 view_direction = sceneCamera.transform.TransformDirection(Vector3.forward);
-
-            //Vector3 pos = b.center - view_direction * dist / 2 ;
-            //sceneCamera.transform.position = pos;
-
-            float cameraDistance = .25f; // Constant factor
-            Vector3 objectSizes = b.max - b.min;
-
-            float objectSize = Mathf.Max(objectSizes.x, objectSizes.y, objectSizes.z);
-
-            float cameraView = 2.0f * Mathf.Tan(0.5f * Mathf.Deg2Rad * sceneCamera.fieldOfView); // Visible height 1 meter in front
-            float distance = cameraDistance * objectSize / cameraView; // Combined wanted distance from the object
-            distance += 0.5f * objectSize; // Estimated offset from the center to the outside of the object
-            sceneCamera.transform.position = b.center - distance * sceneCamera.transform.forward;
-
-            //sceneCamera.transform.LookAt(b.center);
-            //var halfWit = (width / 2f);
-
-            //var alpha = (90 - sceneCamera.transform.eulerAngles.x);
-            //var alphaRad = alpha * Mathf.Deg2Rad;
-
-            //var beta = (sceneCamera.fieldOfView / 2f);
-            //var betaRad = beta * Mathf.Deg2Rad;
-
-            //var gamma = 90 - alpha;
-            //var gammaRad = gamma * Mathf.Deg2Rad;
-
-
-            //var q = halfWit / Mathf.Tan(betaRad);
-            //var yotaRad = Mathf.Asin(halfWit / q);
-            //var yota = yotaRad*Mathf.Rad2Deg;
-
-            //var roh = 180 - gamma - yota;
-            //var rohRad = roh*Mathf.Deg2Rad;
-
-            //var l = (halfWit / Mathf.Tan(betaRad)) * (Mathf.Sin(rohRad) / Mathf.Sin(gammaRad));
-            //var h = Mathf.Cos(alphaRad) * l;
-            //var d = Mathf.Sin(alphaRad) * l;
-
-            //var dActual = d - halfWit;
-
-            //Debug.Log(l);
-            //Debug.Log(h);
-            //Debug.Log(dActual);
-
-            //sceneCamera.transform.position = new Vector3(halfWit, h, 0f - dActual);
-        }
     }
 }

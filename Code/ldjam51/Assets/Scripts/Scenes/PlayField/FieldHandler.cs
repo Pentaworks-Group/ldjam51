@@ -142,7 +142,7 @@ namespace Assets.Scripts.Scenes.PlayField
             plane.SetActive(FieldState.IsPlaneVisible);
             plane.transform.Translate(new Vector3(this.FieldState.ColumnCount - 1, 0, this.FieldState.RowCount - 1), Space.World);
 
-            PlayField.AdjustCamera(0, 0);
+            PlayField.AdjustCamera();
         }
 
         private void AddFence(TileModelBehaviour tileObject, ExtraModelBehaviour fenceTemplate, Int32 rotationAngle)
