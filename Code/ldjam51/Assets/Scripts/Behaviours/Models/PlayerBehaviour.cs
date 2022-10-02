@@ -103,15 +103,11 @@ namespace Assets.Scripts.Behaviours.Models
                 {
                     if (targetBehaviour.Tile.IsFinish)
                     {
-                        Debug.Log("Yay");
                         this.FieldHandler.FieldState.IsCompleted = true;
                         this.FieldHandler.SetActive(false);
                     }
                     else if (targetBehaviour.Tile.ExtraTemplate?.IsDeadly == true)
                     {
-                        // Lost
-
-                        Debug.Log("PEPSI");
                         Base.Core.Game.ChangeScene(SceneNames.GameOver);
                     }
                     else
