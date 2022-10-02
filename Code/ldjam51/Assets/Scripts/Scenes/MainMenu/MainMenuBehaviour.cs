@@ -95,44 +95,44 @@ public class MainMenuBehaviour : MonoBehaviour
             Core.Game.BackgroundAudioManager.Initialize();
         }
 
-//        Core.Game.AudioClipListMenu = new System.Collections.Generic.List<AudioClip>()
-//        {
-//            GameFrame.Base.Resources.Manager.Audio.Get("Background_1")
-//        };
+        //        Core.Game.AudioClipListMenu = new System.Collections.Generic.List<AudioClip>()
+        //        {
+        //            GameFrame.Base.Resources.Manager.Audio.Get("Background_1")
+        //        };
 
-//        Core.Game.AudioClipListGame1 = new System.Collections.Generic.List<AudioClip>()
-//        {
-//            GameFrame.Base.Resources.Manager.Audio.Get("Background_2"),
-//            GameFrame.Base.Resources.Manager.Audio.Get("Background_3"),
-//            GameFrame.Base.Resources.Manager.Audio.Get("Background_4")
-//        };
+        //        Core.Game.AudioClipListGame1 = new System.Collections.Generic.List<AudioClip>()
+        //        {
+        //            GameFrame.Base.Resources.Manager.Audio.Get("Background_2"),
+        //            GameFrame.Base.Resources.Manager.Audio.Get("Background_3"),
+        //            GameFrame.Base.Resources.Manager.Audio.Get("Background_4")
+        //        };
 
-//        Core.Game.AudioClipListGame2 = new System.Collections.Generic.List<AudioClip>()
-//        {
-//            GameFrame.Base.Resources.Manager.Audio.Get("Background_5"),
-//            GameFrame.Base.Resources.Manager.Audio.Get("Background_6"),
-//            GameFrame.Base.Resources.Manager.Audio.Get("Background_7"),
-////            GameFrame.Base.Resources.Manager.Audio.Get("Background_8"),
-//            GameFrame.Base.Resources.Manager.Audio.Get("Background_9")
-//        };
+        //        Core.Game.AudioClipListGame2 = new System.Collections.Generic.List<AudioClip>()
+        //        {
+        //            GameFrame.Base.Resources.Manager.Audio.Get("Background_5"),
+        //            GameFrame.Base.Resources.Manager.Audio.Get("Background_6"),
+        //            GameFrame.Base.Resources.Manager.Audio.Get("Background_7"),
+        ////            GameFrame.Base.Resources.Manager.Audio.Get("Background_8"),
+        //            GameFrame.Base.Resources.Manager.Audio.Get("Background_9")
+        //        };
 
-//        Core.Game.AudioClipListTransition = new System.Collections.Generic.List<AudioClip>()
-//        {
-//            GameFrame.Base.Resources.Manager.Audio.Get("Background_10")
-//        };
+        //        Core.Game.AudioClipListTransition = new System.Collections.Generic.List<AudioClip>()
+        //        {
+        //            GameFrame.Base.Resources.Manager.Audio.Get("Background_10")
+        //        };
 
-//        Core.Game.BackgroundAudioManager.Clips = Core.Game.AudioClipListMenu;
+        //        Core.Game.BackgroundAudioManager.Clips = Core.Game.AudioClipListMenu;
 
-//        Core.Game.AmbientClipList = new System.Collections.Generic.List<AudioClip>()
-//        {
-//            GameFrame.Base.Resources.Manager.Audio.Get("Protest_long")
-//        };
-//        Core.Game.AmbienceAudioManager.Clips = Core.Game.AmbientClipList;
+        //        Core.Game.AmbientClipList = new System.Collections.Generic.List<AudioClip>()
+        //        {
+        //            GameFrame.Base.Resources.Manager.Audio.Get("Protest_long")
+        //        };
+        //        Core.Game.AmbienceAudioManager.Clips = Core.Game.AmbientClipList;
 
-//        Core.Game.ShopClipList = new System.Collections.Generic.List<AudioClip>()
-//        {
-//            GameFrame.Base.Resources.Manager.Audio.Get("Shop_Music")
-//        };
+        //        Core.Game.ShopClipList = new System.Collections.Generic.List<AudioClip>()
+        //        {
+        //            GameFrame.Base.Resources.Manager.Audio.Get("Shop_Music")
+        //        };
 
         //if (!Core.Game.AmbienceAudioManager.IsPlaying)
         //{
@@ -154,7 +154,7 @@ public class MainMenuBehaviour : MonoBehaviour
 
             String tileTypesPath = Application.streamingAssetsPath + "/TileTypes.json";
 
-            StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<Assets.Scripts.Model.TileType>>(tileTypesPath, SetTileTypes));
+            StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<TileTypes>(tileTypesPath, SetTileTypes));
         }
     }
 
@@ -170,7 +170,7 @@ public class MainMenuBehaviour : MonoBehaviour
         return gameSettings;
     }
 
-    private List<TileType> SetTileTypes(List<TileType> tileTypes)
+    private TileTypes SetTileTypes(TileTypes tileTypes)
     {
         GameHandler.AvailableTileTypes = tileTypes;
 

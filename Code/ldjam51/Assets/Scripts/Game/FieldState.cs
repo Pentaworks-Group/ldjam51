@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Assets.Scripts.Model;
 
 namespace Assets.Scripts.Game
 {
@@ -11,6 +9,8 @@ namespace Assets.Scripts.Game
         public Boolean IsActive { get; set; }
         public Int32 RowCount { get; set; }
         public Int32 ColumnCount { get; set; }
+        public Player Player { get; set; }
+        public Finish Finish { get; set; }
         public Tile[,] Tiles { get; set; }
     }
 }

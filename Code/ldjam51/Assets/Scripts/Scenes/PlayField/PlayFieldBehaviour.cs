@@ -110,8 +110,8 @@ namespace Assets.Scripts.Scenes.PlayField
 
         private void ToggleFields()
         {
-            gameState.Field1.IsActive = !gameState.Field1.IsActive;
-            gameState.Field2.IsActive = !gameState.Field2.IsActive;
+            leftField.SetActive(!leftField.FieldState.IsActive);
+            rightField.SetActive(!rightField.FieldState.IsActive);            
         }
 
         private void AdjustCamera(float width, float height)
