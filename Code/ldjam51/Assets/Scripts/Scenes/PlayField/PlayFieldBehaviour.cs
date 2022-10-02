@@ -21,6 +21,7 @@ namespace Assets.Scripts.Scenes.PlayField
         private FieldHandler rightField;
         private TextMeshProUGUI elapsedTimeText;
         private TextMeshProUGUI remainingTimeText;
+        private float remainingTimeFontSize;
 
         public Camera sceneCamera;
 
@@ -38,7 +39,7 @@ namespace Assets.Scripts.Scenes.PlayField
 
             this.elapsedTimeText = transform.Find("Canvas/ElapsedConatiner/Text")?.GetComponent<TextMeshProUGUI>();
             this.remainingTimeText = transform.Find("Canvas/RemainingContainer/Text")?.GetComponent<TextMeshProUGUI>();
-
+            remainingTimeFontSize = remainingTimeText.fontSize;
             var templateConatiner = transform.Find("Templates");
 
             if (templateConatiner != default)
@@ -123,6 +124,7 @@ namespace Assets.Scripts.Scenes.PlayField
             if (this.remainingTimeText != default)
             {
                 this.remainingTimeText.text = gameState.TimeRemaining.ToString("#0.0");
+                this.remainingTimeText.fontSize = remainingTimeFontSize * (10 - remainingTimeFontSize) / 10 + remainingTimeFontSize;
             }
         }
 

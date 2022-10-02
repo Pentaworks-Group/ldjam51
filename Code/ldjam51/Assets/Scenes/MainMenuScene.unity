@@ -779,7 +779,7 @@ PrefabInstance:
     - target: {fileID: 7235878592488330974, guid: 82e661101c203c74bbf98b72a2684303, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6e22f652bac1d334d8a94210b52089d6, type: 3}
+      objectReference: {fileID: 21300000, guid: 7345f1bf63def3d45b20c622fad69240, type: 3}
     - target: {fileID: 8849340443900071137, guid: 82e661101c203c74bbf98b72a2684303, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -1753,7 +1753,7 @@ PrefabInstance:
     - target: {fileID: 7235878592488330974, guid: 82e661101c203c74bbf98b72a2684303, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6e22f652bac1d334d8a94210b52089d6, type: 3}
+      objectReference: {fileID: 21300000, guid: 7345f1bf63def3d45b20c622fad69240, type: 3}
     - target: {fileID: 8849340443900071137, guid: 82e661101c203c74bbf98b72a2684303, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1

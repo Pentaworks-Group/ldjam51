@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using Assets.Scripts.Base;
 
@@ -10,6 +11,8 @@ public class PauseMenuBehavior : MonoBehaviour
 {
     private Assets.Scripts.Core.GameState[] gameStates;
     public UnityEvent<Boolean> PauseToggled = new UnityEvent<Boolean>();
+
+    public List<GameObject> ObjectsToHide = new();
 
     public GameObject Menu;
     public GameObject MenuArea;
@@ -32,6 +35,10 @@ public class PauseMenuBehavior : MonoBehaviour
                 Hide();
 
                 this.PauseToggled.Invoke(false);
+                foreach (GameObject gameObject in ObjectsToHide)
+                {
+                    gameObject.SetActive(true);
+                }
             }
         }
         else
@@ -39,7 +46,10 @@ public class PauseMenuBehavior : MonoBehaviour
             Core.Game.PlayButtonSound();
 
             this.PauseToggled.Invoke(true);
-
+            foreach (GameObject gameObject in ObjectsToHide)
+            {
+                gameObject.SetActive(false);
+            }
             Show();
         }
     }
