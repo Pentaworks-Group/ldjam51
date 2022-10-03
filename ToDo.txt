@@ -12,7 +12,7 @@ Todo:
    
  UI:
  - exit fullscreen on mobile devices
- 
+ - Better tooltip
  
  
  
@@ -33,6 +33,10 @@ Nice to have:
  
  - check for default MobileInterface if WebGL
  - rotation of menus
+ - better cloud
+ - use treasure chest
+ - multimonster
+ - more game modes
  
  
 Ideas:
