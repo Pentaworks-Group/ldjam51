@@ -87,6 +87,11 @@ public class OptionsMenu : MonoBehaviour
         Core.Game.Options.MobileInterface = "Right";
     }
 
+    public void SaveOptions()
+    {
+        Core.Game.SaveOptions();
+    }
+
     private void UpdateValues()
     {
         if (Core.Game.Options != default)
