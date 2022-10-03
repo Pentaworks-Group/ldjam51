@@ -6,6 +6,7 @@ namespace Assets.Scripts.Core
     public class PlayerType
     {
         public String TemplateReference { get; set; }
+        public TileType Tile { get; set; }
         public List<String> Materials { get; set; }
     }
 }

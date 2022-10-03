@@ -64,7 +64,6 @@ namespace Assets.Scripts.Core
                     IsPlaneVisible = isPlaneVisible,
                     ColumnCount = columnCount,
                     RowCount = numRows
-
                 };
 
                 GenerateFields(gameMode, newFieldState);
@@ -110,13 +109,13 @@ namespace Assets.Scripts.Core
 
         private void AddPlayer(GameSettings gameMode, FieldState fieldState)
         {
-            var playerTile = gameMode.ObjectTypes.Players.GetRandomEntry();
+            var playerType = gameMode.ObjectTypes.Players.GetRandomEntry();
 
             var player = new Player()
             {
                 IsActive = fieldState.IsActive,
-                TemplateReference = playerTile.TemplateReference,
-                MaterialReference = playerTile.Materials.GetRandomEntry(),
+                TemplateReference = playerType.TemplateReference,
+                MaterialReference = playerType.Materials.GetRandomEntry(),
                 PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
                 PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount)
             };
@@ -133,14 +132,14 @@ namespace Assets.Scripts.Core
 
         private void AddFinish(GameSettings gameMode, FieldState fieldState)
         {
-            var targetTileTemplate = gameMode.ObjectTypes.Finishes.GetRandomEntry();
+            var finishType = gameMode.ObjectTypes.Finishes.GetRandomEntry();
 
             GeneratePosition(fieldState, out var x, out var y);
 
             var finish = new Finish()
             {
-                TemplateReference = targetTileTemplate.TemplateReference,
-                MaterialReference = targetTileTemplate.Materials.GetRandomEntry(),
+                TemplateReference = finishType.TemplateReference,
+                MaterialReference = finishType.Materials.GetRandomEntry(),
                 PositionX = x,
                 PositionZ = y
             };
@@ -162,12 +161,10 @@ namespace Assets.Scripts.Core
 
         private void AddMonster(GameSettings gameMode, FieldState fieldState)
         {
-            var targetTileTemplate = gameMode.ObjectTypes.Finishes.GetRandomEntry();
-
-            GeneratePosition(fieldState, out var x, out var z);
-
             if (gameMode.ObjectTypes.Monsters?.Count > 0)
             {
+                GeneratePosition(fieldState, out var x, out var z);
+
                 var monsterTemplate = gameMode.ObjectTypes.Monsters.GetRandomEntry();
 
                 var monster = new Monster()
