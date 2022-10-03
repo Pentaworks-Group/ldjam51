@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731713, g: 0.13414736, b: 0.12107852, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -541,7 +541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5865278983240936799, guid: 82e661101c203c74bbf98b72a2684303, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5865278983240936799, guid: 82e661101c203c74bbf98b72a2684303, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1076,11 +1076,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1461314814287008429, guid: d24b214865f598046a197e1ca217c7dc, type: 3}
       propertyPath: m_Text
+      value: Wolfhead
+      objectReference: {fileID: 0}
+    - target: {fileID: 1461314814634639795, guid: d24b214865f598046a197e1ca217c7dc, type: 3}
+      propertyPath: m_Text
       value: Salasam
       objectReference: {fileID: 0}
     - target: {fileID: 1461314815166865491, guid: d24b214865f598046a197e1ca217c7dc, type: 3}
       propertyPath: m_Text
-      value: XpArKeR
+      value: "XpArKeR \nthe \"lovely\" voice"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d24b214865f598046a197e1ca217c7dc, type: 3}
