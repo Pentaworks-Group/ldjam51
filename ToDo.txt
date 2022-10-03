@@ -31,6 +31,7 @@ WIP:
 Nice to have:
 ----------------------------------
  - moving monsters
+ - check for default MobileInterface if WebGL
  
  
 Ideas:
