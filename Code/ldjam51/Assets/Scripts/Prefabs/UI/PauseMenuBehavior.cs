@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class PauseMenuBehavior : MonoBehaviour
 {
-    private Assets.Scripts.Core.GameState[] gameStates;
     public UnityEvent<Boolean> PauseToggled = new UnityEvent<Boolean>();
 
     public List<GameObject> ObjectsToHide = new();
@@ -18,8 +17,28 @@ public class PauseMenuBehavior : MonoBehaviour
     public GameObject MenuArea;
     public GameObject OptionsArea;
     public GameObject SaveGameArea;
+    public GameObject GUI;
     public Button BackButton;
     public Button ContinueButton;
+
+    private Transform inputFieldLeft;
+    private Transform inputFieldRight;
+    // Start is called before the first frame update
+    void Start()
+    {
+        inputFieldLeft = GUI.transform.Find("InputFieldLeft");
+        inputFieldRight = GUI.transform.Find("InputFieldRight");
+        Hide();
+        ReloadUI();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space))
+        {
+            ToggleMenu();
+        }
+    }
 
     public void ToggleMenu()
     {
@@ -39,6 +58,7 @@ public class PauseMenuBehavior : MonoBehaviour
                 {
                     gameObject.SetActive(true);
                 }
+                ReloadUI(); //TODO prevent double activating/deactivating
             }
         }
         else
@@ -64,7 +84,7 @@ public class PauseMenuBehavior : MonoBehaviour
     public void Hide()
     {
         Menu.SetActive(false);
-     
+
         Time.timeScale = 1;
     }
 
@@ -88,6 +108,29 @@ public class PauseMenuBehavior : MonoBehaviour
         SetVisible(pauseMenu: true);
     }
 
+    private void ReloadUI()
+    {
+        switch (Core.Game.Options.MobileInterface)
+        {
+            case "None":
+                inputFieldLeft.gameObject.SetActive(false);
+                inputFieldRight.gameObject.SetActive(false);
+                break;
+            case "Left":
+                inputFieldLeft.gameObject.SetActive(true);
+                inputFieldRight.gameObject.SetActive(false);
+                break;
+            case "Right":
+                inputFieldLeft.gameObject.SetActive(false);
+                inputFieldRight.gameObject.SetActive(true);
+                break;
+            default:
+                inputFieldLeft.gameObject.SetActive(false);
+                inputFieldRight.gameObject.SetActive(true);
+                break;
+        }
+    }
+
     public void ShowOptions()
     {
         Core.Game.PlayButtonSound();
@@ -103,20 +146,7 @@ public class PauseMenuBehavior : MonoBehaviour
         Core.Game.ChangeScene(SceneNames.MainMenu);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Hide();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space))
-        {
-            ToggleMenu();
-        }
-    }
 
     private void SetVisible(Boolean pauseMenu = false, Boolean options = false, Boolean saveGame = false)
     {

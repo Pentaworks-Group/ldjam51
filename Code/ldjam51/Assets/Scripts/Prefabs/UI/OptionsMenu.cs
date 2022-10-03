@@ -2,6 +2,8 @@
 using Assets.Scripts;
 using Assets.Scripts.Base;
 
+using TMPro;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,6 +45,15 @@ public class OptionsMenu : MonoBehaviour
     public void OnAnimationEnabledToggleValueChanged()
     {
         Core.Game.Options.AreAnimationsEnabled = this.AnimationEnabledToggle.isOn;
+    }
+
+    public void OnMobileInterfaceValueChanged(Toggle t)
+    {
+        if (t.isOn)
+        {
+            TextMeshProUGUI text = t.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            Core.Game.Options.MobileInterface = text.text;
+        }
     }
 
     public void OnRestoreDefaultsClick()
