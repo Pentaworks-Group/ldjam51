@@ -35,7 +35,7 @@ namespace Assets.Scripts.Core
                 CurrentScene = SceneNames.PlayFieldScene,
                 Mode = gameMode,
                 TimeRemaining = gameMode.Interval,
-                NextTick = gameMode.Interval - gameMode.TickInterval,
+                NextTick = gameMode.TickStart,
                 Field1 = GenerateField(gameMode, false),
                 Field2 = GenerateField(gameMode, true),
             };
