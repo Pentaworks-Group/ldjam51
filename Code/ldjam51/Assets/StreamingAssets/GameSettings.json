@@ -160,7 +160,7 @@
         {
           "Name": "Trap",
           "TemplateReference": "Trap",
-          "IsDeadly": false,
+          "IsDeadly": true,
           "GameOverText": "You walked into a trap!",
           "SoundEffects": [],
           "Materials": []
@@ -236,7 +236,7 @@
         {
           "Name": "Trap",
           "TemplateReference": "Trap",
-          "IsDeadly": false,
+          "IsDeadly": true,
           "GameOverText": "You walked into a trap!",
           "SoundEffects": [],
           "Materials": []
