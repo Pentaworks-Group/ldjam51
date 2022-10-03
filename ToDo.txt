@@ -27,7 +27,7 @@ Refactoring:
  
 WIP:
 ----------------------------------
- - moving monsters (XPA)
+ 
  
 Nice to have:
 ----------------------------------
@@ -38,9 +38,10 @@ Nice to have:
  
 Ideas:
 ----------------------------------
- - multiple gamefiles (e.g. 3)	
+ - multiple gamefields (e.g. 3)	
  
  
 Done:
 ----------------------------------
  - incremental difficulty		
+ - moving monsters (XPA)
