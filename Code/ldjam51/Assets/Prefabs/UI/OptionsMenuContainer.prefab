@@ -2330,6 +2330,7 @@ MonoBehaviour:
   AmbienceVolumeSlider: {fileID: 3427952569550154950}
   BackgroundVolumeSlider: {fileID: 5508897733177618366}
   AnimationEnabledToggle: {fileID: 7663446371845514529}
+  MobileInterface: {fileID: 5596243943356218686}
 --- !u!222 &8039468310948333088
 CanvasRenderer:
   m_ObjectHideFlags: 0
