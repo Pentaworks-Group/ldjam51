@@ -5,7 +5,7 @@
     "TickInterval": 1,
     "TickStart": 5,
     "ColumnCount": 9,
-	"IncrementalSpawn":25,
+	"IncrementalSpawn":0.05,
     "RowCount": 9,
     "TileTypes": {
       "Players": [
