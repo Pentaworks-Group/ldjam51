@@ -5,7 +5,6 @@ Todo:
  Exceptions:
  
  Core:
- - Loading of WebGL on some iOS devices (helps maybe https://forum.unity.com/threads/ios-15-webgl-2-issue.1176116/)
  
   
  GamePlay:
