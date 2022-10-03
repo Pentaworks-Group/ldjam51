@@ -3,7 +3,7 @@
     {
       "Reference": "PlayerTemplate",
       "Materials": [
-        "Leather"
+        "DefaultPlayer"
       ],
       "ExtraTemplates": []
     }

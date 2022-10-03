@@ -68,7 +68,12 @@ namespace Assets.Scripts.Scenes.PlayField
             FindField(transform.Find("LeftField")?.gameObject, ref leftField, gameState.Field1);
             FindField(transform.Find("RightField")?.gameObject, ref rightField, gameState.Field2);
 
-            rightField.gameObject.transform.position = new Vector3(gameState.Field1.ColumnCount * 2 + 5, 0, 0);
+            var fieldOffset = (gameState.Field1.ColumnCount * 2) + 5;
+
+            leftField.transform.position = Vector3.zero;
+            
+            rightField.transform.position = Vector3.zero;
+            rightField.transform.Translate(new Vector3(fieldOffset, 0, 0), Space.World);
 
             if (this.levelsCompletedText != default)
             {
@@ -113,13 +118,12 @@ namespace Assets.Scripts.Scenes.PlayField
         {
             gameState.Field1 = Base.Core.Game.GenerateField(gameState.Mode, false);
             gameState.Field2 = Base.Core.Game.GenerateField(gameState.Mode, true);
-            
+
             gameState.TimeRemaining = gameState.Mode.Interval;
             gameState.ToggleIndex = 0;
 
             leftField.LoadNewField(this, gameState.Field1);
             rightField.LoadNewField(this, gameState.Field2);
-            //Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.PlayFieldScene);
         }
 
         public T GetTemplateByName<T>(String templateName) where T : ModelBehaviour
@@ -157,7 +161,7 @@ namespace Assets.Scripts.Scenes.PlayField
 
         public void AdjustCamera()
         {
-            Bounds b = GetBound(this.gameObject);
+            Bounds b = GetBounds(this.gameObject);
 
             float cameraDistance = .25f; // Constant factor
             Vector3 objectSizes = b.max - b.min;
@@ -260,7 +264,7 @@ namespace Assets.Scripts.Scenes.PlayField
             }
         }
 
-        internal static Bounds GetBound(GameObject gameObject)
+        internal static Bounds GetBounds(GameObject gameObject)
         {
             Bounds b = new Bounds(gameObject.transform.position, Vector3.zero);
 
@@ -271,6 +275,11 @@ namespace Assets.Scripts.Scenes.PlayField
 
         internal static Bounds GetBoundRec(Transform goT, Bounds b)
         {
+            if (goT.name == "Plane")
+            {
+
+            }
+
             foreach (Transform child in goT)
             {
                 if (child.gameObject.activeSelf)

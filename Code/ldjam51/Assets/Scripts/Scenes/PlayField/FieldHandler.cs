@@ -159,7 +159,17 @@ namespace Assets.Scripts.Scenes.PlayField
                 this.playerBehaviour.gameObject.SetActive(true);
             }
 
-            plane.transform.position = new Vector3(this.transform.position.x + this.FieldState.ColumnCount - 1, plane.transform.position.y, this.FieldState.RowCount - 1);
+            var totalColumns = this.FieldState.ColumnCount + 2;
+            var totalRows = this.FieldState.RowCount + 2;
+
+            var xPosition = totalColumns - 2;
+            var zPosition = totalRows - 2;
+
+            var xScale = this.FieldState.ColumnCount + 2;
+            var zScale = this.FieldState.RowCount + 2;
+
+            plane.transform.position = new Vector3(xPosition, plane.transform.position.y, zPosition);
+            plane.transform.localScale = new Vector3(xScale, zScale, plane.transform.localScale.z);
 
             if (FieldState.IsActive)
             {
@@ -174,8 +184,6 @@ namespace Assets.Scripts.Scenes.PlayField
             {
                 plane.SetActive(true);
             }
-
-            PlayField.AdjustCamera();
         }
 
         private void AddFence(TileModelBehaviour tileObject, ExtraModelBehaviour fenceTemplate, Int32 rotationAngle)
