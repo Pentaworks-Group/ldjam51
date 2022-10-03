@@ -129,7 +129,7 @@ namespace Assets.Scripts.Core
                 {
                     if (fieldState.Tiles[column, row] == default)
                     {
-                        fieldState.Tiles[column, row] = gameMode.TileTypes.Tiles.GetRandomEntry().ToTile(gameMode);
+                        fieldState.Tiles[column, row] = gameMode.TileTypes.Tiles.GetRandomEntry().ToTile();
                     }
                 }
             }

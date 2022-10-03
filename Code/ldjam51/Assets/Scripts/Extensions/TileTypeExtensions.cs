@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using Assets.Scripts.Game;
 using Assets.Scripts.Model;
@@ -9,7 +10,7 @@ namespace Assets.Scripts.Extensions
 {
     public static class TileTypeExtensions
     {
-        public static Tile ToTile(this TileType tileType, GameSettings gameMode)
+        public static Tile ToTile(this TileType tileType)
         {
             if (tileType != default)
             {
@@ -22,13 +23,19 @@ namespace Assets.Scripts.Extensions
 
                 if (tileType.Extras?.Count > 0)
                 {
-                    var randomExtra = tileType.Extras.GetRandomEntry();
-
-                    if (randomExtra.HasValue)
+                    if (UnityEngine.Random.value < Base.Core.SelectedGameMode.ExtraChance)
                     {
-                        var extraTileType = gameMode.TileTypes.Extras.FirstOrDefault(t => t.Reference == randomExtra.Value.Key);
+                        float take = UnityEngine.Random.value;
+                        foreach (TileType t in Base.Core.SelectedGameMode.TileTypes.Extras)
+                        {
+                            float weight = Base.Core.SelectedGameMode.GetExtraWeights()[tileType.Reference].GetValueOrDefault(t.Reference, 0f);
+                            if (weight > take)
+                            {
+                                tile.ExtraTemplate = t.ToTile();
+                                break;
+                            }
+                        }
 
-                        tile.ExtraTemplate = extraTileType.ToTile(gameMode);
                     }
                 }
 

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using Assets.Scripts.Model;
 
@@ -11,4 +13,47 @@ public class GameSettings
     public Int32 ColumnCount { get; set; } = 9;
     public Int32 RowCount { get; set; } = 9;
     public TileTypes TileTypes { get; set; }
+    public float ExtraChance { get; set; } = 0.2f;
+    private Dictionary<String, Dictionary<String, float>> ExtraWeights { get; set; }
+
+
+    public Dictionary<String, Dictionary<String, float>> GetExtraWeights()
+    {
+        if (this.ExtraWeights == default)
+        {
+            this.ExtraWeights = GetExtraWeightsForList(TileTypes.Tiles);
+        }
+        return this.ExtraWeights;
+    }
+
+    private Dictionary<String, Dictionary<String, float>> GetExtraWeightsForList(List<TileType> tileTypeList)
+    {
+        Dictionary<String, Dictionary<String, float>> weights = new();
+        foreach (TileType tileType in tileTypeList)
+        {
+            Dictionary<String, float> extraWeights = GetExtraWeights(tileType);
+            weights[tileType.Reference] = extraWeights;
+        }
+
+        return weights;
+    }
+
+    private Dictionary<String, float> GetExtraWeights(TileType tileType)
+    {
+        Dictionary<String, float> weights = new Dictionary<String, float>();
+        float weightSum = 0;
+        foreach (KeyValuePair<String, float> t in tileType.Extras)
+        {
+            float weight = t.Value;
+            weightSum += weight;
+            weights[t.Key] = weightSum;
+        }
+
+        foreach (String key in weights.Keys.ToList())
+        {
+            weights[key] = weights[key]/ weightSum;
+        }
+
+        return weights;
+    }
 }

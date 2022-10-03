@@ -192,5 +192,56 @@
         }
       ]
     }
+  },
+  {
+    "Name": "Queen Of Blades",
+    "Interval": 5,
+    "TickInterval": 1,
+    "TickStart": 5,
+    "ColumnCount": 9,
+    "RowCount": 9,
+	"ExtraChance": 0.3,
+    "TileTypes": {
+      "Players": [
+        {
+          "Reference": "PlayerTemplate",
+          "Materials": [
+            "DefaultPlayer"
+          ],
+          "ExtraTemplates": []
+        }
+      ],
+      "Monsters": [],
+      "Finishes": [
+        {
+          "Reference": "Tile",
+          "Materials": [
+            "FinishLine"
+          ],
+          "ExtraTemplates": [
+            {
+              "Reference": "Target"
+            }
+          ]
+        }
+      ],
+      "Tiles": [
+        {
+          "Reference": "Tile",
+          "Materials": [
+            "Grass"
+          ],
+          "Extras": {
+            "Trap": 1
+          }
+        }
+      ],
+      "Extras": [
+        {
+          "Reference": "Trap",
+          "IsDeadly": true
+        }
+      ]
+    }
   }
 ]
