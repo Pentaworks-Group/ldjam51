@@ -5,7 +5,63 @@
     "TickInterval": 1,
     "TickStart": 5,
     "ColumnCount": 9,
-    "RowCount": 9
+    "RowCount": 9,
+    "TileTypes": {
+      "Players": [
+        {
+          "Reference": "PlayerTemplate",
+          "Materials": [
+            "DefaultPlayer"
+          ],
+          "Extras": {
+          }
+        }
+      ],
+      "Monsters": [],
+      "Finishes": [
+        {
+          "Reference": "Tile",
+          "Materials": [
+            "FinishLine"
+          ],
+          "Extras": {
+            "Target": 100
+          }
+        }
+      ],
+      "Tiles": [
+        {
+          "Reference": "Tile",
+          "Materials": [
+            "Grass"
+          ],
+          "Extras": {
+            "Stone": 1,
+            "Trees": 1,
+            "Chest": 1,
+            "Trap":1
+          }
+        }
+      ],
+      "Extras": [
+        {
+          "Reference": "Stone",
+          "IsDeadly": false
+        },
+        {
+          "Reference": "Trees",
+          "IsDeadly": false
+        },
+        {
+          "Reference": "Chest",
+          "IsDeadly": false
+        },
+        {
+          "Reference": "Trap",
+          "IsDeadly": true
+        }
+      ]
+    }
   },
   {
     "Name": "Biggus Dickus",
@@ -13,7 +69,64 @@
     "TickInterval": 1,
     "TickStart": 5,
     "ColumnCount": 18,
-    "RowCount": 18
+    "RowCount": 18,
+    "TileTypes": {
+      "Players": [
+        {
+          "Reference": "PlayerTemplate",
+          "Materials": [
+            "DefaultPlayer"
+          ],
+          "Extras": {
+            "Target": 100
+          }
+        }
+      ],
+      "Monsters": [],
+      "Finishes": [
+        {
+          "Reference": "Tile",
+          "Materials": [
+            "FinishLine"
+          ],
+          "Extras": {
+            "Target":  100
+          }
+        }
+      ],
+      "Tiles": [
+        {
+          "Reference": "Tile",
+          "Materials": [
+            "Grass"
+          ],
+          "Extras": {
+            "Stone": 1,
+            "Trees": 1,
+            "Chest": 1,
+            "Trap": 1
+          }
+        }
+      ],
+      "Extras": [
+        {
+          "Reference": "Stone",
+          "IsDeadly": false
+        },
+        {
+          "Reference": "Trees",
+          "IsDeadly": false
+        },
+        {
+          "Reference": "Chest",
+          "IsDeadly": false
+        },
+        {
+          "Reference": "Trap",
+          "IsDeadly": true
+        }
+      ]
+    }
   },
   {
     "Name": "Hugh Mungus",
@@ -21,6 +134,61 @@
     "TickInterval": 1,
     "TickStart": 5,
     "ColumnCount": 72,
-    "RowCount": 72
+    "RowCount": 72,
+    "TileTypes": {
+      "Players": [
+        {
+          "Reference": "PlayerTemplate",
+          "Materials": [
+            "DefaultPlayer"
+          ],
+          "Extras": {}
+        }
+      ],
+      "Monsters": [],
+      "Finishes": [
+        {
+          "Reference": "Tile",
+          "Materials": [
+            "FinishLine"
+          ],
+          "Extras": {
+            "Target": 100
+          }
+        }
+      ],
+      "Tiles": [
+        {
+          "Reference": "Tile",
+          "Materials": [
+            "Grass"
+          ],
+          "Extras": {
+            "Stone": 1,
+            "Trees": 1,
+            "Chest": 1,
+            "Trap": 1
+          }
+        }
+      ],
+      "Extras": [
+        {
+          "Reference": "Stone",
+          "IsDeadly": false
+        },
+        {
+          "Reference": "Trees",
+          "IsDeadly": false
+        },
+        {
+          "Reference": "Chest",
+          "IsDeadly": false
+        },
+        {
+          "Reference": "Trap",
+          "IsDeadly": true
+        }
+      ]
+    }
   }
 ]

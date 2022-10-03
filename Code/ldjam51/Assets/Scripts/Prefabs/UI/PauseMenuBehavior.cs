@@ -104,6 +104,10 @@ public class PauseMenuBehavior : MonoBehaviour
 
     public void OnBackButtonClicked()
     {
+        if (this.SaveGameArea.activeSelf)
+        {
+            Core.Game.SaveOptions();
+        }
         Core.Game.PlayButtonSound();
         SetVisible(pauseMenu: true);
     }

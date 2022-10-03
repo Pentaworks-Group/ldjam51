@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 
 using Assets.Scripts.Base;
-using Assets.Scripts.Model;
 
 using GameFrame.Core.Audio.Multi;
 using GameFrame.Core.Audio.Single;
@@ -151,11 +150,6 @@ public class MainMenuBehaviour : MonoBehaviour
         {
             String filePath = Application.streamingAssetsPath + "/GameSettings.json";
             StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<List<GameSettings>>(filePath, SetGameSettings));
-
-
-            String tileTypesPath = Application.streamingAssetsPath + "/TileTypes.json";
-
-            StartCoroutine(GameFrame.Core.Json.Handler.DeserializeObjectFromStreamingAssets<TileTypes>(tileTypesPath, SetTileTypes));
         }
     }
 
@@ -169,13 +163,6 @@ public class MainMenuBehaviour : MonoBehaviour
         }
 
         return gameSettings;
-    }
-
-    private TileTypes SetTileTypes(TileTypes tileTypes)
-    {
-        GameHandler.AvailableTileTypes = tileTypes;
-
-        return tileTypes;
     }
 
     public void ReloadSettingsClick()
