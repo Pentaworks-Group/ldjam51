@@ -16,7 +16,7 @@ Todo:
  - exit fullscreen on mobile devices
  - GameOverScene Background
  - MainMenu Background
- - Credits Scene
+ - Credits Scene Background
  
  Audio:
  - Horn (Timer elapsed)
@@ -28,11 +28,11 @@ Refactoring:
  
 WIP:
 ----------------------------------
- XPA: Credits Scene 
+ - moving monsters (XPA)
  
 Nice to have:
 ----------------------------------
- - moving monsters
+ 
  - check for default MobileInterface if WebGL
  
  
