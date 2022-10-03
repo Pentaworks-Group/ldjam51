@@ -118,9 +118,7 @@ namespace Assets.Scripts.Behaviours.Models
                     }
                     else if (targetBehaviour.Tile.ExtraTemplate?.IsDeadly == true)
                     {
-                        var possibleAudios = new List<string> { "Awww", "PlayerHit" };
-                        var choice = possibleAudios.GetRandomEntry(); 
-                        Base.Core.Game.EffectsAudioManager.Play(choice);
+                        Base.Core.Game.EffectsAudioManager.Play("PlayerHit");
 
                         Base.Core.Game.State.WatchOutForText = $"the {targetBehaviour.Tile.ExtraTemplate.Name}";
                         Base.Core.Game.State.DeathReason = targetBehaviour.Tile.ExtraTemplate.GameOverText;
@@ -136,10 +134,7 @@ namespace Assets.Scripts.Behaviours.Models
                 }
                 else if (targetBehaviour is MonsterBehaviour monsterBehaviour)
                 {
-                    var possibleAudios = new List<string> { "Awww", "PlayerHit" };
-                    var choice = possibleAudios.GetRandomEntry();
-
-                    Base.Core.Game.EffectsAudioManager.Play(choice);
+                    Base.Core.Game.EffectsAudioManager.Play("Awww");
 
                     Base.Core.Game.State.WatchOutForText = $"the {monsterBehaviour.Monster.Name}";
                     Base.Core.Game.State.DeathReason = monsterBehaviour.Monster.GameOverText;
