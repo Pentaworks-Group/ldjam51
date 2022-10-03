@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Assets.Scripts.Behaviours.Monsters;
 using Assets.Scripts.Scenes.PlayField;
 
 using UnityEngine;
@@ -97,7 +98,8 @@ namespace Assets.Scripts.Behaviours.Models
         private void OnTriggerEnter(Collider other)
         {
             if (this.FieldHandler?.FieldState?.Player != default)
-            {                var targetBehaviour = other.GetComponent<ModelBehaviour>();
+            {
+                var targetBehaviour = other.GetComponent<ModelBehaviour>();
 
                 if (targetBehaviour.Tile != default)
                 {
@@ -123,6 +125,12 @@ namespace Assets.Scripts.Behaviours.Models
 
                         Base.Core.Game.EffectsAudioManager.Play("Bonk");
                     }
+                }
+                else if (targetBehaviour is MonsterBehaviour)
+                {
+                    Base.Core.Game.EffectsAudioManager.Play("Awww");
+
+                    Base.Core.Game.ChangeScene(SceneNames.GameOver);
                 }
             }
         }
