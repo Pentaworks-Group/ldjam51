@@ -240,7 +240,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &1682637802365037447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,6 +261,7 @@ MonoBehaviour:
   MenuArea: {fileID: 6866482383246554470}
   OptionsArea: {fileID: 7882137834077052123}
   SaveGameArea: {fileID: 4423638222082093135}
+  GUI: {fileID: 0}
   BackButton: {fileID: 429715799001396358}
   ContinueButton: {fileID: 3934673285315179486}
 --- !u!1 &7451514606345876462

@@ -13,10 +13,31 @@ public class OptionsMenu : MonoBehaviour
     public Slider AmbienceVolumeSlider;
     public Slider BackgroundVolumeSlider;
     public Toggle AnimationEnabledToggle;
+    public ToggleGroup MobileInterface;
 
     private void Start()
     {
         this.UpdateValues();
+        this.SetMobileInterfaceToggles();
+    }
+
+    private void SetMobileInterfaceToggles()
+    {
+        switch (Core.Game.Options.MobileInterface)
+        {
+            case "None":
+                MobileInterface.transform.Find("ToggleNone").GetComponent<Toggle>().isOn = true;
+                break;
+            case "Left":
+                MobileInterface.transform.Find("ToggleLeft").GetComponent<Toggle>().isOn = true;
+                break;
+            case "Right":
+                MobileInterface.transform.Find("ToggleRight").GetComponent<Toggle>().isOn = true;
+                break;
+            default:
+                MobileInterface.transform.Find("ToggleRight").GetComponent<Toggle>().isOn = true;
+                break;
+        }
     }
 
     private void FixedUpdate()
@@ -63,6 +84,7 @@ public class OptionsMenu : MonoBehaviour
         AmbienceVolumeSlider.value = 0.125f;
         BackgroundVolumeSlider.value = 0.125f;
         Core.Game.Options.AreAnimationsEnabled = true;
+        Core.Game.Options.MobileInterface = "Right";
     }
 
     private void UpdateValues()
