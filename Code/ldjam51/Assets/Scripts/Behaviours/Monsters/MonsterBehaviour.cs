@@ -117,7 +117,7 @@ namespace Assets.Scripts.Behaviours.Monsters
 
                 if (tile != default)
                 {
-                    if ((!tile.IsFinish) && (tile.ExtraTemplate == default))
+                    if ((!tile.IsFinish) && (!tile.IsStart) && (tile.ExtraTemplate == default))
                     {
                         return true;
                     }

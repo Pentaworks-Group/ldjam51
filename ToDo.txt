@@ -39,8 +39,8 @@ Nice to have:
 Ideas:
 ----------------------------------
  - multiple gamefiles (e.g. 3)	
- - incremental difficulty		
  
  
 Done:
 ----------------------------------
+ - incremental difficulty		
