@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Assets.Scripts.Core;
+
 using Newtonsoft.Json;
 
 using UnityEngine;
@@ -11,7 +13,6 @@ namespace Assets.Scripts.Model
         public String TemplateReference { get; set; }
         public Int32 PositionX { get; set; }
         public Int32 PositionZ { get; set; }
-
         public String MaterialReference { get; set; }
 
         private Material material;
