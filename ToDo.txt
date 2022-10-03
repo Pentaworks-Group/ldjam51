@@ -19,16 +19,16 @@ Todo:
  - Credits Scene
  
  Audio:
- - 
+ - Horn (Timer elapsed)
  
   
 Refactoring:
 ----------------------------------
- - Position of Camera seems slightly off (slightly offset to the left) (PlayField)
+ - Position of Camera seems slightly off (offset to the left) (PlayField)
  
 WIP:
 ----------------------------------
-
+ XPA: Credits Scene 
  
 Nice to have:
 ----------------------------------
