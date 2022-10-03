@@ -21,7 +21,7 @@ Todo:
   
 Refactoring:
 ----------------------------------
- - 
+ - Position of Camera seems slightly off (slightly offset to the left) (PlayField)
  
 WIP:
 ----------------------------------
