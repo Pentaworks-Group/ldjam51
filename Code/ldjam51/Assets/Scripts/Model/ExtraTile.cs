@@ -1,20 +1,19 @@
 ﻿using System;
-
-using Assets.Scripts.Model;
+using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
 using UnityEngine;
 
-namespace Assets.Scripts.Game
+namespace Assets.Scripts.Model
 {
-    public class Tile
+    public class ExtraTile
     {
         public String Name { get; set; }
         public String TemplateReference { get; set; }
-        public Boolean IsStart { get; set; }
-        public Boolean IsFinish { get; set; }
-        public ExtraTile ExtraTemplate { get; set; }
+        public Boolean IsDeadly { get; set; }
+        public String GameOverText { get; set; }
+        public List<String> SoundEffects { get; set; }
         public String MaterialReference { get; set; }
 
         private Material material;
@@ -39,8 +38,5 @@ namespace Assets.Scripts.Game
                 }
             }
         }
-
-        [JsonIgnore]
-        public FieldState FieldState { get; set; }
     }
 }

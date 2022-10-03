@@ -93,7 +93,7 @@ namespace Assets.Scripts.Core
             var player = new Player()
             {
                 IsActive = fieldState.IsActive,
-                TemplateReference = playerTile.Reference,
+                TemplateReference = playerTile.TemplateReference,
                 MaterialReference = playerTile.Materials.GetRandomEntry(),
                 PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
                 PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount)
@@ -112,7 +112,8 @@ namespace Assets.Scripts.Core
 
             var finish = new Finish()
             {
-                TemplateReference = targetTileTemplate.Reference,
+                TemplateReference = targetTileTemplate.TemplateReference,
+                MaterialReference = targetTileTemplate.Materials.GetRandomEntry(),
                 PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
                 PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount)
             };
@@ -121,9 +122,9 @@ namespace Assets.Scripts.Core
 
             fieldState.Tiles[finish.PositionX, finish.PositionZ] = new Tile()
             {
-                TemplateReference = "Tile",
                 IsFinish = true,
-                ExtraTemplate = new Tile()
+                TemplateReference = finish.TemplateReference,
+                ExtraTemplate = new ExtraTile()
                 {
                     TemplateReference = "Finish",
                     Material = GameFrame.Base.Resources.Manager.Materials.Get("Finish")

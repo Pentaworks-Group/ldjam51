@@ -15,8 +15,7 @@ namespace Assets.Scripts.Extensions
             {
                 var tile = new Tile()
                 {
-                    TemplateReference = tileType.Reference,
-                    IsDeadly = tileType.IsDeadly,
+                    TemplateReference = tileType.TemplateReference,
                     Material = GameFrame.Base.Resources.Manager.Materials.Get(tileType.Materials.GetRandomEntry())
                 };
 
@@ -32,16 +31,18 @@ namespace Assets.Scripts.Extensions
                     if (UnityEngine.Random.value < chance)
                     {
                         float take = UnityEngine.Random.value;
-                        foreach (TileType t in Base.Core.SelectedGameMode.ObjectTypes.Extras)
+
+                        foreach (var extraWeight in Base.Core.SelectedGameMode.ObjectTypes.Extras)
                         {
-                            float weight = Base.Core.SelectedGameMode.GetExtraWeights()[tileType.Reference].GetValueOrDefault(t.Reference, 0f);
+                            var weights = Base.Core.SelectedGameMode.GetExtraWeights();
+
+                            float weight = weights[tileType.TemplateReference].GetValueOrDefault(extraWeight.Name, 0f);
                             if (weight > take)
                             {
-                                tile.ExtraTemplate = t.ToTile();
+                                tile.ExtraTemplate = extraWeight.ToTile();
                                 break;
                             }
                         }
-
                     }
                 }
 

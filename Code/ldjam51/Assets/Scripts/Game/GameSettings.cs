@@ -25,16 +25,18 @@ public class GameSettings
         {
             this.ExtraWeights = GetExtraWeightsForList(ObjectTypes.Tiles);
         }
+
         return this.ExtraWeights;
     }
 
     private Dictionary<String, Dictionary<String, float>> GetExtraWeightsForList(List<TileType> tileTypeList)
     {
         Dictionary<String, Dictionary<String, float>> weights = new();
+
         foreach (TileType tileType in tileTypeList)
         {
             Dictionary<String, float> extraWeights = GetExtraWeights(tileType);
-            weights[tileType.Reference] = extraWeights;
+            weights[tileType.TemplateReference] = extraWeights;
         }
 
         return weights;

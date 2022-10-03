@@ -80,7 +80,7 @@ public class SaveGameContainerBehaviour : MonoBehaviour
     {
         int index = saveGameSlotBehaviour.index;
         Assets.Scripts.Base.Core.Game.State.SavedOn = DateTime.Now;
-        this.savedGames[index] = Assets.Scripts.Base.Core.Game.State; 
+        this.savedGames[index] = Assets.Scripts.Base.Core.Game.State;
         SaveGames();
         UpdateSlots();
     }
@@ -100,11 +100,17 @@ public class SaveGameContainerBehaviour : MonoBehaviour
 
         if (!System.String.IsNullOrEmpty(savedGamesJson))
         {
-            this.savedGames = GameFrame.Core.Json.Handler.Deserialize<List<GameState>>(savedGamesJson);
-            Debug.Log($"Found GameStates: {this.savedGames.Count}");
+            try
+            {
+                this.savedGames = GameFrame.Core.Json.Handler.Deserialize<List<GameState>>(savedGamesJson);
+                Debug.Log($"Found GameStates: {this.savedGames.Count}");
+            }
+            catch
+            {
+            }
+
             UpdateSlots();
         }
-
     }
 
     private void UpdateSlots()

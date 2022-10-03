@@ -237,6 +237,7 @@ namespace Assets.Scripts.Scenes.PlayField
                 }
 
                 this.monsterBehaviour.FieldHandler = this;
+                this.monsterBehaviour.Monster = monster;
 
                 this.monsterBehaviour.transform.Translate(newPosition, UnityEngine.Space.World);
                 this.monsterBehaviour.gameObject.SetActive(true);
