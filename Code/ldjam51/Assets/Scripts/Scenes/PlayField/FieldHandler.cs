@@ -59,6 +59,11 @@ namespace Assets.Scripts.Scenes.PlayField
             {
                 Destroy(this.playerBehaviour.gameObject);
             }
+
+            if (this.monsterBehaviour != null)
+            {
+                Destroy(this.monsterBehaviour.gameObject);
+            }
         }
 
         private void LoadField()
