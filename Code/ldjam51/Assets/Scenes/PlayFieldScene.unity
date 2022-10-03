@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17628023, g: 0.22062705, b: 0.30295008, a: 1}
+  m_IndirectSpecularColor: {r: 0.17628048, g: 0.22062775, b: 0.30295068, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -252,10 +252,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3340593580460954936, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4135483797724031852, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
-      propertyPath: m_PresetInfoIsWorld
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4135483797724031852, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
@@ -3745,7 +3741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 533daf9ad9088334ab3d63ccf8515fb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsRotatable: 1
+  IsRotatable: 0
 --- !u!64 &1713080027
 MeshCollider:
   m_ObjectHideFlags: 0

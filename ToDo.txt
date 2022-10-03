@@ -14,6 +14,9 @@ Todo:
  UI:
  - rotation of menus
  - exit fullscreen on mobile devices
+ - GameOverScene Background
+ - MainMenu Background
+ - Credits Scene
  
  Audio:
  - 
@@ -25,7 +28,7 @@ Refactoring:
  
 WIP:
 ----------------------------------
- - 
+ - Credits Scene
 
  
 Nice to have:
