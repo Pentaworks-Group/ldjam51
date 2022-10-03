@@ -55,7 +55,7 @@ namespace Assets.Scripts.Core
                     RowCount = gameMode.RowCount
                 };
 
-                GenerateFields(newFieldState);
+                GenerateFields(gameMode, newFieldState);
 
                 if (new FieldStateValidator(newFieldState).IsValid())
                 {
@@ -66,11 +66,11 @@ namespace Assets.Scripts.Core
             return fieldState;
         }
 
-        private void GenerateFields(FieldState fieldState)
+        private void GenerateFields(GameSettings gameMode, FieldState fieldState)
         {
             fieldState.Tiles = new Tile[fieldState.RowCount, fieldState.ColumnCount];
 
-            var playerTile = GetRandomPlayerTileTemplate();
+            var playerTile = gameMode.TileTypes.Players.GetRandomEntry();
 
             var player = new Player()
             {
@@ -90,7 +90,7 @@ namespace Assets.Scripts.Core
                 Material = GameFrame.Base.Resources.Manager.Materials.Get("Start")
             };
 
-            var targetTileTemplate = GetRandomFinishTileTemplate();
+            var targetTileTemplate = gameMode.TileTypes.Finishes.GetRandomEntry();
 
             var finish = new Finish()
             {
@@ -119,42 +119,10 @@ namespace Assets.Scripts.Core
                 {
                     if (fieldState.Tiles[column, row] == default)
                     {
-                        fieldState.Tiles[column, row] = GetRandomTileTemplate().ToTile();
+                        fieldState.Tiles[column, row] = gameMode.TileTypes.Tiles.GetRandomEntry().ToTile();
                     }
                 }
             }
-        }
-
-        private TileType GetRandomTileTemplate()
-        {
-            if (GameHandler.AvailableTileTypes.Tiles?.Count > 0)
-            {
-                return GameHandler.AvailableTileTypes.Tiles.GetRandomEntry();
-            }
-
-            return default;
-        }
-
-        private TileType GetRandomPlayerTileTemplate()
-        {
-            if (GameHandler.AvailableTileTypes?.Player?.Count > 0)
-            {
-                return GameHandler.AvailableTileTypes.Player.GetRandomEntry();
-
-            }
-
-            return default;
-        }
-
-        private TileType GetRandomFinishTileTemplate()
-        {
-            if (GameHandler.AvailableTileTypes?.Finish?.Count > 0)
-            {
-                return GameHandler.AvailableTileTypes.Finish.GetRandomEntry();
-
-            }
-
-            return default;
         }
 
         protected override PlayerOptions InitialzePlayerOptions()
