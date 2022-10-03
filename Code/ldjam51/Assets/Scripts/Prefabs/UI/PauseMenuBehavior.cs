@@ -86,6 +86,7 @@ public class PauseMenuBehavior : MonoBehaviour
         Menu.SetActive(false);
 
         Time.timeScale = 1;
+        Core.Game.AmbienceAudioManager.Resume();
     }
 
     public void Show()
@@ -99,7 +100,7 @@ public class PauseMenuBehavior : MonoBehaviour
 
         Menu.SetActive(true);
 
-        Core.Game.AmbienceAudioManager.Stop();
+        Core.Game.AmbienceAudioManager.Pause();
     }
 
     public void OnBackButtonClicked()
