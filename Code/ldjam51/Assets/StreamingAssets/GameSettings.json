@@ -39,7 +39,7 @@
           "Materials": [
             "FinishLine"
           ],
-          "Extras": [ "Target" ]
+          "Extras": [ "Finish" ]
         }
       ],
       "Tiles": [
@@ -115,7 +115,7 @@
           "Materials": [
             "FinishLine"
           ],
-          "Extras": [ "Target" ]
+          "Extras": [ "Finish" ]
         }
       ],
       "Tiles": [
@@ -191,7 +191,7 @@
           "Materials": [
             "FinishLine"
           ],
-          "Extras": [ "Target" ]
+          "Extras": [ "Finish" ]
         }
       ],
       "Tiles": [
@@ -268,7 +268,7 @@
           "Materials": [
             "FinishLine"
           ],
-          "Extras": [ "Target" ]
+          "Extras": [ "Finish" ]
         }
       ],
       "Tiles": [
@@ -334,7 +334,7 @@
           "Materials": [
             "FinishLine"
           ],
-          "Extras": [ "Target" ]
+          "Extras": [ "Finish" ]
         }
       ],
       "Tiles": [

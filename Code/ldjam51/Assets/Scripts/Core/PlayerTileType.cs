@@ -3,10 +3,9 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.Core
 {
-    public class PlayerType
+    public class PlayerTileType
     {
         public String TemplateReference { get; set; }
-        public PlayerTileType Tile { get; set; }
         public List<String> Materials { get; set; }
     }
 }

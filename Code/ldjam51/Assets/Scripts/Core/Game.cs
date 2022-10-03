@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using Assets.Scripts.Extensions;
 using Assets.Scripts.Game;
@@ -122,11 +123,25 @@ namespace Assets.Scripts.Core
 
             fieldState.Player = player;
 
+            var playerTileType = playerType.Tile;
+
+            if (playerTileType == default)
+            {
+                playerTileType = new PlayerTileType()
+                {
+                    TemplateReference = "Tile_Start",
+                    Materials = new System.Collections.Generic.List<string>()
+                    {
+                        "Start"
+                    }
+                };
+            }
+
             fieldState.Tiles[player.PositionX, player.PositionZ] = new Tile()
             {
-                TemplateReference = "Tile_Start",
                 IsStart = true,
-                Material = GameFrame.Base.Resources.Manager.Materials.Get("Start")
+                TemplateReference = playerTileType.TemplateReference,
+                MaterialReference = playerTileType.Materials.GetRandomEntry(),
             };
         }
 
@@ -146,16 +161,37 @@ namespace Assets.Scripts.Core
 
             fieldState.Finish = finish;
 
+            var extraTile = default(ExtraTile);
+
+            if (finishType.Extras?.Count > 0)
+            {
+                var extraTemplate = finishType.Extras.GetRandomEntry();
+
+                if (!string.IsNullOrEmpty(extraTemplate))
+                {
+                    extraTile = new ExtraTile()
+                    {
+                        TemplateReference = extraTemplate,
+                        MaterialReference = extraTemplate
+                    };
+                }
+            }
+
+            if (extraTile == default)
+            {
+                extraTile = new ExtraTile()
+                {
+                    TemplateReference = "Finish",
+                    MaterialReference = "Finish"
+                };
+            }
+
             fieldState.Tiles[finish.PositionX, finish.PositionZ] = new Tile()
             {
                 IsFinish = true,
-                TemplateReference = finish.TemplateReference,
-                ExtraTemplate = new ExtraTile()
-                {
-                    TemplateReference = "Finish",
-                    Material = GameFrame.Base.Resources.Manager.Materials.Get("Finish")
-                },
-                Material = GameFrame.Base.Resources.Manager.Materials.Get("FinishLine")
+                TemplateReference = finishType.TemplateReference,
+                ExtraTemplate = extraTile,
+                MaterialReference = finishType.Materials.GetRandomEntry()
             };
         }
 
@@ -165,25 +201,39 @@ namespace Assets.Scripts.Core
             {
                 GeneratePosition(fieldState, out var x, out var z);
 
-                var monsterTemplate = gameMode.ObjectTypes.Monsters.GetRandomEntry();
+                var monsterType = gameMode.ObjectTypes.Monsters.GetRandomEntry();
 
                 var monster = new Monster()
                 {
-                    Name = monsterTemplate.Name,
-                    GameOverText = monsterTemplate.GameOverText,
-                    TemplateReference = monsterTemplate.TemplateReference,
-                    MaterialReference = monsterTemplate.Materials.GetRandomEntry(),
-                    SoundEffects = monsterTemplate.SoundEffects,
+                    Name = monsterType.Name,
+                    GameOverText = monsterType.GameOverText,
+                    TemplateReference = monsterType.TemplateReference,
+                    MaterialReference = monsterType.Materials.GetRandomEntry(),
+                    SoundEffects = monsterType.SoundEffects,
                     PositionX = x,
                     PositionZ = z,
                 };
 
                 fieldState.Monster = monster;
 
+                var monsterTileType = monsterType.Tile;
+
+                if (monsterTileType == default)
+                {
+                    monsterTileType = new MonsterTileType()
+                    {
+                        TemplateReference = "Tile",
+                        Materials = new System.Collections.Generic.List<string>()
+                        {
+                            "Grass"
+                        }
+                    };
+                }
+
                 fieldState.Tiles[monster.PositionX, monster.PositionZ] = new Tile()
                 {
-                    TemplateReference = "Tile",
-                    Material = GameFrame.Base.Resources.Manager.Materials.Get("Grass")
+                    TemplateReference = monsterTileType.TemplateReference,
+                    MaterialReference = monsterTileType.Materials.GetRandomEntry()
                 };
             }
         }
@@ -247,6 +297,16 @@ namespace Assets.Scripts.Core
             }
 
             return isAvailable;
+        }
+
+        private ExtraTile GetExtraTile(GameSettings gameMode, String tileReference)
+        {
+            if (!String.IsNullOrEmpty(tileReference))
+            {
+                return gameMode.ObjectTypes.Extras.FirstOrDefault(e => e.Name == tileReference)?.ToTile();
+            }
+
+            return default;
         }
 
         protected override PlayerOptions InitialzePlayerOptions()
