@@ -28,7 +28,6 @@ Refactoring:
  
 WIP:
 ----------------------------------
- - Credits Scene
 
  
 Nice to have:

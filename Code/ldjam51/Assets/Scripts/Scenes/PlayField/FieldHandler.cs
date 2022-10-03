@@ -162,14 +162,11 @@ namespace Assets.Scripts.Scenes.PlayField
             var totalColumns = this.FieldState.ColumnCount + 2;
             var totalRows = this.FieldState.RowCount + 2;
 
-            var xPosition = totalColumns - 2;
-            var zPosition = totalRows - 2;
-
-            var xScale = this.FieldState.ColumnCount + 2;
-            var zScale = this.FieldState.RowCount + 2;
+            var xPosition = this.transform.position.x + this.FieldState.ColumnCount;
+            var zPosition = this.transform.position.z + this.FieldState.RowCount;
 
             plane.transform.position = new Vector3(xPosition, plane.transform.position.y, zPosition);
-            plane.transform.localScale = new Vector3(xScale, zScale, plane.transform.localScale.z);
+            plane.transform.localScale = new Vector3(totalColumns, totalRows, plane.transform.localScale.z);
 
             if (FieldState.IsActive)
             {

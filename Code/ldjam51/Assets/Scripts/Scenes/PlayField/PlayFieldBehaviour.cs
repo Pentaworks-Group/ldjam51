@@ -92,28 +92,28 @@ namespace Assets.Scripts.Scenes.PlayField
 
                 if (gameState.TimeRemaining < 0)
                 {
+                    //Scripts.Base.Core.Game.EffectsAudioManager.Play("Horn");
+
                     gameState.TimeRemaining = gameState.Mode.Interval;
-                    gameState.NextTick = gameState.TimeRemaining - gameState.Mode.TickInterval;
+                    gameState.NextTick = gameState.Mode.TickStart;
                     gameState.LastTick = 0;
 
                     ToggleFields();
                 }
-                else
-                {
-                    if (gameState.TimeRemaining < gameState.NextTick)
-                    {
-                        gameState.NextTick -= gameState.Mode.TickInterval;
 
-                        if (gameState.LastTick == 1)
-                        {
-                            gameState.LastTick = 0;
-                            Scripts.Base.Core.Game.EffectsAudioManager.Play("Tock");
-                        }
-                        else
-                        {
-                            gameState.LastTick = 1;
-                            Scripts.Base.Core.Game.EffectsAudioManager.Play("Tick");
-                        }
+                if (gameState.TimeRemaining < gameState.NextTick)
+                {
+                    gameState.NextTick -= gameState.Mode.TickInterval;
+
+                    if (gameState.LastTick == 1)
+                    {
+                        gameState.LastTick = 0;
+                        Scripts.Base.Core.Game.EffectsAudioManager.Play("Tock");
+                    }
+                    else
+                    {
+                        gameState.LastTick = 1;
+                        Scripts.Base.Core.Game.EffectsAudioManager.Play("Tick");
                     }
                 }
 
@@ -126,7 +126,9 @@ namespace Assets.Scripts.Scenes.PlayField
                         this.levelsCompletedText.text = gameState.LevelsCompleted.ToString();
                     }
 
+                    Time.timeScale = 0;
                     LoadNewFields();
+                    Time.timeScale = 1;
                 }
 
                 UpdateElapsed();
@@ -140,7 +142,7 @@ namespace Assets.Scripts.Scenes.PlayField
             gameState.Field2 = Base.Core.Game.GenerateField(gameState.Mode, true);
 
             gameState.TimeRemaining = gameState.Mode.Interval;
-            gameState.NextTick = gameState.Mode.Interval - 1;
+            gameState.NextTick = gameState.Mode.TickStart;
             gameState.ToggleIndex = 0;
 
             leftField.LoadNewField(this, gameState.Field1);
@@ -296,33 +298,32 @@ namespace Assets.Scripts.Scenes.PlayField
 
         internal static Bounds GetBoundRec(Transform goT, Bounds b)
         {
-            if (goT.name == "Plane")
-            {
+            var boundsBehaviour = goT.GetComponent<BoundsCalculationBehaviour>();
 
-            }
-
-            foreach (Transform child in goT)
+            if (boundsBehaviour == default || boundsBehaviour.IsIncluded)
             {
-                if (child.gameObject.activeSelf)
+                foreach (Transform child in goT)
                 {
-                    b = GetBoundRec(child, b);
-
-                    Renderer r = child.GetComponent<MeshRenderer>();
-
-                    if (r != default)
+                    if (child.gameObject.activeSelf)
                     {
-                        b.Encapsulate(r.bounds);
-                        //Debug.Log("dodi", child);
-                    }
-                    else
-                    {
-                        //Debug.Log("No render:", child);
+                        b = GetBoundRec(child, b);
+
+                        Renderer r = child.GetComponent<MeshRenderer>();
+
+                        if (r != default)
+                        {
+                            b.Encapsulate(r.bounds);
+                            //Debug.Log("dodi", child);
+                        }
+                        else
+                        {
+                            //Debug.Log("No render:", child);
+                        }
                     }
                 }
             }
 
             return b;
         }
-
     }
 }
