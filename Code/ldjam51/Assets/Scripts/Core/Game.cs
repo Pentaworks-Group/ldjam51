@@ -46,8 +46,8 @@ namespace Assets.Scripts.Core
             var fieldState = default(FieldState);
 
             var attempts = 0;
-            
-            while (fieldState == default) 
+
+            while (fieldState == default)
             {
                 var newFieldState = new FieldState()
                 {
@@ -63,13 +63,13 @@ namespace Assets.Scripts.Core
                 {
                     fieldState = newFieldState;
                 }
-                else if (attempts < 5000)
+                else if (attempts < 9000)
                 {
                     attempts++;
                 }
                 else
                 {
-                    throw new Exception("Failed to generate Field! Over 5000 attempts were made!");
+                    throw new Exception("Too many attempts! It's over 9000! Failed to generate Field!");
                 }
             }
 
