@@ -257,5 +257,85 @@
         }
       ]
     }
+  },
+  {
+    "Name": "Speedy Gonzales",
+    "Interval": 1.5,
+    "TickInterval": 1,
+    "TickStart": 5,
+    "ColumnCount": 9,
+	"IncrementalSpawn":0.05,
+    "RowCount": 9,
+    "TileTypes": {
+      "Players": [
+        {
+          "Reference": "PlayerTemplate",
+          "Materials": [
+            "DefaultPlayer"
+          ],
+          "Extras": {
+          }
+        }
+      ],
+      "Monsters": [
+        {
+          "Reference": "Cow",
+          "Materials": [
+            "Leather"
+          ],
+          "Extras": { },
+          "SoundEffects": [
+            "Mooh1",
+            "Mooh2",
+            "Mooh3",
+            "Mooh4",
+            "Mooh5"
+          ]
+        }
+      ],
+      "Finishes": [
+        {
+          "Reference": "Tile",
+          "Materials": [
+            "FinishLine"
+          ],
+          "Extras": {
+            "Target": 100
+          }
+        }
+      ],
+      "Tiles": [
+        {
+          "Reference": "Tile",
+          "Materials": [
+            "Grass"
+          ],
+          "Extras": {
+            "Stone": 1,
+            "Trees": 1,
+            "Chest": 1,
+            "Trap":1
+          }
+        }
+      ],
+      "Extras": [
+        {
+          "Reference": "Stone",
+          "IsDeadly": false
+        },
+        {
+          "Reference": "Trees",
+          "IsDeadly": false
+        },
+        {
+          "Reference": "Chest",
+          "IsDeadly": false
+        },
+        {
+          "Reference": "Trap",
+          "IsDeadly": true
+        }
+      ]
+    }
   }
 ]
