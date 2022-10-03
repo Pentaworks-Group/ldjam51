@@ -21,7 +21,7 @@ namespace Assets.Scripts.Behaviours.Monsters
         {
             if (Time.timeScale != 0)
             {
-                if (Monster.IsActive)
+                if ((Monster.IsActive) && (!this.FieldHandler.FieldState.IsCompleted))
                 {
                     if (nextMove < 0)
                     {
