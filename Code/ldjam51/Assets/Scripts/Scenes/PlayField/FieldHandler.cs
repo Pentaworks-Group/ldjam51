@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Assets.Scripts.Behaviours.Models;
+using Assets.Scripts.Behaviours.Monsters;
 using Assets.Scripts.Game;
 
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace Assets.Scripts.Scenes.PlayField
         private PlayFieldBehaviour PlayField;
 
         public PlayerBehaviour playerBehaviour;
+        public MonsterBehaviour monsterBehaviour;
         public FieldState FieldState;
 
         void Awake()
@@ -36,6 +38,11 @@ namespace Assets.Scripts.Scenes.PlayField
             this.FieldState.IsActive = isActive;
             this.FieldState.Player.IsActive = isActive;
             this.plane.SetActive(isActive);
+
+            if (this.FieldState.Monster != default)
+            {
+                this.FieldState.Monster.IsActive = !isActive;
+            }
         }
 
         private void ClearField()
@@ -135,28 +142,11 @@ namespace Assets.Scripts.Scenes.PlayField
                 }
             }
 
-            var playerTemplate = PlayField.GetTemplateByName<PlayerBehaviour>(FieldState.Player.TemplateReference);
+            AddPlayer();
 
-            if (playerTemplate != default)
+            if (FieldState.Monster != default)
             {
-                this.playerBehaviour = Instantiate(playerTemplate, this.gameObject.transform);
-
-                var newPosition = new UnityEngine.Vector3(FieldState.Player.PositionX * 2, 0, FieldState.Player.PositionZ * 2);
-
-                if (FieldState.Player.Material != default)
-                {
-                    var meshRenderer = playerBehaviour.GetComponent<MeshRenderer>();
-
-                    if (meshRenderer != default)
-                    {
-                        meshRenderer.material = FieldState.Player.Material;
-                    }
-                }
-
-                this.playerBehaviour.FieldHandler = this;
-
-                this.playerBehaviour.transform.Translate(newPosition, UnityEngine.Space.World);
-                this.playerBehaviour.gameObject.SetActive(true);
+                AddMonster();
             }
 
             var totalColumns = this.FieldState.ColumnCount + 2;
@@ -180,6 +170,69 @@ namespace Assets.Scripts.Scenes.PlayField
             else if (FieldState.IsPlaneVisible)
             {
                 plane.SetActive(true);
+            }
+
+            if (this.FieldState.Monster != default)
+            {
+                this.FieldState.Monster.IsActive = !FieldState.IsActive;
+            }
+        }
+
+        private void AddPlayer()
+        {
+            var player = FieldState.Player;
+
+            var playerTemplate = PlayField.GetTemplateByName<PlayerBehaviour>(player.TemplateReference);
+
+            if (playerTemplate != default)
+            {
+                this.playerBehaviour = Instantiate(playerTemplate, this.gameObject.transform);
+
+                var newPosition = new UnityEngine.Vector3(player.PositionX * 2, 0, player.PositionZ * 2);
+
+                if (player.Material != default)
+                {
+                    var meshRenderer = playerBehaviour.GetComponent<MeshRenderer>();
+
+                    if (meshRenderer != default)
+                    {
+                        meshRenderer.material = player.Material;
+                    }
+                }
+
+                this.playerBehaviour.FieldHandler = this;
+
+                this.playerBehaviour.transform.Translate(newPosition, UnityEngine.Space.World);
+                this.playerBehaviour.gameObject.SetActive(true);
+            }
+        }
+
+        private void AddMonster()
+        {
+            var monster = FieldState.Monster;
+
+            var monsterTemplate = PlayField.GetTemplateByName<MonsterBehaviour>(monster.TemplateReference);
+
+            if (monsterTemplate != default)
+            {
+                this.monsterBehaviour = Instantiate(monsterTemplate, this.gameObject.transform);
+
+                var newPosition = new UnityEngine.Vector3(monster.PositionX * 2, 0, monster.PositionZ * 2);
+
+                if (monster.Material != default)
+                {
+                    var meshRenderer = monsterBehaviour.GetComponent<MeshRenderer>();
+
+                    if (meshRenderer != default)
+                    {
+                        meshRenderer.material = monster.Material;
+                    }
+                }
+
+                this.monsterBehaviour.FieldHandler = this;
+
+                this.monsterBehaviour.transform.Translate(newPosition, UnityEngine.Space.World);
+                this.monsterBehaviour.gameObject.SetActive(true);
             }
         }
 

@@ -13,6 +13,7 @@ namespace Assets.Scripts.Game
         public Int32 ColumnCount { get; set; }
         public Player Player { get; set; }
         public Finish Finish { get; set; }
+        public Monster Monster { get; set; }
         public Tile[,] Tiles { get; set; }
     }
 }

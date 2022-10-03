@@ -97,8 +97,7 @@ namespace Assets.Scripts.Behaviours.Models
         private void OnTriggerEnter(Collider other)
         {
             if (this.FieldHandler?.FieldState?.Player != default)
-            {
-                var targetBehaviour = other.GetComponent<ModelBehaviour>();
+            {                var targetBehaviour = other.GetComponent<ModelBehaviour>();
 
                 if (targetBehaviour.Tile != default)
                 {

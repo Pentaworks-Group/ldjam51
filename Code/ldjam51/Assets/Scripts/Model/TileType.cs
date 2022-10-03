@@ -9,5 +9,6 @@ namespace Assets.Scripts.Model
         public Boolean IsDeadly { get; set; }
         public List<String> Materials { get; set; }
         public Dictionary<String, float> Extras { get; set; }
+        public List<String> SoundEffects { get; set; }
     }
 }

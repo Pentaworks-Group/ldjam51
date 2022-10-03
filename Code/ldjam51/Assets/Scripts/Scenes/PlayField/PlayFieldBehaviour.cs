@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Assets.Scripts.Behaviours.Models;
+using Assets.Scripts.Behaviours;
 using Assets.Scripts.Core;
 using Assets.Scripts.Game;
 

@@ -123,6 +123,27 @@ namespace Assets.Scripts.Core
                 Material = GameFrame.Base.Resources.Manager.Materials.Get("FinishLine")
             };
 
+            if (gameMode.TileTypes.Monsters?.Count > 0)
+            {
+                var monsterTemplate = gameMode.TileTypes.Monsters.GetRandomEntry();
+
+                var monster = new Monster()
+                {
+                    TemplateReference = monsterTemplate.Reference,
+                    SoundEffects = monsterTemplate.SoundEffects,
+                    PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
+                    PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount),
+                };
+
+                fieldState.Monster = monster;
+
+                fieldState.Tiles[monster.PositionX, monster.PositionZ] = new Tile()
+                {
+                    Reference = "Tile",
+                    Material = GameFrame.Base.Resources.Manager.Materials.Get("Grass")
+                };
+            }
+
             for (int row = 0; row < fieldState.RowCount; row++)
             {
                 for (int column = 0; column < fieldState.ColumnCount; column++)

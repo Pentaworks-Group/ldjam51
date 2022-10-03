@@ -17,7 +17,22 @@
           }
         }
       ],
-      "Monsters": [],
+      "Monsters": [
+        {
+          "Reference": "Cow",
+          "Materials": [
+            "Leather"
+          ],
+          "Extras": { },
+          "SoundEffects": [
+            "Mooh1",
+            "Mooh2",
+            "Mooh3",
+            "Mooh4",
+            "Mooh5"
+          ]
+        }
+      ],
       "Finishes": [
         {
           "Reference": "Tile",

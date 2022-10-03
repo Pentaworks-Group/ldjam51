@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace Assets.Scripts.Behaviours.Models
+namespace Assets.Scripts.Behaviours
 {
     public class ModelBehaviour : MonoBehaviour
     {
