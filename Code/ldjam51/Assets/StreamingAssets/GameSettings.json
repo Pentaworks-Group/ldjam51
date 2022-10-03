@@ -20,7 +20,7 @@
         {
           "Name": "Cow",
           "TemplateReference": "Cow",
-          "GameOverText": "You have been eaten by a Cow!",
+          "GameOverText": "Have been eaten by a Cow!",
           "Materials": [
             "Leather"
           ],
@@ -85,7 +85,7 @@
           "Name": "Trap",
           "TemplateReference": "Trap",
           "IsDeadly": true,
-          "GameOverText": "You walked into a trap!",
+          "GameOverText": "Walked into a trap!",
           "SoundEffects": [],
           "Materials": []
         }
@@ -161,7 +161,7 @@
           "Name": "Trap",
           "TemplateReference": "Trap",
           "IsDeadly": true,
-          "GameOverText": "You walked into a trap!",
+          "GameOverText": "walked into a trap!",
           "SoundEffects": [],
           "Materials": []
         }
@@ -237,7 +237,7 @@
           "Name": "Trap",
           "TemplateReference": "Trap",
           "IsDeadly": true,
-          "GameOverText": "You walked into a trap!",
+          "GameOverText": "Walked into a trap!",
           "SoundEffects": [],
           "Materials": []
         }
@@ -287,7 +287,7 @@
           "Name": "Trap",
           "TemplateReference": "Trap",
           "IsDeadly": true,
-          "GameOverText": "You walked into a trap!",
+          "GameOverText": "Walked into a trap!",
           "SoundEffects": [],
           "Materials": []
         }
@@ -315,7 +315,7 @@
         {
           "Name": "Cow",
           "TemplateReference": "Cow",
-          "GameOverText": "You have been eaten by a Cow!",
+          "GameOverText": "Have been eaten by a Cow!",
           "Materials": [
             "Leather"
           ],
@@ -380,7 +380,7 @@
           "Name": "Trap",
           "TemplateReference": "Trap",
           "IsDeadly": true,
-          "GameOverText": "You walked into a trap!",
+          "GameOverText": "Walked into a trap!",
           "SoundEffects": [],
           "Materials": []
         }
