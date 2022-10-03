@@ -5,9 +5,9 @@
     "TickInterval": 1,
     "TickStart": 5,
     "ColumnCount": 9,
-	"IncrementalSpawn":0.05,
     "RowCount": 9,
-    "TileTypes": {
+    "IncrementalSpawn": 0.05,
+    "ObjectTypes": {
       "Players": [
         {
           "Reference": "PlayerTemplate",
@@ -21,11 +21,11 @@
       "Monsters": [
         {
           "Name": "Cow",
+          "GameOverText": "You have been eaten by a Cow!",
           "TemplateReference": "Cow",
           "Materials": [
             "Leather"
           ],
-          "Extras": { },
           "SoundEffects": [
             "Mooh1",
             "Mooh2",
@@ -56,7 +56,7 @@
             "Stone": 1,
             "Trees": 1,
             "Chest": 1,
-            "Trap":1
+            "Trap": 1
           }
         }
       ],
@@ -87,7 +87,7 @@
     "TickStart": 5,
     "ColumnCount": 18,
     "RowCount": 18,
-    "TileTypes": {
+    "ObjectTypes": {
       "Players": [
         {
           "Reference": "PlayerTemplate",
@@ -107,7 +107,7 @@
             "FinishLine"
           ],
           "Extras": {
-            "Target":  100
+            "Target": 100
           }
         }
       ],
@@ -152,7 +152,7 @@
     "TickStart": 5,
     "ColumnCount": 72,
     "RowCount": 72,
-    "TileTypes": {
+    "ObjectTypes": {
       "Players": [
         {
           "Reference": "PlayerTemplate",
@@ -215,8 +215,8 @@
     "TickStart": 5,
     "ColumnCount": 9,
     "RowCount": 9,
-	"ExtraChance": 0.3,
-    "TileTypes": {
+    "ExtraChance": 0.3,
+    "ObjectTypes": {
       "Players": [
         {
           "Reference": "PlayerTemplate",

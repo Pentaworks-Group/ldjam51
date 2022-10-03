@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
+using Assets.Scripts.Core;
 using Assets.Scripts.Game;
-using Assets.Scripts.Model;
 
 using GameFrame.Core.Extensions;
 
@@ -33,7 +32,7 @@ namespace Assets.Scripts.Extensions
                     if (UnityEngine.Random.value < chance)
                     {
                         float take = UnityEngine.Random.value;
-                        foreach (TileType t in Base.Core.SelectedGameMode.TileTypes.Extras)
+                        foreach (TileType t in Base.Core.SelectedGameMode.ObjectTypes.Extras)
                         {
                             float weight = Base.Core.SelectedGameMode.GetExtraWeights()[tileType.Reference].GetValueOrDefault(t.Reference, 0f);
                             if (weight > take)

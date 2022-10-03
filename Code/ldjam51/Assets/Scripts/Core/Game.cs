@@ -88,7 +88,7 @@ namespace Assets.Scripts.Core
         {
             fieldState.Tiles = new Tile[fieldState.RowCount, fieldState.ColumnCount];
 
-            var playerTile = gameMode.TileTypes.Players.GetRandomEntry();
+            var playerTile = gameMode.ObjectTypes.Players.GetRandomEntry();
 
             var player = new Player()
             {
@@ -108,7 +108,7 @@ namespace Assets.Scripts.Core
                 Material = GameFrame.Base.Resources.Manager.Materials.Get("Start")
             };
 
-            var targetTileTemplate = gameMode.TileTypes.Finishes.GetRandomEntry();
+            var targetTileTemplate = gameMode.ObjectTypes.Finishes.GetRandomEntry();
 
             var finish = new Finish()
             {
@@ -131,9 +131,9 @@ namespace Assets.Scripts.Core
                 Material = GameFrame.Base.Resources.Manager.Materials.Get("FinishLine")
             };
 
-            if (gameMode.TileTypes.Monsters?.Count > 0)
+            if (gameMode.ObjectTypes.Monsters?.Count > 0)
             {
-                var monsterTemplate = gameMode.TileTypes.Monsters.GetRandomEntry();
+                var monsterTemplate = gameMode.ObjectTypes.Monsters.GetRandomEntry();
 
                 var monster = new Monster()
                 {
@@ -160,7 +160,7 @@ namespace Assets.Scripts.Core
                 {
                     if (fieldState.Tiles[column, row] == default)
                     {
-                        fieldState.Tiles[column, row] = gameMode.TileTypes.Tiles.GetRandomEntry().ToTile();
+                        fieldState.Tiles[column, row] = gameMode.ObjectTypes.Tiles.GetRandomEntry().ToTile();
                     }
                 }
             }

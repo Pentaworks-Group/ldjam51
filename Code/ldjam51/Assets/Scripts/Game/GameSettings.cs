@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Assets.Scripts.Model;
+using Assets.Scripts.Core;
 
 public class GameSettings
 {
@@ -12,7 +12,7 @@ public class GameSettings
     public float TickStart { get; set; } = 5;
     public Int32 ColumnCount { get; set; } = 9;
     public Int32 RowCount { get; set; } = 9;
-    public TileTypes TileTypes { get; set; }
+    public ObjectTypes ObjectTypes { get; set; }
     public float IncrementalSpawn { get; set; }
     public Int32 IncrementalSize { get; set; }
     public float ExtraChance { get; set; } = 0.2f;
@@ -23,7 +23,7 @@ public class GameSettings
     {
         if (this.ExtraWeights == default)
         {
-            this.ExtraWeights = GetExtraWeightsForList(TileTypes.Tiles);
+            this.ExtraWeights = GetExtraWeightsForList(ObjectTypes.Tiles);
         }
         return this.ExtraWeights;
     }
@@ -53,7 +53,7 @@ public class GameSettings
 
         foreach (String key in weights.Keys.ToList())
         {
-            weights[key] = weights[key]/ weightSum;
+            weights[key] = weights[key] / weightSum;
         }
 
         return weights;
