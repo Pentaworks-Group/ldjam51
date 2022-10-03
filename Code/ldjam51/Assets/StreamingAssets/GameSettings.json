@@ -2,18 +2,21 @@
   {
     "Name": "Default",
     "Interval": 10,
+    "TickInterval": 1,
     "ColumnCount": 9,
     "RowCount": 9
   },
   {
     "Name": "Biggus Dickus",
     "Interval": 10,
+    "TickInterval": 1,
     "ColumnCount": 18,
     "RowCount": 18
   },
   {
     "Name": "Hugh Mungus",
     "Interval": 5,
+    "TickInterval": 1,
     "ColumnCount": 72,
     "RowCount": 72
   }

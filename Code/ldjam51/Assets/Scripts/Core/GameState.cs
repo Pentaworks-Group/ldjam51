@@ -14,5 +14,7 @@ namespace Assets.Scripts.Core
         public Single TimeRemaining { get; set; }
         public Int32 LevelsCompleted { get; set; }
         public Int32 ToggleIndex { get; set; }
+        public float NextTick { get; set; }
+        public Int32 LastTick { get; set; }
     }
 }

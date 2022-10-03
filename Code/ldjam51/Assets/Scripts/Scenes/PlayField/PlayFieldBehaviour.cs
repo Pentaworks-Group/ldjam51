@@ -71,7 +71,7 @@ namespace Assets.Scripts.Scenes.PlayField
             var fieldOffset = (gameState.Field1.ColumnCount * 2) + 5;
 
             leftField.transform.position = Vector3.zero;
-            
+
             rightField.transform.position = Vector3.zero;
             rightField.transform.Translate(new Vector3(fieldOffset, 0, 0), Space.World);
 
@@ -93,8 +93,28 @@ namespace Assets.Scripts.Scenes.PlayField
                 if (gameState.TimeRemaining < 0)
                 {
                     gameState.TimeRemaining = gameState.Mode.Interval;
+                    gameState.NextTick = gameState.TimeRemaining - gameState.Mode.TickInterval;
+                    gameState.LastTick = 0;
 
                     ToggleFields();
+                }
+                else
+                {
+                    if (gameState.TimeRemaining < gameState.NextTick)
+                    {
+                        gameState.NextTick -= gameState.Mode.TickInterval;
+
+                        if (gameState.LastTick == 1)
+                        {
+                            gameState.LastTick = 0;
+                            Scripts.Base.Core.Game.EffectsAudioManager.Play("Tock");
+                        }
+                        else
+                        {
+                            gameState.LastTick = 1;
+                            Scripts.Base.Core.Game.EffectsAudioManager.Play("Tick");
+                        }
+                    }
                 }
 
                 if (gameState.Field1.IsCompleted && gameState.Field2.IsCompleted)
@@ -120,6 +140,7 @@ namespace Assets.Scripts.Scenes.PlayField
             gameState.Field2 = Base.Core.Game.GenerateField(gameState.Mode, true);
 
             gameState.TimeRemaining = gameState.Mode.Interval;
+            gameState.NextTick = gameState.Mode.Interval - 1;
             gameState.ToggleIndex = 0;
 
             leftField.LoadNewField(this, gameState.Field1);
