@@ -75,7 +75,7 @@ namespace Assets.Scripts.Scenes.PlayField
                     var tile = FieldState.Tiles[x, z];
                     tile.FieldState = FieldState;
 
-                    var template = PlayField.GetTemplateByName<TileModelBehaviour>(tile.Reference);
+                    var template = PlayField.GetTemplateByName<TileModelBehaviour>(tile.TemplateReference);
 
                     var tileObject = Instantiate(template, tilesContainer.transform);
 
@@ -100,7 +100,7 @@ namespace Assets.Scripts.Scenes.PlayField
 
                     if (tile.ExtraTemplate != default)
                     {
-                        var extraTemplate = PlayField.GetTemplateByName<ExtraModelBehaviour>(tile.ExtraTemplate.Reference);
+                        var extraTemplate = PlayField.GetTemplateByName<ExtraModelBehaviour>(tile.ExtraTemplate.TemplateReference);
 
                         if (extraTemplate != default)
                         {
@@ -237,6 +237,7 @@ namespace Assets.Scripts.Scenes.PlayField
                 }
 
                 this.monsterBehaviour.FieldHandler = this;
+                this.monsterBehaviour.Monster = monster;
 
                 this.monsterBehaviour.transform.Translate(newPosition, UnityEngine.Space.World);
                 this.monsterBehaviour.gameObject.SetActive(true);

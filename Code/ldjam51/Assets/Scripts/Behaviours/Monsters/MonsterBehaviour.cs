@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿using Assets.Scripts.Model;
 using Assets.Scripts.Scenes.PlayField;
 
 using GameFrame.Core.Extensions;
@@ -16,12 +15,13 @@ namespace Assets.Scripts.Behaviours.Monsters
         private float nextMove = moveInterval;
 
         public FieldHandler FieldHandler;
+        public Monster Monster;
 
         void Update()
         {
             if (Time.timeScale != 0)
             {
-                if (this.FieldHandler.FieldState.Monster.IsActive)
+                if (Monster.IsActive)
                 {
                     if (nextMove < 0)
                     {
@@ -76,21 +76,21 @@ namespace Assets.Scripts.Behaviours.Monsters
 
                     if (IsMovePossible(x, z))
                     {
-                        if (direction != FieldHandler.FieldState.Monster.FaceDirection)
+                        if (direction != Monster.FaceDirection)
                         {
-                            var difference = (FieldHandler.FieldState.Monster.FaceDirection - direction) * 90;
+                            var difference = (Monster.FaceDirection - direction) * 90;
 
-                            FieldHandler.FieldState.Monster.FaceDirection = direction;
+                            Monster.FaceDirection = direction;
                             this.transform.Rotate(new UnityEngine.Vector3(0, 0, difference));
                         }
 
                         var newPosition = new UnityEngine.Vector3(x, 0, z);
 
                         this.Move(newPosition);
-                        
-                        if (FieldHandler.FieldState.Monster.SoundEffects?.Count > 0)
+
+                        if (Monster.SoundEffects?.Count > 0)
                         {
-                            Base.Core.Game.EffectsAudioManager.Play(FieldHandler.FieldState.Monster.SoundEffects.GetRandomEntry());
+                            Base.Core.Game.EffectsAudioManager.Play(Monster.SoundEffects.GetRandomEntry());
                         }
 
                         break;
@@ -105,8 +105,8 @@ namespace Assets.Scripts.Behaviours.Monsters
 
         private System.Boolean IsMovePossible(System.Int32 x, System.Int32 z)
         {
-            x += this.FieldHandler.FieldState.Monster.PositionX;
-            z += this.FieldHandler.FieldState.Monster.PositionZ;
+            x += Monster.PositionX;
+            z += Monster.PositionZ;
 
             var tiles = this.FieldHandler.FieldState.Tiles;
 
@@ -129,18 +129,16 @@ namespace Assets.Scripts.Behaviours.Monsters
 
         private void Move(UnityEngine.Vector3 movementVector)
         {
-            var monster = FieldHandler?.FieldState?.Monster;
-
-            if (monster?.IsActive == true)
+            if (Monster?.IsActive == true)
             {
                 if (movementVector.x != 0)
                 {
-                    monster.PositionX += (System.Int32)movementVector.x;
+                    Monster.PositionX += (System.Int32)movementVector.x;
                 }
 
                 if (movementVector.z != 0)
                 {
-                    monster.PositionZ += (System.Int32)movementVector.z;
+                    Monster.PositionZ += (System.Int32)movementVector.z;
                 }
 
                 this.transform.Translate(movementVector * 2, Space.World);

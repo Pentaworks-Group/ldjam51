@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Assets.Scripts.Model;
+
 using Newtonsoft.Json;
 
 using UnityEngine;
@@ -8,11 +10,11 @@ namespace Assets.Scripts.Game
 {
     public class Tile
     {
-        public String Reference { get; set; }
+        public String Name { get; set; }
+        public String TemplateReference { get; set; }
         public Boolean IsStart { get; set; }
         public Boolean IsFinish { get; set; }
-        public Boolean IsDeadly { get; set; }
-        public Tile ExtraTemplate { get; set; }
+        public ExtraTile ExtraTemplate { get; set; }
         public String MaterialReference { get; set; }
 
         private Material material;

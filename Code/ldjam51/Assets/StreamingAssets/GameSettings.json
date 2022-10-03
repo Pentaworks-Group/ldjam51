@@ -5,26 +5,25 @@
     "TickInterval": 1,
     "TickStart": 5,
     "ColumnCount": 9,
-	"IncrementalSpawn":0.05,
     "RowCount": 9,
-    "TileTypes": {
+    "IncrementalSpawn": 0.05,
+    "ObjectTypes": {
       "Players": [
         {
-          "Reference": "PlayerTemplate",
+          "TemplateReference": "PlayerTemplate",
           "Materials": [
             "DefaultPlayer"
-          ],
-          "Extras": {
-          }
+          ]
         }
       ],
       "Monsters": [
         {
-          "Reference": "Cow",
+          "Name": "Cow",
+          "TemplateReference": "Cow",
+          "GameOverText": "You have been eaten by a Cow!",
           "Materials": [
             "Leather"
           ],
-          "Extras": { },
           "SoundEffects": [
             "Mooh1",
             "Mooh2",
@@ -36,18 +35,16 @@
       ],
       "Finishes": [
         {
-          "Reference": "Tile",
+          "TemplateReference": "Tile",
           "Materials": [
             "FinishLine"
           ],
-          "Extras": {
-            "Target": 100
-          }
+          "Extras": [ "Target" ]
         }
       ],
       "Tiles": [
         {
-          "Reference": "Tile",
+          "TemplateReference": "Tile",
           "Materials": [
             "Grass"
           ],
@@ -55,26 +52,42 @@
             "Stone": 1,
             "Trees": 1,
             "Chest": 1,
-            "Trap":1
+            "Trap": 1
           }
         }
       ],
       "Extras": [
         {
-          "Reference": "Stone",
-          "IsDeadly": false
+          "Name": "Stone",
+          "TemplateReference": "Stone",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
         },
         {
-          "Reference": "Trees",
-          "IsDeadly": false
+          "Name": "Trees",
+          "TemplateReference": "Trees",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
         },
         {
-          "Reference": "Chest",
-          "IsDeadly": false
+          "Name": "Chest",
+          "TemplateReference": "Chest",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
         },
         {
-          "Reference": "Trap",
-          "IsDeadly": true
+          "Name": "Trap",
+          "TemplateReference": "Trap",
+          "IsDeadly": true,
+          "GameOverText": "You walked into a trap!",
+          "SoundEffects": [],
+          "Materials": []
         }
       ]
     }
@@ -86,33 +99,28 @@
     "TickStart": 5,
     "ColumnCount": 18,
     "RowCount": 18,
-    "TileTypes": {
+    "ObjectTypes": {
       "Players": [
         {
-          "Reference": "PlayerTemplate",
+          "TemplateReference": "PlayerTemplate",
           "Materials": [
             "DefaultPlayer"
-          ],
-          "Extras": {
-            "Target": 100
-          }
+          ]
         }
       ],
       "Monsters": [],
       "Finishes": [
         {
-          "Reference": "Tile",
+          "TemplateReference": "Tile",
           "Materials": [
             "FinishLine"
           ],
-          "Extras": {
-            "Target":  100
-          }
+          "Extras": [ "Target" ]
         }
       ],
       "Tiles": [
         {
-          "Reference": "Tile",
+          "TemplateReference": "Tile",
           "Materials": [
             "Grass"
           ],
@@ -126,20 +134,36 @@
       ],
       "Extras": [
         {
-          "Reference": "Stone",
-          "IsDeadly": false
+          "Name": "Stone",
+          "TemplateReference": "Stone",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
         },
         {
-          "Reference": "Trees",
-          "IsDeadly": false
+          "Name": "Trees",
+          "TemplateReference": "Trees",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
         },
         {
-          "Reference": "Chest",
-          "IsDeadly": false
+          "Name": "Chest",
+          "TemplateReference": "Chest",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
         },
         {
-          "Reference": "Trap",
-          "IsDeadly": true
+          "Name": "Trap",
+          "TemplateReference": "Trap",
+          "IsDeadly": false,
+          "GameOverText": "You walked into a trap!",
+          "SoundEffects": [],
+          "Materials": []
         }
       ]
     }
@@ -151,31 +175,28 @@
     "TickStart": 5,
     "ColumnCount": 72,
     "RowCount": 72,
-    "TileTypes": {
+    "ObjectTypes": {
       "Players": [
         {
-          "Reference": "PlayerTemplate",
+          "TemplateReference": "PlayerTemplate",
           "Materials": [
             "DefaultPlayer"
-          ],
-          "Extras": {}
+          ]
         }
       ],
       "Monsters": [],
       "Finishes": [
         {
-          "Reference": "Tile",
+          "TemplateReference": "Tile",
           "Materials": [
             "FinishLine"
           ],
-          "Extras": {
-            "Target": 100
-          }
+          "Extras": [ "Target" ]
         }
       ],
       "Tiles": [
         {
-          "Reference": "Tile",
+          "TemplateReference": "Tile",
           "Materials": [
             "Grass"
           ],
@@ -189,20 +210,36 @@
       ],
       "Extras": [
         {
-          "Reference": "Stone",
-          "IsDeadly": false
+          "Name": "Stone",
+          "TemplateReference": "Stone",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
         },
         {
-          "Reference": "Trees",
-          "IsDeadly": false
+          "Name": "Trees",
+          "TemplateReference": "Trees",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
         },
         {
-          "Reference": "Chest",
-          "IsDeadly": false
+          "Name": "Chest",
+          "TemplateReference": "Chest",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
         },
         {
-          "Reference": "Trap",
-          "IsDeadly": true
+          "Name": "Trap",
+          "TemplateReference": "Trap",
+          "IsDeadly": false,
+          "GameOverText": "You walked into a trap!",
+          "SoundEffects": [],
+          "Materials": []
         }
       ]
     }
@@ -214,34 +251,29 @@
     "TickStart": 5,
     "ColumnCount": 9,
     "RowCount": 9,
-	"ExtraChance": 0.3,
-    "TileTypes": {
+    "ExtraChance": 0.3,
+    "ObjectTypes": {
       "Players": [
         {
-          "Reference": "PlayerTemplate",
+          "TemplateReference": "PlayerTemplate",
           "Materials": [
             "DefaultPlayer"
-          ],
-          "ExtraTemplates": []
+          ]
         }
       ],
       "Monsters": [],
       "Finishes": [
         {
-          "Reference": "Tile",
+          "TemplateReference": "Tile",
           "Materials": [
             "FinishLine"
           ],
-          "ExtraTemplates": [
-            {
-              "Reference": "Target"
-            }
-          ]
+          "Extras": [ "Target" ]
         }
       ],
       "Tiles": [
         {
-          "Reference": "Tile",
+          "TemplateReference": "Tile",
           "Materials": [
             "Grass"
           ],
@@ -252,8 +284,12 @@
       ],
       "Extras": [
         {
-          "Reference": "Trap",
-          "IsDeadly": true
+          "Name": "Trap",
+          "TemplateReference": "Trap",
+          "IsDeadly": true,
+          "GameOverText": "You walked into a trap!",
+          "SoundEffects": [],
+          "Materials": []
         }
       ]
     }
@@ -264,26 +300,25 @@
     "TickInterval": 1,
     "TickStart": 5,
     "ColumnCount": 9,
-	"IncrementalSpawn":0.05,
     "RowCount": 9,
-    "TileTypes": {
+    "IncrementalSpawn": 0.05,
+    "ObjectTypes": {
       "Players": [
         {
-          "Reference": "PlayerTemplate",
+          "TemplateReference": "PlayerTemplate",
           "Materials": [
             "DefaultPlayer"
-          ],
-          "Extras": {
-          }
+          ]
         }
       ],
       "Monsters": [
         {
-          "Reference": "Cow",
+          "Name": "Cow",
+          "TemplateReference": "Cow",
+          "GameOverText": "You have been eaten by a Cow!",
           "Materials": [
             "Leather"
           ],
-          "Extras": { },
           "SoundEffects": [
             "Mooh1",
             "Mooh2",
@@ -295,18 +330,16 @@
       ],
       "Finishes": [
         {
-          "Reference": "Tile",
+          "TemplateReference": "Tile",
           "Materials": [
             "FinishLine"
           ],
-          "Extras": {
-            "Target": 100
-          }
+          "Extras": [ "Target" ]
         }
       ],
       "Tiles": [
         {
-          "Reference": "Tile",
+          "TemplateReference": "Tile",
           "Materials": [
             "Grass"
           ],
@@ -314,26 +347,42 @@
             "Stone": 1,
             "Trees": 1,
             "Chest": 1,
-            "Trap":1
+            "Trap": 1
           }
         }
       ],
       "Extras": [
         {
-          "Reference": "Stone",
-          "IsDeadly": false
+          "Name": "Stone",
+          "TemplateReference": "Stone",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
         },
         {
-          "Reference": "Trees",
-          "IsDeadly": false
+          "Name": "Trees",
+          "TemplateReference": "Trees",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
         },
         {
-          "Reference": "Chest",
-          "IsDeadly": false
+          "Name": "Chest",
+          "TemplateReference": "Chest",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
         },
         {
-          "Reference": "Trap",
-          "IsDeadly": true
+          "Name": "Trap",
+          "TemplateReference": "Trap",
+          "IsDeadly": true,
+          "GameOverText": "You walked into a trap!",
+          "SoundEffects": [],
+          "Materials": []
         }
       ]
     }

@@ -88,12 +88,12 @@ namespace Assets.Scripts.Core
         {
             fieldState.Tiles = new Tile[fieldState.RowCount, fieldState.ColumnCount];
 
-            var playerTile = gameMode.TileTypes.Players.GetRandomEntry();
+            var playerTile = gameMode.ObjectTypes.Players.GetRandomEntry();
 
             var player = new Player()
             {
                 IsActive = fieldState.IsActive,
-                TemplateReference = playerTile.Reference,
+                TemplateReference = playerTile.TemplateReference,
                 MaterialReference = playerTile.Materials.GetRandomEntry(),
                 PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
                 PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount)
@@ -103,16 +103,17 @@ namespace Assets.Scripts.Core
 
             fieldState.Tiles[player.PositionX, player.PositionZ] = new Tile()
             {
-                Reference = "Tile_Start",
+                TemplateReference = "Tile_Start",
                 IsStart = true,
                 Material = GameFrame.Base.Resources.Manager.Materials.Get("Start")
             };
 
-            var targetTileTemplate = gameMode.TileTypes.Finishes.GetRandomEntry();
+            var targetTileTemplate = gameMode.ObjectTypes.Finishes.GetRandomEntry();
 
             var finish = new Finish()
             {
-                TemplateReference = targetTileTemplate.Reference,
+                TemplateReference = targetTileTemplate.TemplateReference,
+                MaterialReference = targetTileTemplate.Materials.GetRandomEntry(),
                 PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
                 PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount)
             };
@@ -121,23 +122,26 @@ namespace Assets.Scripts.Core
 
             fieldState.Tiles[finish.PositionX, finish.PositionZ] = new Tile()
             {
-                Reference = "Tile",
                 IsFinish = true,
-                ExtraTemplate = new Tile()
+                TemplateReference = finish.TemplateReference,
+                ExtraTemplate = new ExtraTile()
                 {
-                    Reference = "Finish",
+                    TemplateReference = "Finish",
                     Material = GameFrame.Base.Resources.Manager.Materials.Get("Finish")
                 },
                 Material = GameFrame.Base.Resources.Manager.Materials.Get("FinishLine")
             };
 
-            if (gameMode.TileTypes.Monsters?.Count > 0)
+            if (gameMode.ObjectTypes.Monsters?.Count > 0)
             {
-                var monsterTemplate = gameMode.TileTypes.Monsters.GetRandomEntry();
+                var monsterTemplate = gameMode.ObjectTypes.Monsters.GetRandomEntry();
 
                 var monster = new Monster()
                 {
-                    TemplateReference = monsterTemplate.Reference,
+                    Name = monsterTemplate.Name,
+                    GameOverText = monsterTemplate.GameOverText,
+                    TemplateReference = monsterTemplate.TemplateReference,
+                    MaterialReference = monsterTemplate.Materials.GetRandomEntry(),
                     SoundEffects = monsterTemplate.SoundEffects,
                     PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
                     PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount),
@@ -147,7 +151,7 @@ namespace Assets.Scripts.Core
 
                 fieldState.Tiles[monster.PositionX, monster.PositionZ] = new Tile()
                 {
-                    Reference = "Tile",
+                    TemplateReference = "Tile",
                     Material = GameFrame.Base.Resources.Manager.Materials.Get("Grass")
                 };
             }
@@ -157,7 +161,7 @@ namespace Assets.Scripts.Core
                 {
                     if (fieldState.Tiles[column, row] == default)
                     {
-                        fieldState.Tiles[column, row] = gameMode.TileTypes.Tiles.GetRandomEntry().ToTile();
+                        fieldState.Tiles[column, row] = gameMode.ObjectTypes.Tiles.GetRandomEntry().ToTile();
                     }
                 }
             }

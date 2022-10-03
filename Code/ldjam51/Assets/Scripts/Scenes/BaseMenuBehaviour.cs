@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Assets.Scripts.Base;
 
 namespace Assets.Scripts.Scenes
 {
@@ -11,7 +10,9 @@ namespace Assets.Scripts.Scenes
             if (GameHandler.AvailableGameModes == default)
             {
                 Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.MainMenu);
+                return;
             }
+
             CustomAwake();
         }
 
