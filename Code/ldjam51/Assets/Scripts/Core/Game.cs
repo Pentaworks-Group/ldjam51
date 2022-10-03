@@ -95,7 +95,7 @@ namespace Assets.Scripts.Core
 
             fieldState.Tiles[player.PositionX, player.PositionZ] = new Tile()
             {
-                Reference = "Tile_Start",
+                TemplateReference = "Tile_Start",
                 IsStart = true,
                 Material = GameFrame.Base.Resources.Manager.Materials.Get("Start")
             };
@@ -113,11 +113,11 @@ namespace Assets.Scripts.Core
 
             fieldState.Tiles[finish.PositionX, finish.PositionZ] = new Tile()
             {
-                Reference = "Tile",
+                TemplateReference = "Tile",
                 IsFinish = true,
                 ExtraTemplate = new Tile()
                 {
-                    Reference = "Finish",
+                    TemplateReference = "Finish",
                     Material = GameFrame.Base.Resources.Manager.Materials.Get("Finish")
                 },
                 Material = GameFrame.Base.Resources.Manager.Materials.Get("FinishLine")
@@ -129,7 +129,10 @@ namespace Assets.Scripts.Core
 
                 var monster = new Monster()
                 {
-                    TemplateReference = monsterTemplate.Reference,
+                    Name = monsterTemplate.Name,
+                    GameOverText = monsterTemplate.GameOverText,
+                    TemplateReference = monsterTemplate.TemplateReference,
+                    MaterialReference = monsterTemplate.Materials.GetRandomEntry(),
                     SoundEffects = monsterTemplate.SoundEffects,
                     PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
                     PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount),
@@ -139,7 +142,7 @@ namespace Assets.Scripts.Core
 
                 fieldState.Tiles[monster.PositionX, monster.PositionZ] = new Tile()
                 {
-                    Reference = "Tile",
+                    TemplateReference = "Tile",
                     Material = GameFrame.Base.Resources.Manager.Materials.Get("Grass")
                 };
             }

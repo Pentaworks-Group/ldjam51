@@ -117,6 +117,9 @@ namespace Assets.Scripts.Behaviours.Models
                     {
                         Base.Core.Game.EffectsAudioManager.Play("Awww");
 
+                        Base.Core.Game.State.WatchOutForText = $"the {targetBehaviour.Tile.ExtraTemplate.Name}";
+                        Base.Core.Game.State.DeathReason = targetBehaviour.Tile.ExtraTemplate.GameOverText;
+
                         Base.Core.Game.ChangeScene(SceneNames.GameOver);
                     }
                     else
@@ -126,9 +129,12 @@ namespace Assets.Scripts.Behaviours.Models
                         Base.Core.Game.EffectsAudioManager.Play("Bonk");
                     }
                 }
-                else if (targetBehaviour is MonsterBehaviour)
+                else if (targetBehaviour is MonsterBehaviour monsterBehaviour)
                 {
                     Base.Core.Game.EffectsAudioManager.Play("Awww");
+
+                    Base.Core.Game.State.WatchOutForText = $"the {monsterBehaviour.Monster.Name}";
+                    Base.Core.Game.State.DeathReason = monsterBehaviour.Monster.GameOverText;
 
                     Base.Core.Game.ChangeScene(SceneNames.GameOver);
                 }

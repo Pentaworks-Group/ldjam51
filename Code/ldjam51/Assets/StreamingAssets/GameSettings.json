@@ -20,7 +20,8 @@
       ],
       "Monsters": [
         {
-          "Reference": "Cow",
+          "Name": "Cow",
+          "TemplateReference": "Cow",
           "Materials": [
             "Leather"
           ],

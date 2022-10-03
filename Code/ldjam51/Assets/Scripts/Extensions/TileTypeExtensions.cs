@@ -16,7 +16,7 @@ namespace Assets.Scripts.Extensions
             {
                 var tile = new Tile()
                 {
-                    Reference = tileType.Reference,
+                    TemplateReference = tileType.Reference,
                     IsDeadly = tileType.IsDeadly,
                     Material = GameFrame.Base.Resources.Manager.Materials.Get(tileType.Materials.GetRandomEntry())
                 };
