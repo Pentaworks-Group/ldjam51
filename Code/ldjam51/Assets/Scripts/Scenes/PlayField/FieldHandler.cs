@@ -165,16 +165,23 @@ namespace Assets.Scripts.Scenes.PlayField
                     FieldState.IsPlaneVisible = false;
                 }
 
+                SetMonsterActive(!FieldState.IsActive);
+
                 plane.SetActive(FieldState.IsActive);
             }
             else if (FieldState.IsPlaneVisible)
             {
+                SetMonsterActive(false);
+
                 plane.SetActive(true);
             }
+        }
 
+        private void SetMonsterActive(Boolean isActive)
+        {
             if (this.FieldState.Monster != default)
             {
-                this.FieldState.Monster.IsActive = !FieldState.IsActive;
+                this.FieldState.Monster.IsActive = isActive;
             }
         }
 
