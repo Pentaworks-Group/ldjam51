@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Assets.Scripts.Behaviours.Monsters;
 using Assets.Scripts.Scenes.PlayField;
+
+using GameFrame.Core.Extensions;
 
 using UnityEngine;
 
@@ -11,7 +14,7 @@ namespace Assets.Scripts.Behaviours.Models
     {
         public const Int32 StepSize = 1;
 
-        private Vector3 lastMove = Vector3.zero;
+        private UnityEngine.Vector3 lastMove = UnityEngine.Vector3.zero;
 
         public FieldHandler FieldHandler;
 
@@ -49,31 +52,31 @@ namespace Assets.Scripts.Behaviours.Models
 
             if (moveRequired)
             {
-                this.Move(new Vector3(x, 0, z));
+                this.Move(new UnityEngine.Vector3(x, 0, z));
             }
         }
 
         public void MoveRight()
         {
-            this.Move(new Vector3(StepSize, 0, 0));
+            this.Move(new UnityEngine.Vector3(StepSize, 0, 0));
         }
 
         public void MoveDown()
         {
-            this.Move(new Vector3(0, 0, -StepSize));
+            this.Move(new UnityEngine.Vector3(0, 0, -StepSize));
         }
 
         public void MoveLeft()
         {
-            this.Move(new Vector3(-StepSize, 0, 0));
+            this.Move(new UnityEngine.Vector3(-StepSize, 0, 0));
         }
 
         public void MoveUp()
         {
-            this.Move(new Vector3(0, 0, StepSize));
+            this.Move(new UnityEngine.Vector3(0, 0, StepSize));
         }
 
-        private void Move(Vector3 movementVector)
+        private void Move(UnityEngine.Vector3 movementVector)
         {
             var player = FieldHandler?.FieldState?.Player;
 
@@ -115,8 +118,10 @@ namespace Assets.Scripts.Behaviours.Models
                     }
                     else if (targetBehaviour.Tile.ExtraTemplate?.IsDeadly == true)
                     {
-                        Base.Core.Game.EffectsAudioManager.Play("Awww");
+                        var possibleAudios = new List<string> { "Awww", "PlayerHit" };
+                        var choice = possibleAudios.GetRandomEntry();
 
+                        Base.Core.Game.EffectsAudioManager.Play(choice);
                         Base.Core.Game.ChangeScene(SceneNames.GameOver);
                     }
                     else
@@ -128,7 +133,10 @@ namespace Assets.Scripts.Behaviours.Models
                 }
                 else if (targetBehaviour is MonsterBehaviour)
                 {
-                    Base.Core.Game.EffectsAudioManager.Play("Awww");
+                    var possibleAudios = new List<string> { "Awww", "PlayerHit" };
+                    var choice = possibleAudios.GetRandomEntry();
+
+                    Base.Core.Game.EffectsAudioManager.Play(choice);
 
                     Base.Core.Game.ChangeScene(SceneNames.GameOver);
                 }
