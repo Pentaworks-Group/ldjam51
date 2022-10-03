@@ -222,6 +222,8 @@ namespace Assets.Scripts.Scenes.PlayField
 
                 gameState.ToggleIndex = newToggleState;
 
+                activeField = leftField;
+
                 leftField.SetActive(field1WillBeActive);
                 rightField.SetActive(!field1WillBeActive);
             }
