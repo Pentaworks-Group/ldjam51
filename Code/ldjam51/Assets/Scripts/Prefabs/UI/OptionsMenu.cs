@@ -85,6 +85,9 @@ public class OptionsMenu : MonoBehaviour
         BackgroundVolumeSlider.value = 0.125f;
         Core.Game.Options.AreAnimationsEnabled = true;
         Core.Game.Options.MobileInterface = "Right";
+
+
+        this.SetMobileInterfaceToggles();
     }
 
     public void SaveOptions()

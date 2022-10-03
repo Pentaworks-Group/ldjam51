@@ -12,7 +12,6 @@ Todo:
  - 
    
  UI:
- - rotation of menus
  - exit fullscreen on mobile devices
  - GameOverScene Background
  - MainMenu Background
@@ -34,6 +33,7 @@ Nice to have:
 ----------------------------------
  
  - check for default MobileInterface if WebGL
+ - rotation of menus
  
  
 Ideas:
