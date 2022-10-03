@@ -13,9 +13,9 @@ Todo:
    
  UI:
  - exit fullscreen on mobile devices
- - GameOverScene Background
- - MainMenu Background
- - Credits Scene Background
+ 
+ 
+ 
  
  Audio:
  - Horn (Timer elapsed)
@@ -45,3 +45,6 @@ Done:
 ----------------------------------
  - incremental difficulty		
  - moving monsters (XPA)
+ - GameOverScene Background
+ - Credits Scene Background
+ - MainMenu Background

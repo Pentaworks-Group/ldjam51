@@ -88,6 +88,26 @@ namespace Assets.Scripts.Core
         {
             fieldState.Tiles = new Tile[fieldState.RowCount, fieldState.ColumnCount];
 
+            AddPlayer(gameMode, fieldState);
+
+            AddFinish(gameMode, fieldState);
+
+            AddMonster(gameMode, fieldState);
+
+            for (int row = 0; row < fieldState.RowCount; row++)
+            {
+                for (int column = 0; column < fieldState.ColumnCount; column++)
+                {
+                    if (fieldState.Tiles[column, row] == default)
+                    {
+                        fieldState.Tiles[column, row] = gameMode.ObjectTypes.Tiles.GetRandomEntry().ToTile();
+                    }
+                }
+            }
+        }
+
+        private void AddPlayer(GameSettings gameMode, FieldState fieldState)
+        {
             var playerTile = gameMode.ObjectTypes.Players.GetRandomEntry();
 
             var player = new Player()
@@ -107,15 +127,20 @@ namespace Assets.Scripts.Core
                 IsStart = true,
                 Material = GameFrame.Base.Resources.Manager.Materials.Get("Start")
             };
+        }
 
+        private void AddFinish(GameSettings gameMode, FieldState fieldState)
+        {
             var targetTileTemplate = gameMode.ObjectTypes.Finishes.GetRandomEntry();
+
+            GeneratePosition(fieldState, out var x, out var y);
 
             var finish = new Finish()
             {
                 TemplateReference = targetTileTemplate.TemplateReference,
                 MaterialReference = targetTileTemplate.Materials.GetRandomEntry(),
-                PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
-                PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount)
+                PositionX = x,
+                PositionZ = y
             };
 
             fieldState.Finish = finish;
@@ -131,6 +156,13 @@ namespace Assets.Scripts.Core
                 },
                 Material = GameFrame.Base.Resources.Manager.Materials.Get("FinishLine")
             };
+        }
+
+        private void AddMonster(GameSettings gameMode, FieldState fieldState)
+        {
+            var targetTileTemplate = gameMode.ObjectTypes.Finishes.GetRandomEntry();
+
+            GeneratePosition(fieldState, out var x, out var z);
 
             if (gameMode.ObjectTypes.Monsters?.Count > 0)
             {
@@ -143,8 +175,8 @@ namespace Assets.Scripts.Core
                     TemplateReference = monsterTemplate.TemplateReference,
                     MaterialReference = monsterTemplate.Materials.GetRandomEntry(),
                     SoundEffects = monsterTemplate.SoundEffects,
-                    PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
-                    PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount),
+                    PositionX = x,
+                    PositionZ = z,
                 };
 
                 fieldState.Monster = monster;
@@ -155,16 +187,67 @@ namespace Assets.Scripts.Core
                     Material = GameFrame.Base.Resources.Manager.Materials.Get("Grass")
                 };
             }
-            for (int row = 0; row < fieldState.RowCount; row++)
+        }
+
+        private void GeneratePosition(FieldState fieldState, out Int32 x, out Int32 z)
+        {
+            x = 0;
+            z = 0;
+
+            var positionFound = false;
+
+            for (var counter = 0; counter < 5; counter++)
             {
-                    for (int column = 0; column < fieldState.ColumnCount; column++)
+                x = UnityEngine.Random.Range(0, fieldState.ColumnCount);
+                z = UnityEngine.Random.Range(0, fieldState.RowCount);
+
+                if (IsPositionAvailable(fieldState, x, z))
                 {
-                    if (fieldState.Tiles[column, row] == default)
+                    positionFound = true;
+                }
+            }
+
+            if (!positionFound)
+            {
+                throw new Exception("Failed to generate Position for Finish!");
+            }
+        }
+
+        private Boolean IsPositionAvailable(FieldState fieldState, Int32 x, Int32 z)
+        {
+            var isAvailable = true;
+
+            if (fieldState.Player != default)
+            {
+                if (fieldState.Player.PositionX == x && fieldState.Player.PositionZ == z)
+                {
+                    isAvailable = false;
+                }
+            }
+
+            if (isAvailable)
+            {
+                if (fieldState.Finish != default)
+                {
+                    if (fieldState.Finish.PositionX == x && fieldState.Finish.PositionZ == z)
                     {
-                        fieldState.Tiles[column, row] = gameMode.ObjectTypes.Tiles.GetRandomEntry().ToTile();
+                        isAvailable = false;
                     }
                 }
             }
+
+            if (isAvailable)
+            {
+                if (fieldState.Monster != default)
+                {
+                    if (fieldState.Monster.PositionX == x && fieldState.Monster.PositionZ == z)
+                    {
+                        isAvailable = false;
+                    }
+                }
+            }
+
+            return isAvailable;
         }
 
         protected override PlayerOptions InitialzePlayerOptions()
