@@ -1,0 +1,43 @@
+Todo:
+----------------------------------
+ Bugs:
+  
+ Exceptions:
+ 
+ Core:
+ - Loading of WebGL on some iOS devices (helps maybe https://forum.unity.com/threads/ios-15-webgl-2-issue.1176116/)
+ 
+  
+ GamePlay:
+ - 
+   
+ UI:
+ - rotation of menus
+ - exit fullscreen on mobile devices
+ 
+ Audio:
+ - 
+ 
+  
+Refactoring:
+----------------------------------
+ - 
+ 
+WIP:
+----------------------------------
+ - 
+
+ 
+Nice to have:
+----------------------------------
+ - moving monsters
+ 
+ 
+Ideas:
+----------------------------------
+ - multiple gamefiles (e.g. 3)	
+ - incremental difficulty		
+ 
+ 
+Done:
+----------------------------------
