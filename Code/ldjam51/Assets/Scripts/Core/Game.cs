@@ -49,11 +49,13 @@ namespace Assets.Scripts.Core
 
             Int32 numRows = gameMode.RowCount;
             Int32 columnCount = gameMode.ColumnCount;
+
             if (Base.Core.SelectedGameMode.IncrementalSize != default && Base.Core.Game.State != default)
             {
                 numRows += Base.Core.SelectedGameMode.IncrementalSize * Base.Core.Game.State.LevelsCompleted;
                 columnCount += Base.Core.SelectedGameMode.IncrementalSize * Base.Core.Game.State.LevelsCompleted;
             }
+
             while (fieldState == default)
             {
                 var newFieldState = new FieldState()
