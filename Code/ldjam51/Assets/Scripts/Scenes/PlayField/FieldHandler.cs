@@ -180,6 +180,10 @@ namespace Assets.Scripts.Scenes.PlayField
 
                 plane.SetActive(true);
             }
+            else
+            {
+                SetMonsterActive(true);
+            }
         }
 
         private void SetMonsterActive(Boolean isActive)
