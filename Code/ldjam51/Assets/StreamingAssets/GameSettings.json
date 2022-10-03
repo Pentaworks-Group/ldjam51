@@ -13,7 +13,8 @@
           "Materials": [
             "DefaultPlayer"
           ],
-          "ExtraTemplates": []
+          "Extras": {
+          }
         }
       ],
       "Monsters": [],
@@ -23,11 +24,9 @@
           "Materials": [
             "FinishLine"
           ],
-          "ExtraTemplates": [
-            {
-              "Reference": "Target"
-            }
-          ]
+          "Extras": {
+            "Target": 100
+          }
         }
       ],
       "Tiles": [
@@ -36,11 +35,11 @@
           "Materials": [
             "Grass"
           ],
-          "ExtraTemplates": {
-            { "Stone": 1 },
-            { "Trees": 1 },
-            { "Chest": 1 },
-            { "Trap": 1 }
+          "Extras": {
+            "Stone": 1,
+            "Trees": 1,
+            "Chest": 1,
+            "Trap":1
           }
         }
       ],
@@ -101,11 +100,11 @@
           "Materials": [
             "Grass"
           ],
-          "ExtraTemplates": {
-            { "Stone": 1 },
-            { "Trees": 1 },
-            { "Chest": 1 },
-            { "Trap": 1 }
+          "Extras": {
+            "Stone": 1,
+            "Trees": 1,
+            "Chest": 1,
+            "Trap": 1
           }
         }
       ],
@@ -166,11 +165,11 @@
           "Materials": [
             "Grass"
           ],
-          "ExtraTemplates": {
-            { "Stone": 1 },
-            { "Trees": 1 },
-            { "Chest": 1 },
-            { "Trap": 1 }
+          "Extras": {
+            "Stone": 1,
+            "Trees": 1,
+            "Chest": 1,
+            "Trap": 1
           }
         }
       ],

@@ -45,7 +45,9 @@ namespace Assets.Scripts.Core
         {
             var fieldState = default(FieldState);
 
-            while (fieldState == default)
+            var attempts = 0;
+            
+            while (fieldState == default) 
             {
                 var newFieldState = new FieldState()
                 {
@@ -60,6 +62,14 @@ namespace Assets.Scripts.Core
                 if (new FieldStateValidator(newFieldState).IsValid())
                 {
                     fieldState = newFieldState;
+                }
+                else if (attempts < 5000)
+                {
+                    attempts++;
+                }
+                else
+                {
+                    throw new Exception("Failed to generate Field! Over 5000 attempts were made!");
                 }
             }
 
@@ -119,7 +129,7 @@ namespace Assets.Scripts.Core
                 {
                     if (fieldState.Tiles[column, row] == default)
                     {
-                        fieldState.Tiles[column, row] = gameMode.TileTypes.Tiles.GetRandomEntry().ToTile();
+                        fieldState.Tiles[column, row] = gameMode.TileTypes.Tiles.GetRandomEntry().ToTile(gameMode);
                     }
                 }
             }
