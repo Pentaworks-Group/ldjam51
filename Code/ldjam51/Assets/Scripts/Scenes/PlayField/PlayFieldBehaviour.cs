@@ -111,10 +111,9 @@ namespace Assets.Scripts.Scenes.PlayField
 
         private void LoadNewFields()
         {
-            gameState.Field1 = Base.Core.Game.GenerateField(false);
-            //leftField.LoadNewField(gameState.Field1);
-            gameState.Field2 = Base.Core.Game.GenerateField(true);
-            //rightField.LoadNewField(gameState.Field2);
+            gameState.Field1 = Base.Core.Game.GenerateField(gameState.Mode, false);
+            gameState.Field2 = Base.Core.Game.GenerateField(gameState.Mode, true);
+            
             gameState.TimeRemaining = gameState.Mode.Interval;
             gameState.ToggleIndex = 0;
 

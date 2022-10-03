@@ -1,3 +1,14 @@
 [
-{"name":"test"}
+  {
+    "Name": "Default",
+    "Interval": 10,
+    "ColumnCount": 9,
+    "RowCount": 9
+  },
+  {
+    "Name": "Biggus Dickus",
+    "Interval": 10,
+    "ColumnCount": 18,
+    "RowCount": 18
+  }
 ]

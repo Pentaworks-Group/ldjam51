@@ -14,8 +14,6 @@ namespace Assets.Scripts.Core
 {
     public class Game : GameFrame.Core.Game<GameState, PlayerOptions>
     {
-        public const Int32 FieldCount = 9;
-
         public ContinuousAudioManager AmbienceAudioManager { get; set; }
         public ContinuousAudioManager BackgroundAudioManager { get; set; }
         public EffectsAudioManager EffectsAudioManager { get; set; }
@@ -36,24 +34,24 @@ namespace Assets.Scripts.Core
             {
                 CurrentScene = SceneNames.PlayFieldScene,
                 Mode = gameMode,
-                TimeRemaining = 10,
-                Field1 = GenerateField(false),
-                Field2 = GenerateField(true),
+                TimeRemaining = gameMode.Interval,
+                Field1 = GenerateField(gameMode, false),
+                Field2 = GenerateField(gameMode, true),
             };
         }
 
-        public FieldState GenerateField(Boolean isPlaneVisible)
+        public FieldState GenerateField(GameSettings gameMode, Boolean isPlaneVisible)
         {
             var fieldState = default(FieldState);
 
             while (fieldState == default)
-            { 
+            {
                 var newFieldState = new FieldState()
                 {
                     IsActive = false,
                     IsPlaneVisible = isPlaneVisible,
-                    ColumnCount = FieldCount,
-                    RowCount = FieldCount
+                    ColumnCount = gameMode.ColumnCount,
+                    RowCount = gameMode.RowCount
                 };
 
                 GenerateFields(newFieldState);
@@ -77,6 +75,7 @@ namespace Assets.Scripts.Core
             {
                 IsActive = fieldState.IsActive,
                 TemplateReference = playerTile.Reference,
+                MaterialReference = playerTile.Materials.GetRandomEntry(),
                 PositionX = UnityEngine.Random.Range(0, fieldState.ColumnCount),
                 PositionZ = UnityEngine.Random.Range(0, fieldState.RowCount)
             };

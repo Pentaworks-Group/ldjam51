@@ -36,7 +36,6 @@ namespace Assets.Scripts.Scenes.PlayField
             this.FieldState.IsActive = isActive;
             this.FieldState.Player.IsActive = isActive;
             this.plane.SetActive(isActive);
-            //this.plane.SetActive(false);
         }
 
         private void ClearField()
@@ -143,6 +142,16 @@ namespace Assets.Scripts.Scenes.PlayField
                 this.playerBehaviour = Instantiate(playerTemplate, this.gameObject.transform);
 
                 var newPosition = new UnityEngine.Vector3(FieldState.Player.PositionX * 2, 0, FieldState.Player.PositionZ * 2);
+
+                if (FieldState.Player.Material != default)
+                {
+                    var meshRenderer = playerBehaviour.GetComponent<MeshRenderer>();
+
+                    if (meshRenderer != default)
+                    {
+                        meshRenderer.material = FieldState.Player.Material;
+                    }
+                }
 
                 this.playerBehaviour.FieldHandler = this;
 
