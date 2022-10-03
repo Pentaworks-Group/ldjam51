@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17628048, g: 0.22062775, b: 0.30295068, a: 1}
+  m_IndirectSpecularColor: {r: 0.17628023, g: 0.22062705, b: 0.30295008, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -208,7 +208,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 261244544261765539, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1682637802365037447, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
       propertyPath: GUI
@@ -244,11 +244,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2103252039003050592, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 74.53334
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3340593580460954936, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 74.53334
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4135483797724031852, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4423638222082093134, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
       propertyPath: m_AnchorMax.x
@@ -272,11 +276,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7451514606345876462, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7514478096002418872, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -49.613335
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9199526047750111619, guid: c73a4c840bd1da24683deb34fa150985, type: 3}
       propertyPath: m_Pivot.x
