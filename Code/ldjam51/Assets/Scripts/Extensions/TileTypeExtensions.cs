@@ -23,7 +23,14 @@ namespace Assets.Scripts.Extensions
 
                 if (tileType.Extras?.Count > 0)
                 {
-                    if (UnityEngine.Random.value < Base.Core.SelectedGameMode.ExtraChance)
+                    float chance = Base.Core.SelectedGameMode.ExtraChance;
+                    var incr = Base.Core.SelectedGameMode.IncrementalSpawn;
+                    if (incr != default && Base.Core.Game.State != default)
+                    {
+                        var lvl = Base.Core.Game.State.LevelsCompleted;
+                        chance += lvl * incr;
+                    }
+                    if (UnityEngine.Random.value < chance)
                     {
                         float take = UnityEngine.Random.value;
                         foreach (TileType t in Base.Core.SelectedGameMode.TileTypes.Extras)

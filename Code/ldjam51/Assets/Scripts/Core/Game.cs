@@ -143,10 +143,16 @@ namespace Assets.Scripts.Core
                     Material = GameFrame.Base.Resources.Manager.Materials.Get("Grass")
                 };
             }
-
-            for (int row = 0; row < fieldState.RowCount; row++)
+            Int32 numRows = fieldState.RowCount;
+            Int32 columnCount = fieldState.ColumnCount;
+            if (Base.Core.SelectedGameMode.IncrementalSize != default)
             {
-                for (int column = 0; column < fieldState.ColumnCount; column++)
+                numRows += Base.Core.SelectedGameMode.IncrementalSize * Base.Core.Game.State.LevelsCompleted;
+                columnCount += Base.Core.SelectedGameMode.IncrementalSize * Base.Core.Game.State.LevelsCompleted;
+            }
+            for (int row = 0; row < numRows; row++)
+            {
+                    for (int column = 0; column < columnCount; column++)
                 {
                     if (fieldState.Tiles[column, row] == default)
                     {

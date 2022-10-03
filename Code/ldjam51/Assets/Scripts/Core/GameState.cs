@@ -12,7 +12,7 @@ namespace Assets.Scripts.Core
         public FieldState Field1 { get; set; }
         public FieldState Field2 { get; set; }
         public Single TimeRemaining { get; set; }
-        public Int32 LevelsCompleted { get; set; }
+        public Int32 LevelsCompleted { get; set; } = 0;
         public Int32 ToggleIndex { get; set; }
         public float NextTick { get; set; }
         public Int32 LastTick { get; set; }

@@ -13,6 +13,8 @@ public class GameSettings
     public Int32 ColumnCount { get; set; } = 9;
     public Int32 RowCount { get; set; } = 9;
     public TileTypes TileTypes { get; set; }
+    public float IncrementalSpawn { get; set; }
+    public Int32 IncrementalSize { get; set; }
     public float ExtraChance { get; set; } = 0.2f;
     private Dictionary<String, Dictionary<String, float>> ExtraWeights { get; set; }
 
