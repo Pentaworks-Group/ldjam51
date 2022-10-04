@@ -82,11 +82,34 @@ namespace Assets.Scripts.Behaviours.Models
 
             if (player?.IsActive == true)
             {
+
+                var tiles = this.FieldHandler.FieldState.Tiles;
                 if (movementVector.x != 0)
                 {
-                    FieldHandler.FieldState.Player.PositionX += (Int32)movementVector.x;
+                    var newX = FieldHandler.FieldState.Player.PositionX + (Int32)movementVector.x;
+                    if (newX >= 0 && newX < tiles.GetLength(0)) {
+                        FieldHandler.FieldState.Player.PositionX += (Int32)movementVector.x;
+                    } else
+                    {
+                        Base.Core.Game.EffectsAudioManager.Play("Bonk");
+                        return;
+                    }
+                    
                 }
+                if (movementVector.z != 0)
+                {
+                    var newZ = FieldHandler.FieldState.Player.PositionZ + (Int32)movementVector.z;
+                    if (newZ >= 0 && newZ < tiles.GetLength(0))
+                    {
+                        FieldHandler.FieldState.Player.PositionZ += (Int32)movementVector.z;
+                    }
+                    else
+                    {
+                        Base.Core.Game.EffectsAudioManager.Play("Bonk");
+                        return;
+                    }
 
+                }
                 if (movementVector.z != 0)
                 {
                     FieldHandler.FieldState.Player.PositionZ += (Int32)movementVector.z;
