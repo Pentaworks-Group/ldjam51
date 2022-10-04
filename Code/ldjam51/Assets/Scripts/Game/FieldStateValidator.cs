@@ -25,31 +25,37 @@ namespace Assets.Scripts.Game
             {
                 if ((fieldState.Player.PositionX != fieldState.Finish.PositionX) && (fieldState.Player.PositionZ != fieldState.Finish.PositionZ))
                 {
-                    if (CheckTileRecursive(fieldState.Player.PositionX - 1, fieldState.Player.PositionZ))
+                    if (fieldState.Monsters?.Count > 0)
+                    {
+                        foreach (var monster in fieldState.Monsters)
+                        {
+                            visitedTilesByIndex[monster.PositionX, monster.PositionZ] = true;
+                        }
+                    }
+
+                    if (CheckTileRecursive(fieldState.Player.PositionX - 1, fieldState.Player.PositionZ, 0))
                     {
                         return true;
                     }
-                    else if (CheckTileRecursive(fieldState.Player.PositionX, fieldState.Player.PositionZ - 1))
+                    else if (CheckTileRecursive(fieldState.Player.PositionX, fieldState.Player.PositionZ - 1, 1))
                     {
                         return true;
                     }
-                    else if (CheckTileRecursive(fieldState.Player.PositionX + 1, fieldState.Player.PositionZ))
+                    else if (CheckTileRecursive(fieldState.Player.PositionX + 1, fieldState.Player.PositionZ, 2))
                     {
                         return true;
                     }
-                    else if (CheckTileRecursive(fieldState.Player.PositionX, fieldState.Player.PositionZ + 1))
+                    else if (CheckTileRecursive(fieldState.Player.PositionX, fieldState.Player.PositionZ + 1, 3))
                     {
                         return true;
                     }
                 }
             }
 
-            //UnityEngine.Debug.Log("Generated impossible Field! :D rekt");
-
             return false;
         }
 
-        private Boolean CheckTileRecursive(Int32 x, Int32 z)
+        private Boolean CheckTileRecursive(Int32 x, Int32 z, Int32 previousDirection)
         {
             var tile = GetTile(x, z);
 
@@ -65,17 +71,30 @@ namespace Assets.Scripts.Game
                     }
                     else if (tile.ExtraTemplate == default)
                     {
-                        if (CheckTileRecursive(x - 1, z))
+                        var excludedDirection = previousDirection + 2;
+
+                        if (excludedDirection > 3)
                         {
-                            return true;
+                            excludedDirection -= 4;
                         }
-                        else if (CheckTileRecursive(x, z - 1))
+
+                        for (int i = 0; i < 4; i++)
                         {
-                            return true;
-                        }
-                        else if (CheckTileRecursive(x, z + 1))
-                        {
-                            return true;
+                            if (i != excludedDirection)
+                            {
+                                switch (i)
+                                {
+                                    case 0: x -= 1; break;
+                                    case 1: z -= 1; break;
+                                    case 2: x += 1; break;
+                                    case 3: z += 1; break;
+                                }
+
+                                if (CheckTileRecursive(x, z, i))
+                                {
+                                    return true;
+                                }
+                            }
                         }
                     }
                 }
