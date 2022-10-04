@@ -17,8 +17,7 @@ Todo:
  
  
  Audio:
- - Horn (Timer elapsed)
- - Movement noise (steps)
+
  
   
 Refactoring:
@@ -36,10 +35,10 @@ Nice to have:
  - rotation of menus
  - better cloud
  - use treasure chest
- - multimonster
  - more game modes
  - save zones for cow level
- 
+ - Horn (Timer elapsed)
+ - Movement noise (steps)
  
 Ideas:
 ----------------------------------
@@ -53,3 +52,4 @@ Done:
  - GameOverScene Background
  - Credits Scene Background
  - MainMenu Background
+ - multimonster
