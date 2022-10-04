@@ -94,7 +94,7 @@ namespace Assets.Scripts.Core
 
             AddFinish(gameMode, fieldState);
 
-            AddMonster(gameMode, fieldState);
+            AddMonsters(gameMode, fieldState);
 
             for (int row = 0; row < fieldState.RowCount; row++)
             {
@@ -195,46 +195,54 @@ namespace Assets.Scripts.Core
             };
         }
 
-        private void AddMonster(GameSettings gameMode, FieldState fieldState)
+        private void AddMonsters(GameSettings gameMode, FieldState fieldState)
         {
-            if (gameMode.ObjectTypes.Monsters?.Count > 0)
+            if ((gameMode.ObjectTypes.Monsters?.Count > 0) && (gameMode.MonsterAmount > 0))
             {
-                GeneratePosition(fieldState, out var x, out var z);
-
-                var monsterType = gameMode.ObjectTypes.Monsters.GetRandomEntry();
-
-                var monster = new Monster()
+                for (int i = 1; i <= gameMode.MonsterAmount; i++)
                 {
-                    Name = monsterType.Name,
-                    GameOverText = monsterType.GameOverText,
-                    TemplateReference = monsterType.TemplateReference,
-                    MaterialReference = monsterType.Materials.GetRandomEntry(),
-                    SoundEffects = monsterType.SoundEffects,
-                    PositionX = x,
-                    PositionZ = z,
-                };
+                    GeneratePosition(fieldState, out var x, out var z);
 
-                fieldState.Monster = monster;
+                    var monsterType = gameMode.ObjectTypes.Monsters.GetRandomEntry();
 
-                var monsterTileType = monsterType.Tile;
-
-                if (monsterTileType == default)
-                {
-                    monsterTileType = new MonsterTileType()
+                    var monster = new Monster()
                     {
-                        TemplateReference = "Tile",
-                        Materials = new System.Collections.Generic.List<string>()
+                        Name = monsterType.Name,
+                        GameOverText = monsterType.GameOverText,
+                        TemplateReference = monsterType.TemplateReference,
+                        MaterialReference = monsterType.Materials.GetRandomEntry(),
+                        SoundEffects = monsterType.SoundEffects,
+                        PositionX = x,
+                        PositionZ = z,
+                    };
+
+                    if (fieldState.Monsters == default)
+                    {
+                        fieldState.Monsters = new System.Collections.Generic.List<Monster>();
+                    }
+
+                    fieldState.Monsters.Add(monster);
+
+                    var monsterTileType = monsterType.Tile;
+
+                    if (monsterTileType == default)
+                    {
+                        monsterTileType = new MonsterTileType()
+                        {
+                            TemplateReference = "Tile",
+                            Materials = new System.Collections.Generic.List<string>()
                         {
                             "Grass"
                         }
+                        };
+                    }
+
+                    fieldState.Tiles[monster.PositionX, monster.PositionZ] = new Tile()
+                    {
+                        TemplateReference = monsterTileType.TemplateReference,
+                        MaterialReference = monsterTileType.Materials.GetRandomEntry()
                     };
                 }
-
-                fieldState.Tiles[monster.PositionX, monster.PositionZ] = new Tile()
-                {
-                    TemplateReference = monsterTileType.TemplateReference,
-                    MaterialReference = monsterTileType.Materials.GetRandomEntry()
-                };
             }
         }
 
@@ -287,11 +295,14 @@ namespace Assets.Scripts.Core
 
             if (isAvailable)
             {
-                if (fieldState.Monster != default)
+                if (fieldState.Monsters?.Count > 0)
                 {
-                    if (fieldState.Monster.PositionX == x && fieldState.Monster.PositionZ == z)
+                    foreach (var monster in fieldState.Monsters)
                     {
-                        isAvailable = false;
+                        if (monster.PositionX == x && monster.PositionZ == z)
+                        {
+                            isAvailable = false;
+                        }
                     }
                 }
             }

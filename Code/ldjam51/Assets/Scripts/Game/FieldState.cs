@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Assets.Scripts.Model;
 
@@ -13,7 +14,7 @@ namespace Assets.Scripts.Game
         public Int32 ColumnCount { get; set; }
         public Player Player { get; set; }
         public Finish Finish { get; set; }
-        public Monster Monster { get; set; }
+        public List<Monster> Monsters { get; set; }
         public Tile[,] Tiles { get; set; }
     }
 }

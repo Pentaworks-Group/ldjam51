@@ -13,9 +13,9 @@ namespace Assets.Scripts.Scenes.PlayField
         private GameObject plane;
         private GameObject tilesContainer;
         private PlayFieldBehaviour PlayField;
+        private System.Collections.Generic.List<MonsterBehaviour> monsterBehaviours = new System.Collections.Generic.List<MonsterBehaviour>();
 
         public PlayerBehaviour playerBehaviour;
-        public MonsterBehaviour monsterBehaviour;
         public FieldState FieldState;
 
         void Awake()
@@ -39,9 +39,12 @@ namespace Assets.Scripts.Scenes.PlayField
             this.FieldState.Player.IsActive = isActive;
             this.plane.SetActive(isActive);
 
-            if (this.FieldState.Monster != default)
+            if (this.FieldState.Monsters?.Count > 0)
             {
-                this.FieldState.Monster.IsActive = !isActive;
+                for (int i = 0; i < this.FieldState.Monsters.Count; i++)
+                {
+                    this.FieldState.Monsters[i].IsActive = !isActive;
+                }
             }
         }
 
@@ -60,9 +63,14 @@ namespace Assets.Scripts.Scenes.PlayField
                 Destroy(this.playerBehaviour.gameObject);
             }
 
-            if (this.monsterBehaviour != null)
+            if (this.monsterBehaviours.Count > 0)
             {
-                Destroy(this.monsterBehaviour.gameObject);
+                for (int i = 0; i < this.monsterBehaviours.Count; i++)
+                {
+                    Destroy(this.monsterBehaviours[i].gameObject);
+                }
+
+                this.monsterBehaviours.Clear();
             }
         }
 
@@ -149,9 +157,9 @@ namespace Assets.Scripts.Scenes.PlayField
 
             AddPlayer();
 
-            if (FieldState.Monster != default)
+            if (FieldState.Monsters?.Count > 0)
             {
-                AddMonster();
+                AddMonsters();
             }
 
             var totalColumns = this.FieldState.ColumnCount + 2;
@@ -188,9 +196,12 @@ namespace Assets.Scripts.Scenes.PlayField
 
         private void SetMonsterActive(Boolean isActive)
         {
-            if (this.FieldState.Monster != default)
+            if (this.FieldState.Monsters?.Count > 0)
             {
-                this.FieldState.Monster.IsActive = isActive;
+                foreach (var monster in this.FieldState.Monsters)
+                {
+                    monster.IsActive = isActive;
+                }
             }
         }
 
@@ -223,33 +234,36 @@ namespace Assets.Scripts.Scenes.PlayField
             }
         }
 
-        private void AddMonster()
+        private void AddMonsters()
         {
-            var monster = FieldState.Monster;
-
-            var monsterTemplate = PlayField.GetTemplateByName<MonsterBehaviour>(monster.TemplateReference);
-
-            if (monsterTemplate != default)
+            foreach (var monster in FieldState.Monsters)
             {
-                this.monsterBehaviour = Instantiate(monsterTemplate, this.gameObject.transform);
+                var monsterTemplate = PlayField.GetTemplateByName<MonsterBehaviour>(monster.TemplateReference);
 
-                var newPosition = new UnityEngine.Vector3(monster.PositionX * 2, 0, monster.PositionZ * 2);
-
-                if (monster.Material != default)
+                if (monsterTemplate != default)
                 {
-                    var meshRenderer = monsterBehaviour.GetComponent<MeshRenderer>();
+                    var monsterBehaviour = Instantiate(monsterTemplate, this.gameObject.transform);
 
-                    if (meshRenderer != default)
+                    var newPosition = new UnityEngine.Vector3(monster.PositionX * 2, 0, monster.PositionZ * 2);
+
+                    if (monster.Material != default)
                     {
-                        meshRenderer.material = monster.Material;
+                        var meshRenderer = monsterBehaviour.GetComponent<MeshRenderer>();
+
+                        if (meshRenderer != default)
+                        {
+                            meshRenderer.material = monster.Material;
+                        }
                     }
+
+                    monsterBehaviour.FieldHandler = this;
+                    monsterBehaviour.Monster = monster;
+
+                    monsterBehaviour.transform.Translate(newPosition, UnityEngine.Space.World);
+                    monsterBehaviour.gameObject.SetActive(true);
+
+                    this.monsterBehaviours.Add(monsterBehaviour);
                 }
-
-                this.monsterBehaviour.FieldHandler = this;
-                this.monsterBehaviour.Monster = monster;
-
-                this.monsterBehaviour.transform.Translate(newPosition, UnityEngine.Space.World);
-                this.monsterBehaviour.gameObject.SetActive(true);
             }
         }
 
