@@ -5,7 +5,7 @@ Todo:
  Exceptions:
  
  Core:
- 
+ - 
   
  GamePlay:
  - 
@@ -13,7 +13,7 @@ Todo:
  UI:
  - exit fullscreen on mobile devices
  - Better tooltip
- 
+ - ANIMATIONS!!!1!11
  
  
  Audio:
@@ -37,6 +37,7 @@ Nice to have:
  - use treasure chest
  - multimonster
  - more game modes
+ - save zones for cow level
  
  
 Ideas:

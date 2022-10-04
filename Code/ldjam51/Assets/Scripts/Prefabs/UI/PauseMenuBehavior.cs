@@ -28,7 +28,7 @@ public class PauseMenuBehavior : MonoBehaviour
     {
         inputFieldLeft = GUI.transform.Find("InputFieldLeft");
         inputFieldRight = GUI.transform.Find("InputFieldRight");
-        Hide();
+        Menu.SetActive(false);
         ReloadUI();
     }
 
@@ -91,9 +91,6 @@ public class PauseMenuBehavior : MonoBehaviour
     public void Show()
     {
         Time.timeScale = 0;
-
-        CursorMode cursorMode = CursorMode.Auto;
-        Cursor.SetCursor(null, Vector2.zero, cursorMode);
 
         SetVisible(pauseMenu: true);
 
