@@ -18,6 +18,7 @@ Todo:
  
  Audio:
  - Horn (Timer elapsed)
+ - Movement noise (steps)
  
   
 Refactoring:
