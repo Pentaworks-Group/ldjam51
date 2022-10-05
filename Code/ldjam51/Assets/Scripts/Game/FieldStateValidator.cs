@@ -25,19 +25,19 @@ namespace Assets.Scripts.Game
             {
                 if ((fieldState.Player.PositionX != fieldState.Finish.PositionX) && (fieldState.Player.PositionZ != fieldState.Finish.PositionZ))
                 {
-                    if (CheckTileRecursive(fieldState.Player.PositionX - 1, fieldState.Player.PositionZ))
+                    if (CheckTileRecursive(fieldState.Player.PositionX - 1, fieldState.Player.PositionZ, 1))
                     {
                         return true;
                     }
-                    else if (CheckTileRecursive(fieldState.Player.PositionX, fieldState.Player.PositionZ - 1))
+                    else if (CheckTileRecursive(fieldState.Player.PositionX, fieldState.Player.PositionZ - 1, 3))
                     {
                         return true;
                     }
-                    else if (CheckTileRecursive(fieldState.Player.PositionX + 1, fieldState.Player.PositionZ))
+                    else if (CheckTileRecursive(fieldState.Player.PositionX + 1, fieldState.Player.PositionZ, 2))
                     {
                         return true;
                     }
-                    else if (CheckTileRecursive(fieldState.Player.PositionX, fieldState.Player.PositionZ + 1))
+                    else if (CheckTileRecursive(fieldState.Player.PositionX, fieldState.Player.PositionZ + 1, 4))
                     {
                         return true;
                     }
@@ -49,7 +49,7 @@ namespace Assets.Scripts.Game
             return false;
         }
 
-        private Boolean CheckTileRecursive(Int32 x, Int32 z)
+        private Boolean CheckTileRecursive(Int32 x, Int32 z, int origin)
         {
             var tile = GetTile(x, z);
 
@@ -65,15 +65,19 @@ namespace Assets.Scripts.Game
                     }
                     else if (tile.ExtraTemplate == default)
                     {
-                        if (CheckTileRecursive(x - 1, z))
+                        if (origin != 2 && CheckTileRecursive(x - 1, z, 1))
                         {
                             return true;
                         }
-                        else if (CheckTileRecursive(x, z - 1))
+                        else if (origin != 1 && CheckTileRecursive(x + 1, z, 2))
                         {
                             return true;
                         }
-                        else if (CheckTileRecursive(x, z + 1))
+                        else if (origin != 4 && CheckTileRecursive(x, z - 1, 3))
+                        {
+                            return true;
+                        }
+                        else if (origin != 3 && CheckTileRecursive(x, z + 1, 4))
                         {
                             return true;
                         }
