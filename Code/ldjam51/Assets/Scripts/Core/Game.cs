@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 
 using Assets.Scripts.Extensions;
@@ -30,6 +31,52 @@ namespace Assets.Scripts.Core
         protected override GameState InitializeGameState()
         {
             var gameMode = Base.Core.SelectedGameMode;
+
+            //var fieldsToGenerate = 50000;
+            //var averageGenerationDuration = 0d;
+            //var averageValidationDuration = 0d;
+            //var invalidFields = 0;
+
+            //var totalStopwatch = new Stopwatch();
+
+            //for (int i = 0; i < fieldsToGenerate; i++)
+            //{
+            //    totalStopwatch.Start();
+
+            //    var newFieldState = new FieldState()
+            //    {
+            //        IsActive = false,
+            //        IsPlaneVisible = true,
+            //        ColumnCount = gameMode.ColumnCount,
+            //        RowCount = gameMode.RowCount,
+            //    };
+
+            //    var stopwatch = new Stopwatch();
+
+            //    stopwatch.Start();
+            //    GenerateFields(gameMode, newFieldState);
+            //    stopwatch.Stop();
+
+            //    totalStopwatch.Stop();
+            //    averageGenerationDuration = (i * stopwatch.ElapsedTicks + averageGenerationDuration) / (i + 1);
+            //    totalStopwatch.Start();
+
+            //    var validationStopwatch = new Stopwatch();
+            //    validationStopwatch.Start();
+
+            //    if (!new FieldStateValidator(newFieldState).IsValid())
+            //    {
+            //        invalidFields++;
+            //    }
+
+            //    validationStopwatch.Stop();
+            //    totalStopwatch.Stop();
+
+            //    averageValidationDuration = (i * validationStopwatch.ElapsedTicks + averageValidationDuration) / (i + 1);
+            //}
+
+            //UnityEngine.Debug.Log(String.Format("Generated {0} fields. {1}/{0} ({2}%) Invaild.", fieldsToGenerate, invalidFields, (invalidFields * 100 / fieldsToGenerate)));
+            //UnityEngine.Debug.Log(String.Format("Total time: {0} - Average generation: {1:#0.00} Ticks - Average validation: {2:#0.00} Ticks", totalStopwatch.Elapsed, averageGenerationDuration, averageValidationDuration));
 
             return new GameState()
             {
@@ -253,7 +300,7 @@ namespace Assets.Scripts.Core
 
             var positionFound = false;
 
-            for (var counter = 0; counter < 5; counter++)
+            for (var counter = 0; counter < 10; counter++)
             {
                 x = UnityEngine.Random.Range(0, fieldState.ColumnCount);
                 z = UnityEngine.Random.Range(0, fieldState.RowCount);
@@ -266,7 +313,7 @@ namespace Assets.Scripts.Core
 
             if (!positionFound)
             {
-                throw new Exception("Failed to generate Position for Finish!");
+                throw new Exception("Failed to generate Position!");
             }
         }
 
