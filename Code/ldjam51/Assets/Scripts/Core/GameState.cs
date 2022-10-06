@@ -12,7 +12,7 @@ namespace Assets.Scripts.Core
         public String SaveGameName { get; set; }
         public Single TimeRemaining { get; set; }
         public Int32 LevelsCompleted { get; set; } = 0;
-        public Int32 ToggleIndex { get; set; }
+        public Int32 ActiveFieldIndex { get; set; } = -1;
         public float NextTick { get; set; }
         public Int32 LastTick { get; set; }
         public List<FieldState> Fields { get; set; }

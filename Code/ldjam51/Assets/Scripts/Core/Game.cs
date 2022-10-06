@@ -82,7 +82,8 @@ namespace Assets.Scripts.Core
                 CurrentScene = SceneNames.PlayFieldScene,
                 Mode = gameMode,
                 TimeRemaining = gameMode.Interval,
-                NextTick = gameMode.TickStart
+                NextTick = gameMode.TickStart,
+                ActiveFieldIndex = -1
             };
 
             GenerateFields(gameMode, gameState);
@@ -94,6 +95,8 @@ namespace Assets.Scripts.Core
         {
             if (gameMode?.FieldAmount > 0)
             {
+                gameState.Fields = new System.Collections.Generic.List<FieldState>();
+
                 var firstField = true;
 
                 for (int i = 0; i < gameMode.FieldAmount; i++)

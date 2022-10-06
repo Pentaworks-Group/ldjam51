@@ -185,16 +185,27 @@ namespace Assets.Scripts.Scenes.PlayField
 
         private void LoadNewFields()
         {
-            
-            gameState.Field1 = Base.Core.Game.GenerateField(gameState.Mode, false);
-            gameState.Field2 = Base.Core.Game.GenerateField(gameState.Mode, true);
+            gameState.Fields.Clear();
+
+            var firstField = true;
+
+            for (int i = 0; i < gameState.Mode.FieldAmount; i++)
+            {
+                var newField = Base.Core.Game.GenerateField(gameState.Mode, firstField);
+
+                firstField = false;
+
+                if (newField != default)
+                {
+                    gameState.Fields.Add(newField);
+                }
+
+                fieldHandlers[i].LoadNewField(this, newField);
+            }
 
             gameState.TimeRemaining = gameState.Mode.Interval;
             gameState.NextTick = gameState.Mode.TickStart;
-            gameState.ToggleIndex = 0;
-
-            leftField.LoadNewField(this, gameState.Field1);
-            rightField.LoadNewField(this, gameState.Field2);
+            gameState.ActiveFieldIndex = -1;
         }
 
         public T GetTemplateByName<T>(String templateName) where T : ModelBehaviour
@@ -283,9 +294,9 @@ namespace Assets.Scripts.Scenes.PlayField
 
         private void ToggleFields()
         {
-            if (gameState.ToggleIndex == 0)
+            if (gameState.ActiveFieldIndex == -1)
             {
-                var newToggleState = 1;
+                var newToggleState = 0;
 
                 foreach (var fieldHandler in this.fieldHandlers)
                 {
@@ -296,44 +307,71 @@ namespace Assets.Scripts.Scenes.PlayField
                         newToggleState++;
                         fieldWillBeActive = false;
                     }
+                    else
+                    {
+                        activeField = fieldHandler;
+                    }
 
                     fieldHandler.SetActive(fieldWillBeActive);
                 }
 
-                if (this.fieldHandlers[0].FieldState.IsCompleted)
-                {
-                    newToggleState = 2;
-                }
+                //if (this.fieldHandlers[0].FieldState.IsCompleted)
+                //{
+                //    newToggleState = 2;
+                //}
 
-                if (gameState.Field1.IsCompleted)
-                {
-                    newToggleState = 2;
-                    firstFieldWillBeActive = false;
-                }
+                //if (gameState.Field1.IsCompleted)
+                //{
+                //    newToggleState = 2;
+                //    firstFieldWillBeActive = false;
+                //}
 
-                gameState.ToggleIndex = newToggleState;
+                //gameState.ToggleIndex = newToggleState;
 
-                activeField = leftField;
+                //activeField = leftField;
 
-                leftField.SetActive(firstFieldWillBeActive);
-                rightField.SetActive(!firstFieldWillBeActive);
+                //leftField.SetActive(firstFieldWillBeActive);
+                //rightField.SetActive(!firstFieldWillBeActive);
             }
             else
             {
-                var field1Active = false;
+                var isPossible = false;
 
-                if (gameState.ToggleIndex == 2)
+                while (!isPossible)
                 {
-                    field1Active = true;
-                    gameState.ToggleIndex = 1;
-                }
-                else
-                {
-                    gameState.ToggleIndex = 2;
+                    var newActiveFieldIndex = UnityEngine.Random.Range(0, gameState.Mode.FieldAmount);
+
+                    if (newActiveFieldIndex != gameState.ActiveFieldIndex)
+                    {
+                        isPossible = true;
+
+                        var newActiveField = gameState.Fields[newActiveFieldIndex];
+
+                        foreach (var fieldHandler in this.fieldHandlers)
+                        {
+                            var isActive = (fieldHandler.FieldState != newActiveField);
+
+                            SetFieldActive(fieldHandler, isActive);
+                        }
+
+                        gameState.ActiveFieldIndex = newActiveFieldIndex;
+                    }
                 }
 
-                SetFieldActive(leftField, field1Active);
-                SetFieldActive(rightField, !field1Active);
+                //var field1Active = false;
+
+                //if (gameState.ToggleIndex == 2)
+                //{
+                //    field1Active = true;
+                //    gameState.ToggleIndex = 1;
+                //}
+                //else
+                //{
+                //    gameState.ToggleIndex = 2;
+                //}
+
+                //SetFieldActive(leftField, field1Active);
+                //SetFieldActive(rightField, !field1Active);
             }
         }
 

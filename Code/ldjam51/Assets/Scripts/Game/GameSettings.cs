@@ -17,7 +17,7 @@ public class GameSettings
     public Int32 IncrementalSize { get; set; }
     public float ExtraChance { get; set; } = 0.2f;
     public Int32 MonsterAmount { get; set; }
-    public Int32 FieldAmount { get; internal set; }
+    public Int32 FieldAmount { get; set; }
 
     private Dictionary<String, Dictionary<String, float>> extraWeights;
     public Dictionary<String, Dictionary<String, float>> ExtraWeights
