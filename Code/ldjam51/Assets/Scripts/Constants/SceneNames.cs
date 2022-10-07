@@ -9,4 +9,6 @@ public static class SceneNames
     public const String PlayFieldScene = "PlayFieldScene";
     public const String GameOver = "GameOverScene";
     public const String GameModeScene = "GameModeScene";
+    public const String Tutorial = "TutorialScene";
+
 }

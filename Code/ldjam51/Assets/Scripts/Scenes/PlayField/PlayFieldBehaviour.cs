@@ -26,7 +26,6 @@ namespace Assets.Scripts.Scenes.PlayField
         private float remainingTimeFontSize;
 
         public Camera sceneCamera;
-        public GameObject Tutorial;
 
         private void Awake()
         {
@@ -80,14 +79,14 @@ namespace Assets.Scripts.Scenes.PlayField
             {
                 this.levelsCompletedText.text = gameState.LevelsCompleted.ToString();
             }
-
-            if (Assets.Scripts.Base.Core.Game.Options.ShowTutorial)
-            {
-                ShowTutorial();
-            }
-
-
+                        
             AdjustCamera();
+        }
+
+        public void OpenTutorial()
+        {
+            Assets.Scripts.Base.Core.Game.PlayButtonSound();
+            Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.Tutorial);
         }
 
     
@@ -146,20 +145,7 @@ namespace Assets.Scripts.Scenes.PlayField
             }
         }
 
-        public void ShowTutorial()
-        {
-            Tutorial.SetActive(true);
-            Time.timeScale = 0;
-        }
-
-
-        public void CloseTutorial()
-        {
-            Tutorial.SetActive(false);
-            Assets.Scripts.Base.Core.Game.Options.ShowTutorial = false;
-            Time.timeScale = 1;
-        }
-        private void LoadNewFields()
+         private void LoadNewFields()
         {
             gameState.Field1 = Base.Core.Game.GenerateField(gameState.Mode, false);
             gameState.Field2 = Base.Core.Game.GenerateField(gameState.Mode, true);
