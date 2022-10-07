@@ -10,7 +10,7 @@ namespace Assets.Scripts.Scenes.PlayField
 {
     public class FieldHandler : UnityEngine.MonoBehaviour
     {
-        private GameObject plane;
+        private GameObject shadowPlane;
         private GameObject tilesContainer;
         private PlayFieldBehaviour PlayField;
         private System.Collections.Generic.List<MonsterBehaviour> monsterBehaviours = new System.Collections.Generic.List<MonsterBehaviour>();
@@ -21,7 +21,7 @@ namespace Assets.Scripts.Scenes.PlayField
         void Awake()
         {
             this.tilesContainer = this.gameObject.transform.Find("TilesContainer").gameObject;
-            this.plane = this.gameObject.transform.Find("Plane").gameObject;
+            this.shadowPlane = this.gameObject.transform.Find("Plane").gameObject;
         }
 
         public void LoadNewField(PlayFieldBehaviour playField, FieldState fieldState)
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Scenes.PlayField
         {
             this.FieldState.IsActive = isActive;
             this.FieldState.Player.IsActive = isActive;
-            this.plane.SetActive(isActive);
+            this.shadowPlane.SetActive(isActive);
 
             if (this.FieldState.Monsters?.Count > 0)
             {
@@ -168,8 +168,8 @@ namespace Assets.Scripts.Scenes.PlayField
             var xPosition = this.transform.position.x + this.FieldState.ColumnCount;
             var zPosition = this.transform.position.z + this.FieldState.RowCount;
 
-            plane.transform.position = new Vector3(xPosition, plane.transform.position.y, zPosition);
-            plane.transform.localScale = new Vector3(totalColumns, totalRows, plane.transform.localScale.z);
+            shadowPlane.transform.position = new Vector3(xPosition, shadowPlane.transform.position.y, zPosition);
+            shadowPlane.transform.localScale = new Vector3(totalColumns, totalRows, shadowPlane.transform.localScale.z);
 
             if (FieldState.IsActive)
             {
@@ -180,13 +180,13 @@ namespace Assets.Scripts.Scenes.PlayField
 
                 SetMonsterActive(!FieldState.IsActive);
 
-                plane.SetActive(FieldState.IsActive);
+                shadowPlane.SetActive(FieldState.IsActive);
             }
             else if (FieldState.IsPlaneVisible)
             {
                 SetMonsterActive(false);
 
-                plane.SetActive(true);
+                shadowPlane.SetActive(true);
             }
             else
             {

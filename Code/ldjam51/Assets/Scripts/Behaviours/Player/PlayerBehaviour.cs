@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 
 using Assets.Scripts.Behaviours.Monsters;
 using Assets.Scripts.Scenes.PlayField;
-
-using GameFrame.Core.Extensions;
 
 using UnityEngine;
 
@@ -82,26 +79,15 @@ namespace Assets.Scripts.Behaviours.Models
 
             if (player?.IsActive == true)
             {
-
                 var tiles = this.FieldHandler.FieldState.Tiles;
+
                 if (movementVector.x != 0)
                 {
                     var newX = FieldHandler.FieldState.Player.PositionX + (Int32)movementVector.x;
-                    if (newX >= 0 && newX < tiles.GetLength(0)) {
+
+                    if (newX >= 0 && newX < tiles.GetLength(0))
+                    {
                         FieldHandler.FieldState.Player.PositionX += (Int32)movementVector.x;
-                    } else
-                    {
-                        Base.Core.Game.EffectsAudioManager.Play("Bonk");
-                        return;
-                    }
-                    
-                }
-                if (movementVector.z != 0)
-                {
-                    var newZ = FieldHandler.FieldState.Player.PositionZ + (Int32)movementVector.z;
-                    if (newZ >= 0 && newZ < tiles.GetLength(0))
-                    {
-                        FieldHandler.FieldState.Player.PositionZ += (Int32)movementVector.z;
                     }
                     else
                     {
@@ -110,9 +96,20 @@ namespace Assets.Scripts.Behaviours.Models
                     }
 
                 }
+
                 if (movementVector.z != 0)
                 {
-                    FieldHandler.FieldState.Player.PositionZ += (Int32)movementVector.z;
+                    var newZ = FieldHandler.FieldState.Player.PositionZ + (Int32)movementVector.z;
+
+                    if (newZ >= 0 && newZ < tiles.GetLength(1))
+                    {
+                        FieldHandler.FieldState.Player.PositionZ += (Int32)movementVector.z;
+                    }
+                    else
+                    {
+                        Base.Core.Game.EffectsAudioManager.Play("Bonk");
+                        return;
+                    }
                 }
 
                 this.lastMove = movementVector;

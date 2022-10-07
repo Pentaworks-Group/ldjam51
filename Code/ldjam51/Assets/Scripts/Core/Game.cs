@@ -97,13 +97,9 @@ namespace Assets.Scripts.Core
             {
                 gameState.Fields = new System.Collections.Generic.List<FieldState>();
 
-                var firstField = true;
-
                 for (int i = 0; i < gameMode.FieldAmount; i++)
                 {
-                    var field = GenerateField(gameMode, firstField);
-
-                    firstField = false;
+                    var field = GenerateField(gameMode);
 
                     if (field != default)
                     {
@@ -117,7 +113,7 @@ namespace Assets.Scripts.Core
             }
         }
 
-        public FieldState GenerateField(GameSettings gameMode, Boolean isPlaneVisible)
+        public FieldState GenerateField(GameSettings gameMode)
         {
             var fieldState = default(FieldState);
 
@@ -137,7 +133,7 @@ namespace Assets.Scripts.Core
                 var newFieldState = new FieldState()
                 {
                     IsActive = false,
-                    IsPlaneVisible = isPlaneVisible,
+                    IsPlaneVisible = false,
                     ColumnCount = columnCount,
                     RowCount = numRows
                 };
