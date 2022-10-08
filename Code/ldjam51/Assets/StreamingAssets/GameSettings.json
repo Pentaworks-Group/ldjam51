@@ -8,6 +8,7 @@
     "RowCount": 9,
     "IncrementalSpawn": 0.05,
     "MonsterAmount": 1,
+    "FieldAmount": 2,
     "ObjectTypes": {
       "Players": [
         {
@@ -100,6 +101,7 @@
     "TickStart": 5,
     "ColumnCount": 18,
     "RowCount": 18,
+    "FieldAmount": 2,
     "ObjectTypes": {
       "Players": [
         {
@@ -176,6 +178,7 @@
     "TickStart": 5,
     "ColumnCount": 72,
     "RowCount": 72,
+    "FieldAmount": 2,
     "ObjectTypes": {
       "Players": [
         {
@@ -253,6 +256,7 @@
     "ColumnCount": 9,
     "RowCount": 9,
     "ExtraChance": 0.3,
+    "FieldAmount": 2,
     "ObjectTypes": {
       "Players": [
         {
@@ -304,6 +308,7 @@
     "RowCount": 9,
     "IncrementalSpawn": 0.05,
     "MonsterAmount": 1,
+    "FieldAmount": 2,
     "ObjectTypes": {
       "Players": [
         {
@@ -398,6 +403,7 @@
     "RowCount": 16,
     "IncrementalSpawn": 0.00,
     "MonsterAmount": 20,
+    "FieldAmount": 2,
     "ObjectTypes": {
       "Players": [
         {
@@ -439,9 +445,104 @@
           "Materials": [
             "Grass"
           ],
-          "Extras": { }
+          "Extras": {}
         }
       ]
     }
-  }
+  },
+  {
+    "Name": "Default - 4 Fields",
+    "Interval": 10,
+    "TickInterval": 1,
+    "TickStart": 5,
+    "ColumnCount": 9,
+    "RowCount": 9,
+    "IncrementalSpawn": 0.05,
+    "MonsterAmount": 1,
+    "FieldAmount": 4,
+    "ObjectTypes": {
+      "Players": [
+        {
+          "TemplateReference": "PlayerTemplate",
+          "Materials": [
+            "DefaultPlayer"
+          ]
+        }
+      ],
+      "Monsters": [
+        {
+          "Name": "Cow",
+          "TemplateReference": "Cow",
+          "GameOverText": "Have been eaten by a Cow!",
+          "Materials": [
+            "Leather"
+          ],
+          "SoundEffects": [
+            "Mooh1",
+            "Mooh2",
+            "Mooh3",
+            "Mooh4",
+            "Mooh5"
+          ]
+        }
+      ],
+      "Finishes": [
+        {
+          "TemplateReference": "Tile",
+          "Materials": [
+            "FinishLine"
+          ],
+          "Extras": [ "Finish" ]
+        }
+      ],
+      "Tiles": [
+        {
+          "TemplateReference": "Tile",
+          "Materials": [
+            "Grass"
+          ],
+          "Extras": {
+            "Stone": 1,
+            "Trees": 1,
+            "Chest": 1,
+            "Trap": 1
+          }
+        }
+      ],
+      "Extras": [
+        {
+          "Name": "Stone",
+          "TemplateReference": "Stone",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
+        },
+        {
+          "Name": "Trees",
+          "TemplateReference": "Trees",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
+        },
+        {
+          "Name": "Chest",
+          "TemplateReference": "Chest",
+          "IsDeadly": false,
+          "GameOverText": "",
+          "SoundEffects": [],
+          "Materials": []
+        },
+        {
+          "Name": "Trap",
+          "TemplateReference": "Trap",
+          "IsDeadly": true,
+          "GameOverText": "Walked into a trap!",
+          "SoundEffects": [],
+          "Materials": []
+        }
+      ]
+    }
+  },
 ]

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 
 using Assets.Scripts.Extensions;
@@ -78,18 +77,43 @@ namespace Assets.Scripts.Core
             //UnityEngine.Debug.Log(String.Format("Generated {0} fields. {1}/{0} ({2}%) Invaild.", fieldsToGenerate, invalidFields, (invalidFields * 100 / fieldsToGenerate)));
             //UnityEngine.Debug.Log(String.Format("Total time: {0} - Average generation: {1:#0.00} Ticks - Average validation: {2:#0.00} Ticks", totalStopwatch.Elapsed, averageGenerationDuration, averageValidationDuration));
 
-            return new GameState()
+            var gameState = new GameState()
             {
                 CurrentScene = SceneNames.PlayFieldScene,
                 Mode = gameMode,
                 TimeRemaining = gameMode.Interval,
                 NextTick = gameMode.TickStart,
-                Field1 = GenerateField(gameMode, false),
-                Field2 = GenerateField(gameMode, true),
+                ActiveFieldIndex = -1
             };
+
+            GenerateFields(gameMode, gameState);
+
+            return gameState;
         }
 
-        public FieldState GenerateField(GameSettings gameMode, Boolean isPlaneVisible)
+        private void GenerateFields(GameSettings gameMode, GameState gameState)
+        {
+            if (gameMode?.FieldAmount > 0)
+            {
+                gameState.Fields = new System.Collections.Generic.List<FieldState>();
+
+                for (int i = 0; i < gameMode.FieldAmount; i++)
+                {
+                    var field = GenerateField(gameMode);
+
+                    if (field != default)
+                    {
+                        gameState.Fields.Add(field);
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Either no GameMode provided or FouldCount less than 1");
+            }
+        }
+
+        public FieldState GenerateField(GameSettings gameMode)
         {
             var fieldState = default(FieldState);
 
@@ -109,12 +133,12 @@ namespace Assets.Scripts.Core
                 var newFieldState = new FieldState()
                 {
                     IsActive = false,
-                    IsPlaneVisible = isPlaneVisible,
+                    IsPlaneVisible = false,
                     ColumnCount = columnCount,
                     RowCount = numRows
                 };
 
-                GenerateFields(gameMode, newFieldState);
+                GenerateTiles(gameMode, newFieldState);
 
                 if (new FieldStateValidator(newFieldState).IsValid())
                 {
@@ -133,7 +157,7 @@ namespace Assets.Scripts.Core
             return fieldState;
         }
 
-        private void GenerateFields(GameSettings gameMode, FieldState fieldState)
+        private void GenerateTiles(GameSettings gameMode, FieldState fieldState)
         {
             fieldState.Tiles = new Tile[fieldState.RowCount, fieldState.ColumnCount];
 

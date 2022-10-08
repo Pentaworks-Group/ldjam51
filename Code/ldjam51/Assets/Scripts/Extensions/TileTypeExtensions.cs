@@ -34,9 +34,8 @@ namespace Assets.Scripts.Extensions
 
                         foreach (var extraWeight in Base.Core.SelectedGameMode.ObjectTypes.Extras)
                         {
-                            var weights = Base.Core.SelectedGameMode.GetExtraWeights();
+                            float weight = Base.Core.SelectedGameMode.ExtraWeights[tileType.TemplateReference].GetValueOrDefault(extraWeight.Name, 0f);
 
-                            float weight = weights[tileType.TemplateReference].GetValueOrDefault(extraWeight.Name, 0f);
                             if (weight > take)
                             {
                                 tile.ExtraTemplate = extraWeight.ToTile();

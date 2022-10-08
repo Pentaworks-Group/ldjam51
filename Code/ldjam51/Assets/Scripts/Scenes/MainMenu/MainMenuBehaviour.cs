@@ -63,7 +63,6 @@ public class MainMenuBehaviour : MonoBehaviour
         Screen.fullScreen = false;
     }
 
-
     // Start is called before the first frame update
     void Start()
     {

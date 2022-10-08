@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Assets.Scripts.Behaviours;
 using Assets.Scripts.Core;
-using Assets.Scripts.Game;
 
 using TMPro;
 
@@ -16,10 +16,10 @@ namespace Assets.Scripts.Scenes.PlayField
         private readonly Dictionary<String, ModelBehaviour> templatesCache = new Dictionary<String, ModelBehaviour>();
 
         private GameState gameState;
-        private FieldHandler activeField;
 
-        private FieldHandler leftField;
-        private FieldHandler rightField;
+        private FieldHandler activeField;
+        private List<FieldHandler> fieldHandlers = new List<FieldHandler>();
+
         private TextMeshProUGUI elapsedTimeText;
         private TextMeshProUGUI remainingTimeText;
         private TextMeshProUGUI levelsCompletedText;
@@ -65,15 +65,7 @@ namespace Assets.Scripts.Scenes.PlayField
                 }
             }
 
-            FindField(transform.Find("LeftField")?.gameObject, ref leftField, gameState.Field1);
-            FindField(transform.Find("RightField")?.gameObject, ref rightField, gameState.Field2);
-
-            var fieldOffset = (gameState.Field1.ColumnCount * 2) + 5;
-
-            leftField.transform.position = Vector3.zero;
-
-            rightField.transform.position = Vector3.zero;
-            rightField.transform.Translate(new Vector3(fieldOffset, 0, 0), Space.World);
+            GenerateFields();
 
             if (this.levelsCompletedText != default)
             {
@@ -89,7 +81,41 @@ namespace Assets.Scripts.Scenes.PlayField
             Assets.Scripts.Base.Core.Game.ChangeScene(SceneNames.Tutorial);
         }
 
-    
+        private void GenerateFields()
+        {
+            var fieldTemplate = transform.Find("Templates/Fields/Field")?.gameObject;
+            var fieldsContainer = transform.Find("FieldsContainer")?.gameObject;
+
+            if ((fieldTemplate != default) && (fieldsContainer != default))
+            {
+                for (int i = 0; i < this.gameState.Fields.Count; i++)
+                {
+                    var fieldGameObject = Instantiate(fieldTemplate, fieldsContainer.transform);
+
+                    var fieldHandler = fieldGameObject.GetComponent<FieldHandler>();
+
+                    if (fieldHandler != default)
+                    {
+                        var field = this.gameState.Fields[i];
+
+                        var perFieldWidth = (gameState.Mode.ColumnCount * 2 + 5f);
+
+                        var newX = perFieldWidth * i;
+
+                        if (fieldGameObject.transform.position.x != newX)
+                        {
+                            fieldGameObject.transform.position = new Vector3(newX, this.transform.position.y, this.transform.position.y);
+                        }
+
+                        fieldHandler.LoadNewField(this, field);
+
+                        this.fieldHandlers.Add(fieldHandler);
+                    }
+                }
+            }
+        }
+
+
         private void Update()
         {
             if (Time.timeScale > 0)
@@ -124,7 +150,7 @@ namespace Assets.Scripts.Scenes.PlayField
                     }
                 }
 
-                if (gameState.Field1.IsCompleted && gameState.Field2.IsCompleted)
+                if (!gameState.Fields.Any(f => !f.IsCompleted))
                 {
                     gameState.LevelsCompleted += 1;
 
@@ -140,22 +166,29 @@ namespace Assets.Scripts.Scenes.PlayField
 
                 UpdateElapsed();
                 UpdateRemaining();
-
-               
             }
         }
 
-         private void LoadNewFields()
+        private void LoadNewFields()
         {
-            gameState.Field1 = Base.Core.Game.GenerateField(gameState.Mode, false);
-            gameState.Field2 = Base.Core.Game.GenerateField(gameState.Mode, true);
+            gameState.Fields.Clear();
+
+            for (int i = 0; i < gameState.Mode.FieldAmount; i++)
+            {
+                var newField = Base.Core.Game.GenerateField(gameState.Mode);
+
+                if (newField != default)
+                {
+                    newField.Index = i;
+                    gameState.Fields.Add(newField);
+                }
+
+                fieldHandlers[i].LoadNewField(this, newField);
+            }
 
             gameState.TimeRemaining = gameState.Mode.Interval;
             gameState.NextTick = gameState.Mode.TickStart;
-            gameState.ToggleIndex = 0;
-
-            leftField.LoadNewField(this, gameState.Field1);
-            rightField.LoadNewField(this, gameState.Field2);
+            gameState.ActiveFieldIndex = -1;
         }
 
         public T GetTemplateByName<T>(String templateName) where T : ModelBehaviour
@@ -223,61 +256,41 @@ namespace Assets.Scripts.Scenes.PlayField
             }
         }
 
-        private Boolean FindField(GameObject fieldObject, ref FieldHandler fieldHandlerValue, FieldState fieldState)
-        {
-            if (fieldObject != null)
-            {
-                var fieldHandler = fieldObject.GetComponent<FieldHandler>();
-
-                if (fieldHandler != default)
-                {
-                    fieldHandler.LoadNewField(this, fieldState);
-
-                    fieldHandlerValue = fieldHandler;
-
-                    return true;
-                }
-            }
-
-            return default;
-        }
-
         private void ToggleFields()
         {
-            if (gameState.ToggleIndex == 0)
+            var remainingFields = this.fieldHandlers.Where(f => !f.FieldState.IsCompleted).ToList();
+
+            if (remainingFields.Count == 1)
             {
-                var field1WillBeActive = true;
-                var newToggleState = 1;
+                var remainingField = remainingFields[0];
 
-                if (gameState.Field1.IsCompleted)
-                {
-                    newToggleState = 2;
-                    field1WillBeActive = false;
-                }
+                SetFieldActive(remainingField, !remainingField.FieldState.IsActive);
 
-                gameState.ToggleIndex = newToggleState;
-
-                activeField = leftField;
-
-                leftField.SetActive(field1WillBeActive);
-                rightField.SetActive(!field1WillBeActive);
+                gameState.ActiveFieldIndex = this.gameState.Fields.IndexOf(remainingField.FieldState);
             }
             else
             {
-                var field1Active = false;
-
-                if (gameState.ToggleIndex == 2)
+                for (int i = 0; i < 10; i++)
                 {
-                    field1Active = true;
-                    gameState.ToggleIndex = 1;
-                }
-                else
-                {
-                    gameState.ToggleIndex = 2;
-                }
+                    var newActiveFieldIndex = UnityEngine.Random.Range(0, remainingFields.Count);
 
-                SetFieldActive(leftField, field1Active);
-                SetFieldActive(rightField, !field1Active);
+                    var newActiveFieldHandler = remainingFields[newActiveFieldIndex];
+
+                    var actualIndex = gameState.Fields.IndexOf(newActiveFieldHandler.FieldState);
+
+                    if (actualIndex != gameState.ActiveFieldIndex)
+                    {
+                        foreach (var fieldHandler in this.fieldHandlers)
+                        {
+                            var isActive = (fieldHandler == newActiveFieldHandler);
+
+                            SetFieldActive(fieldHandler, isActive);
+                        }
+
+                        gameState.ActiveFieldIndex = this.gameState.Fields.IndexOf(newActiveFieldHandler.FieldState);
+                        break;
+                    }
+                }
             }
         }
 

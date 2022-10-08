@@ -17,17 +17,20 @@ public class GameSettings
     public Int32 IncrementalSize { get; set; }
     public float ExtraChance { get; set; } = 0.2f;
     public Int32 MonsterAmount { get; set; }
-    private Dictionary<String, Dictionary<String, float>> ExtraWeights { get; set; }
+    public Int32 FieldAmount { get; set; }
 
-
-    public Dictionary<String, Dictionary<String, float>> GetExtraWeights()
+    private Dictionary<String, Dictionary<String, float>> extraWeights;
+    public Dictionary<String, Dictionary<String, float>> ExtraWeights
     {
-        if (this.ExtraWeights == default)
+        get
         {
-            this.ExtraWeights = GetExtraWeightsForList(ObjectTypes.Tiles);
-        }
+            if (this.extraWeights == default)
+            {
+                this.extraWeights = GetExtraWeightsForList(ObjectTypes.Tiles);
+            }
 
-        return this.ExtraWeights;
+            return this.extraWeights;
+        }
     }
 
     private Dictionary<String, Dictionary<String, float>> GetExtraWeightsForList(List<TileType> tileTypeList)
@@ -46,7 +49,9 @@ public class GameSettings
     private Dictionary<String, float> GetExtraWeights(TileType tileType)
     {
         Dictionary<String, float> weights = new Dictionary<String, float>();
+
         float weightSum = 0;
+
         foreach (KeyValuePair<String, float> t in tileType.Extras)
         {
             float weight = t.Value;
