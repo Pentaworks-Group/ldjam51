@@ -6,15 +6,24 @@ public class TutorialMenuBehaviour : BaseMenuBehaviour
 {
     public void ToGame()
     {
+        Core.Game.Options.ShowTutorial = false;
         Core.Game.PlayButtonSound();
-        //if (Core.Game.State != default)
-        //{
+        if (Core.Game.State != default)
+        {
 
             Core.Game.Start(Core.Game.State);
-        //}
-        //else
-        //{
-        //    Core.Game.Start();
-        //}
+            Core.Game.ChangeScene(SceneNames.PlayFieldScene);
+        }
+        else
+        {
+            Core.Game.Start();
+        }
+    }
+
+
+    public void ToMenu()
+    {
+        Core.Game.Stop();
+        ToMainMenu();
     }
 }
