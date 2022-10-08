@@ -18,5 +18,48 @@ namespace Assets.Scripts.Core
         public List<FieldState> Fields { get; set; }
         public String DeathReason { get; set; }
         public String WatchOutForText { get; set; }
+
+        [Obsolete("Legacy: The setter will only set the ActiveFieldIndex.")]
+        public Int32 ToggleIndex
+        {
+            set
+            {
+                this.ActiveFieldIndex = value;
+            }
+        }
+
+        [Obsolete("Legacy: The setter will add the field to the Fields list.")]
+        public FieldState Field1
+        {
+            set
+            {
+                if (value != default)
+                {
+                    if (this.Fields == default)
+                    {
+                        this.Fields = new List<FieldState>();
+                    }
+
+                    this.Fields.Add(value);
+                }
+            }
+        }
+
+        [Obsolete("Legacy: The setter will add the field to the Fields list.")]
+        public FieldState Field2
+        {
+            set
+            {
+                if (value != default)
+                {
+                    if (this.Fields == default)
+                    {
+                        this.Fields = new List<FieldState>();
+                    }
+
+                    this.Fields.Add(value);
+                }
+            }
+        }
     }
 }

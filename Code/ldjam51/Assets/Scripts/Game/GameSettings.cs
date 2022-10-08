@@ -4,6 +4,8 @@ using System.Linq;
 
 using Assets.Scripts.Core;
 
+using Newtonsoft.Json;
+
 public class GameSettings
 {
     public String Name { get; set; }
@@ -17,9 +19,10 @@ public class GameSettings
     public Int32 IncrementalSize { get; set; }
     public float ExtraChance { get; set; } = 0.2f;
     public Int32 MonsterAmount { get; set; }
-    public Int32 FieldAmount { get; set; }
+    public Int32 FieldAmount { get; set; } = 2;
 
     private Dictionary<String, Dictionary<String, float>> extraWeights;
+    [JsonIgnore]
     public Dictionary<String, Dictionary<String, float>> ExtraWeights
     {
         get

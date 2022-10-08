@@ -302,9 +302,9 @@ namespace Assets.Scripts.Core
                         {
                             TemplateReference = "Tile",
                             Materials = new System.Collections.Generic.List<string>()
-                        {
-                            "Grass"
-                        }
+                            {
+                                "Grass"
+                            }
                         };
                     }
 
@@ -332,6 +332,7 @@ namespace Assets.Scripts.Core
                 if (IsPositionAvailable(fieldState, x, z))
                 {
                     positionFound = true;
+                    break;
                 }
             }
 
