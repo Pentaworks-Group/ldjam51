@@ -31,12 +31,12 @@ namespace Assets.Scripts.Core
         {
             var gameMode = Base.Core.SelectedGameMode;
 
-            //var fieldsToGenerate = 50000;
+            //var fieldsToGenerate = 1000000;
             //var averageGenerationDuration = 0d;
             //var averageValidationDuration = 0d;
             //var invalidFields = 0;
 
-            //var totalStopwatch = new Stopwatch();
+            //var totalStopwatch = new System.Diagnostics.Stopwatch();
 
             //for (int i = 0; i < fieldsToGenerate; i++)
             //{
@@ -50,17 +50,17 @@ namespace Assets.Scripts.Core
             //        RowCount = gameMode.RowCount,
             //    };
 
-            //    var stopwatch = new Stopwatch();
+            //    var stopwatch = new System.Diagnostics.Stopwatch();
 
             //    stopwatch.Start();
-            //    GenerateFields(gameMode, newFieldState);
+            //    GenerateTiles(gameMode, newFieldState);
             //    stopwatch.Stop();
 
             //    totalStopwatch.Stop();
             //    averageGenerationDuration = (i * stopwatch.ElapsedTicks + averageGenerationDuration) / (i + 1);
             //    totalStopwatch.Start();
 
-            //    var validationStopwatch = new Stopwatch();
+            //    var validationStopwatch = new System.Diagnostics.Stopwatch();
             //    validationStopwatch.Start();
 
             //    if (!new FieldStateValidator(newFieldState).IsValid())
