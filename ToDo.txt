@@ -26,7 +26,8 @@ Refactoring:
  
 WIP:
 ----------------------------------
- 
+
+ - multiple gamefields (e.g. 3)	
  
 Nice to have:
 ----------------------------------
@@ -40,10 +41,13 @@ Nice to have:
  - Horn (Timer elapsed)
  - Movement noise (steps)
  
+ - 
+ 
 Ideas:
 ----------------------------------
- - multiple gamefields (e.g. 3)	
  
+ - Forced patterns to drop field generation issues (currently ~73% invalid fields)
+ - Min distance from Start to Finish (will increase the invalidity rate!) 
  
 Done:
 ----------------------------------
