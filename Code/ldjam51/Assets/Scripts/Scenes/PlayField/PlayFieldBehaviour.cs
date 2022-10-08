@@ -113,13 +113,6 @@ namespace Assets.Scripts.Scenes.PlayField
                     }
                 }
             }
-
-            //var fieldOffset = (gameState.Field1.ColumnCount * 2) + 5;
-
-            //leftField.transform.position = Vector3.zero;
-
-            //rightField.transform.position = Vector3.zero;
-            //rightField.transform.Translate(new Vector3(fieldOffset, 0, 0), Space.World);
         }
 
 
@@ -174,14 +167,6 @@ namespace Assets.Scripts.Scenes.PlayField
                 UpdateElapsed();
                 UpdateRemaining();
             }
-        }
-
-
-        public void CloseTutorial()
-        {
-            Tutorial.SetActive(false);
-            Assets.Scripts.Base.Core.Game.Options.ShowTutorial = false;
-            Time.timeScale = 1;
         }
 
         private void LoadNewFields()
