@@ -18,6 +18,12 @@ public class GameOverBehaviour : BaseMenuBehaviour
         }
     }
 
+    public void ToMenu()
+    {
+        Core.Game.Stop();
+        ToMainMenu();
+    }
+
     private void SetText(String textMeshPath, String text)
     {
         var deathReasonText = transform.Find(textMeshPath)?.GetComponent<TextMeshProUGUI>();

@@ -19,8 +19,16 @@ public class MainMenuBehaviour : MonoBehaviour
     public GameObject QuitButton;
     public void StartGame()
     {
-        Core.Game.PlayButtonSound();
-        Core.Game.Start();
+        if (Assets.Scripts.Base.Core.Game.Options.ShowTutorial)
+        {
+            Core.Game.PlayButtonSound();
+            Core.Game.ChangeScene(SceneNames.Tutorial);
+        } else
+        {
+            Core.Game.PlayButtonSound();
+            Core.Game.Start();
+
+        }
     }
 
     public void ShowSavedGames()
