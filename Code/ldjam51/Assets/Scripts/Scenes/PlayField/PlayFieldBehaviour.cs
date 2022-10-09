@@ -107,17 +107,16 @@ namespace Assets.Scripts.Scenes.PlayField
                 {
                     for (var column = 0; column < fieldColumnsCount; column++)
                     {
-                        var fieldGameObject = Instantiate(fieldTemplate, fieldsContainer.transform);
-
-                        var fieldHandler = fieldGameObject.GetComponent<FieldHandler>();
-
-                        if (fieldHandler != default)
+                        if (fieldIndex < gameState.Fields.Count)
                         {
                             var field = this.gameState.Fields[fieldIndex];
 
+                            var fieldGameObject = Instantiate(fieldTemplate, fieldsContainer.transform);
+
+                            var fieldHandler = fieldGameObject.GetComponent<FieldHandler>();
+
                             var newX = perFieldWidth * column;
                             var newZ = perFieldHeight * row;
-
 
                             if ((fieldGameObject.transform.position.x != newX) || (fieldGameObject.transform.position.z != newZ))
                             {
@@ -127,7 +126,7 @@ namespace Assets.Scripts.Scenes.PlayField
                             fieldHandler.LoadNewField(this, field);
 
                             this.fieldHandlers.Add(fieldHandler);
-                            
+
                             fieldIndex++;
                         }
                     }

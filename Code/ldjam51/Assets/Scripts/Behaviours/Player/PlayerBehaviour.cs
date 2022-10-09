@@ -49,31 +49,46 @@ namespace Assets.Scripts.Behaviours.Models
 
             if (moveRequired)
             {
-                this.Move(new UnityEngine.Vector3(x, 0, z));
+                if (Move(new UnityEngine.Vector3(x, 0, z)))
+                {
+                    Base.Core.Game.EffectsAudioManager.Play("Step");
+                }
             }
         }
 
         public void MoveRight()
         {
-            this.Move(new UnityEngine.Vector3(StepSize, 0, 0));
+            if (Move(new UnityEngine.Vector3(StepSize, 0, 0)))
+            {
+                Base.Core.Game.EffectsAudioManager.Play("Step");
+            }
         }
 
         public void MoveDown()
         {
-            this.Move(new UnityEngine.Vector3(0, 0, -StepSize));
+            if (Move(new UnityEngine.Vector3(0, 0, -StepSize)))
+            {
+                Base.Core.Game.EffectsAudioManager.Play("Step");
+            }
         }
 
         public void MoveLeft()
         {
-            this.Move(new UnityEngine.Vector3(-StepSize, 0, 0));
+            if (Move(new UnityEngine.Vector3(-StepSize, 0, 0)))
+            {
+                Base.Core.Game.EffectsAudioManager.Play("Step");
+            }
         }
 
         public void MoveUp()
         {
-            this.Move(new UnityEngine.Vector3(0, 0, StepSize));
+            if (Move(new UnityEngine.Vector3(0, 0, StepSize)))
+            {
+                Base.Core.Game.EffectsAudioManager.Play("Step");
+            }
         }
 
-        private void Move(UnityEngine.Vector3 movementVector)
+        private Boolean Move(UnityEngine.Vector3 movementVector)
         {
             var player = FieldHandler?.FieldState?.Player;
 
@@ -92,7 +107,7 @@ namespace Assets.Scripts.Behaviours.Models
                     else
                     {
                         Base.Core.Game.EffectsAudioManager.Play("Bonk");
-                        return;
+                        return false;
                     }
 
                 }
@@ -108,14 +123,18 @@ namespace Assets.Scripts.Behaviours.Models
                     else
                     {
                         Base.Core.Game.EffectsAudioManager.Play("Bonk");
-                        return;
+                        return false;
                     }
                 }
 
                 this.lastMove = movementVector;
 
                 this.transform.Translate(movementVector * 2, Space.World);
+
+                return true;
             }
+
+            return false;
         }
 
         private void OnTriggerEnter(Collider other)
