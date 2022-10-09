@@ -17,7 +17,7 @@ public class ToolTip : MonoBehaviour
         EventTrigger trigger = Parent.AddComponent<EventTrigger>();
         AddTrigger(trigger, EventTriggerType.PointerEnter, Show);
         AddTrigger(trigger, EventTriggerType.PointerExit, Hide);
-        Text TextField = ToolTipObject.transform.GetChild(1).GetComponent<Text>();
+        Text TextField = ToolTipObject.transform.GetChild(2).GetComponent<Text>();
         TextField.text = Text;
     }
 

@@ -406,7 +406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6011841777290742783
 RectTransform:
   m_ObjectHideFlags: 0
@@ -457,7 +457,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: fb1e683c3475f4f4da695c3a8a34c8d5, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1416,7 +1416,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 2bc31bff924f5df48a418adb08fc0b5c, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -2051,9 +2051,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0afc1ba947a1c0246aa26d2f4ee0a209, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ff967289272062b4c87b553158b7c730, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -2452,6 +2452,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3329976185580736636}
     m_Modifications:
+    - target: {fileID: 1037016215730299294, guid: 8e651d97600317c4da028a5d9762d367, type: 3}
+      propertyPath: Text
+      value: Load
+      objectReference: {fileID: 0}
     - target: {fileID: 8405887846135611698, guid: 8e651d97600317c4da028a5d9762d367, type: 3}
       propertyPath: m_Name
       value: ToolTip
