@@ -76,6 +76,63 @@ namespace Assets.Scripts.Scenes.PlayField
             AdjustCamera();
         }
 
+
+
+
+        private void Update()
+        {
+            if (Time.timeScale > 0)
+            {
+                gameState.ElapsedTime += Time.deltaTime;
+                gameState.TimeRemaining -= Time.deltaTime;
+
+                if (gameState.TimeRemaining < 0)
+                {
+                    //Scripts.Base.Core.Game.EffectsAudioManager.Play("Horn");
+
+                    gameState.TimeRemaining = gameState.Mode.Interval;
+                    gameState.NextTick = gameState.Mode.TickStart;
+                    gameState.LastTick = 0;
+
+                    ToggleFields();
+                }
+
+                if (gameState.TimeRemaining < gameState.NextTick)
+                {
+                    gameState.NextTick -= gameState.Mode.TickInterval;
+
+                    if (gameState.LastTick == 1)
+                    {
+                        gameState.LastTick = 0;
+                        Scripts.Base.Core.Game.EffectsAudioManager.Play("Tock");
+                    }
+                    else
+                    {
+                        gameState.LastTick = 1;
+                        Scripts.Base.Core.Game.EffectsAudioManager.Play("Tick");
+                    }
+                }
+
+                if (!gameState.Fields.Any(f => !f.IsCompleted))
+                {
+                    gameState.LevelsCompleted += 1;
+
+                    if (this.levelsCompletedText != default)
+                    {
+                        this.levelsCompletedText.text = gameState.LevelsCompleted.ToString();
+                    }
+
+                    Time.timeScale = 0;
+                    LoadNewFields();
+                    Time.timeScale = 1;
+                }
+
+                UpdateElapsed();
+                UpdateRemaining();
+            }
+        }
+
+
         public void OpenTutorial()
         {
             Assets.Scripts.Base.Core.Game.PlayButtonSound();
@@ -131,60 +188,6 @@ namespace Assets.Scripts.Scenes.PlayField
                         }
                     }
                 }
-            }
-        }
-
-
-        private void Update()
-        {
-            if (Time.timeScale > 0)
-            {
-                gameState.ElapsedTime += Time.deltaTime;
-                gameState.TimeRemaining -= Time.deltaTime;
-
-                if (gameState.TimeRemaining < 0)
-                {
-                    //Scripts.Base.Core.Game.EffectsAudioManager.Play("Horn");
-
-                    gameState.TimeRemaining = gameState.Mode.Interval;
-                    gameState.NextTick = gameState.Mode.TickStart;
-                    gameState.LastTick = 0;
-
-                    ToggleFields();
-                }
-
-                if (gameState.TimeRemaining < gameState.NextTick)
-                {
-                    gameState.NextTick -= gameState.Mode.TickInterval;
-
-                    if (gameState.LastTick == 1)
-                    {
-                        gameState.LastTick = 0;
-                        Scripts.Base.Core.Game.EffectsAudioManager.Play("Tock");
-                    }
-                    else
-                    {
-                        gameState.LastTick = 1;
-                        Scripts.Base.Core.Game.EffectsAudioManager.Play("Tick");
-                    }
-                }
-
-                if (!gameState.Fields.Any(f => !f.IsCompleted))
-                {
-                    gameState.LevelsCompleted += 1;
-
-                    if (this.levelsCompletedText != default)
-                    {
-                        this.levelsCompletedText.text = gameState.LevelsCompleted.ToString();
-                    }
-
-                    Time.timeScale = 0;
-                    LoadNewFields();
-                    Time.timeScale = 1;
-                }
-
-                UpdateElapsed();
-                UpdateRemaining();
             }
         }
 
