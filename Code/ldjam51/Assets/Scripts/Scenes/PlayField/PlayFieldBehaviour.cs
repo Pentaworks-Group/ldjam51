@@ -42,8 +42,9 @@ namespace Assets.Scripts.Scenes.PlayField
             this.elapsedTimeText = transform.Find("Canvas/ElapsedConatiner/Text")?.GetComponent<TextMeshProUGUI>();
             this.remainingTimeText = transform.Find("Canvas/RemainingContainer/Text")?.GetComponent<TextMeshProUGUI>();
             this.levelsCompletedText = transform.Find("Canvas/LevelsCompletedText/Text")?.GetComponent<TextMeshProUGUI>();
-            this.remainingTimeFontSize = remainingTimeText.fontSize;
             var templateConatiner = transform.Find("Templates");
+
+            this.remainingTimeFontSize = remainingTimeText.fontSize;
 
             if (templateConatiner != default)
             {
@@ -71,7 +72,7 @@ namespace Assets.Scripts.Scenes.PlayField
             {
                 this.levelsCompletedText.text = gameState.LevelsCompleted.ToString();
             }
-                        
+
             AdjustCamera();
         }
 
@@ -88,28 +89,47 @@ namespace Assets.Scripts.Scenes.PlayField
 
             if ((fieldTemplate != default) && (fieldsContainer != default))
             {
-                for (int i = 0; i < this.gameState.Fields.Count; i++)
+                var fieldColumnsCount = gameState.Fields.Count;
+                var fieldRowsCount = 1;
+
+                if (gameState.Fields.Count > 4)
                 {
-                    var fieldGameObject = Instantiate(fieldTemplate, fieldsContainer.transform);
+                    fieldColumnsCount = (Int32)Math.Ceiling(Math.Sqrt(gameState.Fields.Count));
+                    fieldRowsCount = (Int32)Math.Ceiling((Decimal)gameState.Fields.Count / fieldColumnsCount);
+                }
 
-                    var fieldHandler = fieldGameObject.GetComponent<FieldHandler>();
+                var perFieldWidth = (gameState.Mode.ColumnCount * 2 + 5f);
+                var perFieldHeight = (gameState.Mode.RowCount * 2 + 5f);
 
-                    if (fieldHandler != default)
+                var fieldIndex = 0;
+
+                for (var row = 0; row < fieldRowsCount; row++)
+                {
+                    for (var column = 0; column < fieldColumnsCount; column++)
                     {
-                        var field = this.gameState.Fields[i];
+                        var fieldGameObject = Instantiate(fieldTemplate, fieldsContainer.transform);
 
-                        var perFieldWidth = (gameState.Mode.ColumnCount * 2 + 5f);
+                        var fieldHandler = fieldGameObject.GetComponent<FieldHandler>();
 
-                        var newX = perFieldWidth * i;
-
-                        if (fieldGameObject.transform.position.x != newX)
+                        if (fieldHandler != default)
                         {
-                            fieldGameObject.transform.position = new Vector3(newX, this.transform.position.y, this.transform.position.y);
+                            var field = this.gameState.Fields[fieldIndex];
+
+                            var newX = perFieldWidth * column;
+                            var newZ = perFieldHeight * row;
+
+
+                            if ((fieldGameObject.transform.position.x != newX) || (fieldGameObject.transform.position.z != newZ))
+                            {
+                                fieldGameObject.transform.position = new Vector3(newX, this.transform.position.y, newZ);
+                            }
+
+                            fieldHandler.LoadNewField(this, field);
+
+                            this.fieldHandlers.Add(fieldHandler);
+                            
+                            fieldIndex++;
                         }
-
-                        fieldHandler.LoadNewField(this, field);
-
-                        this.fieldHandlers.Add(fieldHandler);
                     }
                 }
             }
