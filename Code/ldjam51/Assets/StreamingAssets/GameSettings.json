@@ -186,6 +186,12 @@
           "Materials": [
             "DefaultPlayer"
           ]
+        },
+        {
+          "TemplateReference": "Player_High",
+          "Materials": [
+            "DefaultPlayer"
+          ]
         }
       ],
       "Monsters": [],

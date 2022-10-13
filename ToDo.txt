@@ -26,7 +26,7 @@ Refactoring:
 WIP:
 ----------------------------------
 
- - multiple gamefields (e.g. 3)	
+ 
  
 Nice to have:
 ----------------------------------
@@ -58,3 +58,4 @@ Done:
  - multimonster
  - Better tooltip
  - Movement noise (steps)
+ - multiple gamefields (e.g. 3)	

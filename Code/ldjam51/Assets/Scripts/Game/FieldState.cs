@@ -3,10 +3,14 @@ using System.Collections.Generic;
 
 using Assets.Scripts.Model;
 
+using Newtonsoft.Json;
+
 namespace Assets.Scripts.Game
 {
     public class FieldState
     {
+        [JsonIgnore]
+        public Boolean IsPrepared { get; set; }
         public Boolean IsActive { get; set; }
         public Boolean IsPlaneVisible { get; set; }
         public Boolean IsCompleted { get; set; }

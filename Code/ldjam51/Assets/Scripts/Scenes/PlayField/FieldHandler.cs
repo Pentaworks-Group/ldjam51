@@ -192,6 +192,8 @@ namespace Assets.Scripts.Scenes.PlayField
             {
                 SetMonsterActive(true);
             }
+
+            FieldState.IsPrepared = true;
         }
 
         private void SetMonsterActive(Boolean isActive)

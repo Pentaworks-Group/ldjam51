@@ -139,46 +139,52 @@ namespace Assets.Scripts.Behaviours.Models
 
         private void OnTriggerEnter(Collider other)
         {
-            if (this.FieldHandler?.FieldState?.Player != default)
+            if (this.FieldHandler.FieldState.IsPrepared)
             {
                 var targetBehaviour = other.GetComponent<ModelBehaviour>();
 
                 if (targetBehaviour.Tile != default)
                 {
-                    if (targetBehaviour.Tile.IsFinish)
+                    if (targetBehaviour.Tile.FieldState == this.FieldHandler.FieldState)
                     {
-                        if (!this.FieldHandler.FieldState.IsCompleted)
+                        if (targetBehaviour.Tile.IsFinish)
                         {
-                            this.FieldHandler.FieldState.IsCompleted = true;
-                            this.FieldHandler.SetActive(false);
+                            if (!this.FieldHandler.FieldState.IsCompleted)
+                            {
+                                this.FieldHandler.FieldState.IsCompleted = true;
+                                this.FieldHandler.SetActive(false);
 
-                            Base.Core.Game.EffectsAudioManager.Play("Woohoo");
+                                Base.Core.Game.EffectsAudioManager.Play("Woohoo");
+                            }
                         }
-                    }
-                    else if (targetBehaviour.Tile.ExtraTemplate?.IsDeadly == true)
-                    {
-                        Base.Core.Game.EffectsAudioManager.Play("PlayerHit");
+                        else if (targetBehaviour.Tile.ExtraTemplate?.IsDeadly == true)
+                        {
+                            Base.Core.Game.EffectsAudioManager.Play("PlayerHit");
 
-                        Base.Core.Game.State.WatchOutForText = $"the {targetBehaviour.Tile.ExtraTemplate.Name}";
-                        Base.Core.Game.State.DeathReason = targetBehaviour.Tile.ExtraTemplate.GameOverText;
+                            Base.Core.Game.State.WatchOutForText = $"the {targetBehaviour.Tile.ExtraTemplate.Name}";
+                            Base.Core.Game.State.DeathReason = targetBehaviour.Tile.ExtraTemplate.GameOverText;
 
-                        Base.Core.Game.ChangeScene(SceneNames.GameOver);
-                    }
-                    else
-                    {
-                        this.Move(-this.lastMove);
+                            Base.Core.Game.ChangeScene(SceneNames.GameOver);
+                        }
+                        else
+                        {
+                            this.Move(-this.lastMove);
 
-                        Base.Core.Game.EffectsAudioManager.Play("Bonk");
+                            Base.Core.Game.EffectsAudioManager.Play("Bonk");
+                        }
                     }
                 }
                 else if (targetBehaviour is MonsterBehaviour monsterBehaviour)
                 {
-                    Base.Core.Game.EffectsAudioManager.Play("Awww");
+                    if (monsterBehaviour.FieldHandler.FieldState == this.FieldHandler.FieldState)
+                    {
+                        Base.Core.Game.EffectsAudioManager.Play("Awww");
 
-                    Base.Core.Game.State.WatchOutForText = $"the {monsterBehaviour.Monster.Name}";
-                    Base.Core.Game.State.DeathReason = monsterBehaviour.Monster.GameOverText;
+                        Base.Core.Game.State.WatchOutForText = $"the {monsterBehaviour.Monster.Name}";
+                        Base.Core.Game.State.DeathReason = monsterBehaviour.Monster.GameOverText;
 
-                    Base.Core.Game.ChangeScene(SceneNames.GameOver);
+                        Base.Core.Game.ChangeScene(SceneNames.GameOver);
+                    }
                 }
             }
         }
