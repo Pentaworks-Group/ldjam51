@@ -39,9 +39,7 @@ Nice to have:
  - more game modes
  - save zones for cow level
  - Horn (Timer elapsed)
- - Movement noise (steps)
  
- - 
  
 Ideas:
 ----------------------------------
@@ -57,3 +55,4 @@ Done:
  - Credits Scene Background
  - MainMenu Background
  - multimonster
+ - Movement noise (steps)
