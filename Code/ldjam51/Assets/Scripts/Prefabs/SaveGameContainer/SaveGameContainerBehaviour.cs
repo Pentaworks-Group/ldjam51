@@ -139,6 +139,7 @@ public class SaveGameContainerBehaviour : MonoBehaviour
         Core.Game.PlayButtonSound();
         //Assets.Scripts.Base.Core.SelectedGameMode = gameState.Mode;
         Assets.Scripts.Base.Core.Game.Start(saveGameSlotBehaviour.GameState);
+        Time.timeScale = 1; //required if called from pausemenu
     }
 
     private void ClearSlots()

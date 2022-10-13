@@ -12,7 +12,6 @@ Todo:
    
  UI:
  - exit fullscreen on mobile devices
- - Better tooltip
  - ANIMATIONS!!!1!11
  
  
@@ -39,7 +38,9 @@ Nice to have:
  - more game modes
  - save zones for cow level
  - Horn (Timer elapsed)
- 
+ - Mode Selection before gamestart
+ - Mode editor (factorio style) 
+ - 
  
 Ideas:
 ----------------------------------
@@ -55,4 +56,5 @@ Done:
  - Credits Scene Background
  - MainMenu Background
  - multimonster
+ - Better tooltip
  - Movement noise (steps)
